@@ -7,7 +7,7 @@ public class MovimientosPresonaje : MonoBehaviour
     public CharacterController Controlador;
 
     public float Velocidad = 15f;
-    public float Gravedad = -10f;
+    public float Gravedad= -10f;
     public float Saltar = 3f;
 
 
@@ -19,32 +19,29 @@ public class MovimientosPresonaje : MonoBehaviour
 
     Vector3 VelocidadAbajo;
     bool EstaEnElPiso;
-
+    
     void Start()
     {
-
+        
     }
 
-
+    
     void Update()
     {
-        Mover();
-    }
-
-    void Mover()
-    {
-
         EstaEnElPiso = Physics.CheckSphere(EnElPiso.position, DistaciaDelPiso, MascaraDelPiso);
 
         if (EstaEnElPiso && VelocidadAbajo.y < 0)
         {
             VelocidadAbajo.y = -2;
         }
+
+
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 mover = transform.right * x + transform.forward * z;
-        Controlador.Move(mover * Velocidad * Time.deltaTime);
+        Controlador.Move(mover* Velocidad * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && EstaEnElPiso)
         {
@@ -54,7 +51,6 @@ public class MovimientosPresonaje : MonoBehaviour
         VelocidadAbajo.y += Gravedad * Time.deltaTime;
 
         Controlador.Move(VelocidadAbajo * Time.deltaTime);
+
     }
-
-
 }
