@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private Vector2 input;
     Vector3 localMoveDirection;
     Vector3 worldMoveDirection;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,7 +27,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(worldMoveDirection * fuerzaMove);
-
     }
 
     public void Jump(InputAction.CallbackContext callbackContext)
