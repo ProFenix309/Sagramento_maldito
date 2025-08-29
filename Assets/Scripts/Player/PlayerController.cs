@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +7,10 @@ public class PlayerController : MonoBehaviour
     [Header("Movimiento")]
     float horizantalAxis, verticalAxis;
     [SerializeField] float speed;
+    [SerializeField] float speedRun;
+    [SerializeField] float speedCrouched;
+    Vector3 move;
+    bool crouched;
 
     [Space]
     [Header("Fuerza jump y Grabedad")]
@@ -38,6 +39,8 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         Jump();
+        Crouched();
+        Run();
     }
 
     void MovePlayer()
@@ -45,7 +48,7 @@ public class PlayerController : MonoBehaviour
         horizantalAxis = Input.GetAxis("Horizontal");
         verticalAxis = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * horizantalAxis + transform.forward * verticalAxis;
+        move = transform.right * horizantalAxis + transform.forward * verticalAxis;
         character.Move(move * speed * Time.deltaTime);
 
         if (horizantalAxis != 0 || verticalAxis != 0)
@@ -75,6 +78,35 @@ public class PlayerController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         character.Move(velocity * Time.deltaTime);
+    }
+
+    void Crouched()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            crouched = !crouched;
+            if (crouched == true)
+            {
+                animator.SetBool("Crouched", true);
+                character.Move(move * speedCrouched * Time.deltaTime);
+
+            }
+            else
+            {
+                animator.SetBool("Crouched", false);
+            }
+        }
+
+    }
+
+    void Run()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            animator.SetBool("Crouched", false);
+            crouched = false;
+            character.Move(move * speedRun * Time.deltaTime);
+        }
     }
     private void OnDrawGizmos()
     {
