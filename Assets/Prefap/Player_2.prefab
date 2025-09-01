@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 2023545278076129976}
   - component: {fileID: 2065207380069943800}
   - component: {fileID: 6868056728393359174}
+  - component: {fileID: 8267921368135196397}
   - component: {fileID: 2043293649215726268}
-  m_Layer: 0
+  - component: {fileID: 8774748195198492589}
+  m_Layer: 7
   m_Name: Player_2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -115,6 +117,28 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &8267921368135196397
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747754299751385279}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1233f4b527fb46444b25fc00c020ddeb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2043293649215726268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  speedRun: 0
+  speedCrouched: 0
   gravity: -9.81
   jumpForce: 1
   layerColision:
@@ -135,7 +161,22 @@ MonoBehaviour:
     m_Bits: 64
   checketGround: {fileID: 6296364985872556938}
   radiusGround: 0.3
-  animator: {fileID: 0}
+  animator: {fileID: 8267921368135196397}
+--- !u!114 &8774748195198492589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747754299751385279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e42dbf626affb4fa643da7d4ad5d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryEnabled: 0
+  inventory: {fileID: 0}
+  slotHalder: {fileID: 0}
 --- !u!1 &6409179253568734700
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +190,7 @@ GameObject:
   - component: {fileID: 3463770097991091733}
   - component: {fileID: 8476010781641289959}
   - component: {fileID: 5996708375372291873}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -300,7 +341,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6296364985872556938}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CheckSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
