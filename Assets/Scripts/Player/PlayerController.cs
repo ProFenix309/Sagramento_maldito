@@ -7,11 +7,11 @@ public class PlayerController : MonoBehaviour
     [Space]
     [Header("Movimiento")]
 
-    float horizantalAxis, verticalAxis;
     [SerializeField] float speed;
     [SerializeField] float speedRun;
     [SerializeField] float speedCrouched;
     Vector3 move;
+    float horizantalAxis, verticalAxis;
     bool crouched;
 
     [Space]
@@ -24,10 +24,10 @@ public class PlayerController : MonoBehaviour
     [Space]
     [Header("Deteccion de suelos")]
 
-    bool isGround;
     [SerializeField] LayerMask layerColision;
     [SerializeField] Transform checketGround;
     [SerializeField] float radiusGround;
+    bool isGround;
 
     [Space]
     [Header("Animation")]
