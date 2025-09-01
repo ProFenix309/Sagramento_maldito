@@ -4,7 +4,9 @@ public class PlayerController : MonoBehaviour
 {
     CharacterController character;
 
+    [Space]
     [Header("Movimiento")]
+
     float horizantalAxis, verticalAxis;
     [SerializeField] float speed;
     [SerializeField] float speedRun;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     [Space]
     [Header("Animation")]
+
     [SerializeField] Animator animator;
 
     private void Awake()
