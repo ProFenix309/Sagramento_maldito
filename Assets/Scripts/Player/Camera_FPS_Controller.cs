@@ -11,6 +11,8 @@ public class Camera_FPS_Controller : MonoBehaviour
     public float mouseX;
     public float mouseY;
 
+    public bool canMove = false;
+
     //Sencivilidad a la que se muenve el mause 
     public float sencitivily;
 
@@ -19,6 +21,8 @@ public class Camera_FPS_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (canMove)
+        {
         //Detectar el movimiento del mause
         mouseX = Input.GetAxis("Mouse X") * sencitivily * Time.deltaTime; //Time.deltatime estandariza los frimes para que
         mouseY = Input.GetAxis("Mouse Y") * sencitivily * Time.deltaTime; //todos las gamas de PC lo ejecute de manera igual    
@@ -32,6 +36,7 @@ public class Camera_FPS_Controller : MonoBehaviour
 
         //Se le está dando la rotacion a la camara en eje X
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        }
     }
 
     private void Start()

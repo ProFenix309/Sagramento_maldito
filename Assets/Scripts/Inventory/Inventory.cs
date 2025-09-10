@@ -12,8 +12,14 @@ public class Inventory : MonoBehaviour
 
     public GameObject slotHalder;
 
+    PlayerController playerController;
+    Camera_FPS_Controller cameraController;
+
     void Start()
     {
+        playerController = GetComponent<PlayerController>();
+        cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
+        
         allSlots = slotHalder.transform.childCount;
 
         slot = new GameObject[allSlots];
@@ -34,9 +40,17 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryEnabled = !inventoryEnabled;
-            if (!inventoryEnabled)
+            if (inventoryEnabled)
             {
                 Cursor.lockState = CursorLockMode.None;
+                playerController.canMove = false;
+                cameraController.canMove = false;
+            }
+            else
+            {
+                playerController.canMove = true;
+                cameraController.canMove = true;
+                Cursor.lockState = CursorLockMode.Locked;
             }
             inventory.SetActive(inventoryEnabled);
         }

@@ -100,7 +100,8 @@ GameObject:
   - component: {fileID: 6984618932464442795}
   - component: {fileID: 8506614036289374178}
   - component: {fileID: 8093667093378113394}
-  m_Layer: 7
+  - component: {fileID: 2617963237899507420}
+  m_Layer: 0
   m_Name: ExampleEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,21 +239,41 @@ MonoBehaviour:
     m_Bits: 64
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128
   whatIsDistraction:
     serializedVersion: 2
-    m_Bits: 256
-  randomTime: 2
-  walkPoint: {x: 0, y: 0, z: 0}
+    m_Bits: 2
+  initialRandomTime: 1.5
   walkPointSet: 0
   walkPointRange: 10
+  velocity: 0
   ChaseVelocity: 6
-  timeBetweenAtacks: 2.2
+  timeBetweenAtacks: 1
   alreadyAtacked: 0
   AttackingTime: 2
-  sightRange: 4.34
-  attackRange: 1.32
+  sightRange: 5.36
+  attackRange: 1.14
   distractionRange: 6.48
   playerInSightRange: 0
   playerInAttackRange: 0
   DistractionISinRange: 0
+--- !u!114 &2617963237899507420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061293701481982907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

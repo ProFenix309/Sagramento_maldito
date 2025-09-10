@@ -2,119 +2,125 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    CharacterController character;
+    private Rigidbody rb;
+    private Transform sphereStart;
 
     [Space]
     [Header("Movimiento")]
 
-    [SerializeField] float speed;
-    [SerializeField] float speedRun;
-    [SerializeField] float speedCrouched;
-    Vector3 move;
-    float horizantalAxis, verticalAxis;
-    bool crouched;
+    [SerializeField] private float speed;
+    [SerializeField] private float speedRun;
+    [SerializeField] private float speedCrouched;
+    private Vector3 move;
+    private float horizontalAxis, verticalAxis;
+    [SerializeField] private bool crouched;
+    [HideInInspector] public bool canMove = false;
 
     [Space]
-    [Header("Fuerza jump y Grabedad")]
+    [Header("Movimiento Agachado")]
 
-    [SerializeField] float gravity = -9.81f;
-    Vector3 velocity;
-    [SerializeField] float jumpForce;
-
-    [Space]
-    [Header("Deteccion de suelos")]
-
-    [SerializeField] LayerMask layerColision;
-    [SerializeField] Transform checketGround;
-    [SerializeField] float radiusGround;
-    bool isGround;
+    [SerializeField] private float standing;
+    [SerializeField] private Vector3 pivot;
+    [SerializeField] private float crouch;
+    [SerializeField] private Vector3 crouchPivot;
 
     [Space]
-    [Header("Animation")]
+    [Header("Fuerza jump y Gravedad")]
 
-    [SerializeField] Animator animator;
+    
+    private Vector3 velocity;
+    [SerializeField] private float jumpForce;
+
+    [Space]
+    [Header("Detecci�n de suelos")]
+
+    [SerializeField] private LayerMask layerColision;
+    [SerializeField] private Transform checkedGround;
+    [SerializeField] private float radiusGround;
+    [SerializeField] private bool isGround;
+    [SerializeField] private Vector3 sphereUp;
+    [SerializeField] private Vector3 sphereDown;
+
+    bool jump;
+    bool run;
 
     private void Awake()
     {
-        character = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        sphereStart = transform.GetChild(1);
     }
+
     private void Update()
     {
-        MovePlayer();
-        Jump();
-        Crouched();
-        Run();
+        if (canMove)
+        {
+            GetInputs();
+        }
     }
 
-    void MovePlayer()
+    private void FixedUpdate()
     {
-        horizantalAxis = Input.GetAxis("Horizontal");
+        if (canMove)
+        {
+            GroundDetection();
+            MovePlayer();
+            Jump();
+        }
+    }
+    public void MovePlayer()
+    {
+        float currentSpeed = run ? speedRun : (crouched ? speedCrouched : speed);
+        Vector3 direction = (transform.right * horizontalAxis) + (transform.forward * verticalAxis);
+        rb.linearVelocity = new Vector3(direction.x * currentSpeed, rb.linearVelocity.y, direction.z * currentSpeed);
+    }
+
+    void GetInputs()
+    {
+        horizontalAxis = Input.GetAxis("Horizontal");
         verticalAxis = Input.GetAxis("Vertical");
 
-        move = transform.right * horizantalAxis + transform.forward * verticalAxis;
-        character.Move(move * speed * Time.deltaTime);
-
-        if (horizantalAxis != 0 || verticalAxis != 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            //animator.SetBool("IsWalking", true);
+            run = true;
+
+            if (crouched)
+            {
+                crouched = false;
+            }   
         }
 
-        else
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            //animator.SetBool("IsWalking", false);
-        }
-    }
-
-    void Jump()
-    {
-        isGround = Physics.CheckSphere(checketGround.position, radiusGround, layerColision);
-
-        if (isGround && velocity.y < -2)
-        {
-            velocity.y = -2;
+            run = false;
         }
 
-        if (Input.GetButtonDown("Jump") && isGround)
-        {
-            velocity.y = Mathf.Sqrt(jumpForce * -2 * gravity);
-        }
-
-        velocity.y += gravity * Time.deltaTime;
-        character.Move(velocity * Time.deltaTime);
-    }
-
-    void Crouched()
-    {
         if (Input.GetKeyDown(KeyCode.C))
         {
             crouched = !crouched;
-            if (crouched == true)
-            {
-                animator.SetBool("Crouched", true);
-                character.Move(move * speedCrouched * Time.deltaTime);
-
-            }
-            else
-            {
-                animator.SetBool("Crouched", false);
-            }
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        {
+            jump = true;
+        }
     }
 
-    void Run()
+    void GroundDetection()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        isGround = Physics.CheckSphere(checkedGround.position, radiusGround, layerColision);
+    }
+
+    public void Jump()
+    {
+        if (jump)
         {
-            animator.SetBool("Crouched", false);
-            crouched = false;
-            character.Move(move * speedRun * Time.deltaTime);
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jump = false;
         }
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(checketGround.position, radiusGround);
+        Gizmos.DrawWireSphere(checkedGround.position, radiusGround);
     }
-
 }
