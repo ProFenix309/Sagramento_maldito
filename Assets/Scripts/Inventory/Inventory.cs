@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 
     public GameObject inventory;
 
-    private int allSlots, enbaledSlot;
+    private int allSlots;
 
     private GameObject[] slot;
 
@@ -34,6 +34,10 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryEnabled = !inventoryEnabled;
+            if (!inventoryEnabled)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
             inventory.SetActive(inventoryEnabled);
         }
 
