@@ -3,43 +3,30 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
-    private Transform sphereStart;
 
-    [Space]
     [Header("Movimiento")]
 
     [SerializeField] private float speed;
     [SerializeField] private float speedRun;
     [SerializeField] private float speedCrouched;
-    private Vector3 move;
     private float horizontalAxis, verticalAxis;
     [SerializeField] private bool crouched;
-    [HideInInspector] public bool canMove = false;
+    [HideInInspector] public bool canMove;
 
-    [Space]
-    [Header("Movimiento Agachado")]
+    [Space, Header("Fuerza jump y Gravedad")]
 
-    [SerializeField] private float standing;
-    [SerializeField] private Vector3 pivot;
-    [SerializeField] private float crouch;
-    [SerializeField] private Vector3 crouchPivot;
-
-    [Space]
-    [Header("Fuerza jump y Gravedad")]
-
-    
-    private Vector3 velocity;
     [SerializeField] private float jumpForce;
 
-    [Space]
-    [Header("Detecci�n de suelos")]
+    [Space, Header("Detecci�n de suelos")]
 
     [SerializeField] private LayerMask layerColision;
     [SerializeField] private Transform checkedGround;
     [SerializeField] private float radiusGround;
     [SerializeField] private bool isGround;
-    [SerializeField] private Vector3 sphereUp;
-    [SerializeField] private Vector3 sphereDown;
+
+    [Space, Header("Animator")]
+
+    [SerializeField] Animator animator;
 
     bool jump;
     bool run;
@@ -47,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        sphereStart = transform.GetChild(1);
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -86,7 +73,8 @@ public class PlayerController : MonoBehaviour
             if (crouched)
             {
                 crouched = false;
-            }   
+                animator.SetBool("Crouched", false);
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -97,6 +85,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             crouched = !crouched;
+            animator.SetBool("Crouched", crouched);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
@@ -118,6 +107,7 @@ public class PlayerController : MonoBehaviour
             jump = false;
         }
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

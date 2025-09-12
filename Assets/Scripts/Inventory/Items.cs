@@ -11,7 +11,7 @@ public class Items : MonoBehaviour
     public bool pickedUp;
 
     [HideInInspector]
-    public bool equipped; 
+    public bool equipped;
 
     [HideInInspector]
     public GameObject bulletManager;
@@ -27,7 +27,7 @@ public class Items : MonoBehaviour
 
         if (!playersBullets)
         {
-            int allBullet = bulletManager.transform.childCount; 
+            int allBullet = bulletManager.transform.childCount;
 
             for (int i = 0; i < allBullet; i++)
             {

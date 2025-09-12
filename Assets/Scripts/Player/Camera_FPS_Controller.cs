@@ -11,7 +11,7 @@ public class Camera_FPS_Controller : MonoBehaviour
     public float mouseX;
     public float mouseY;
 
-    public bool canMove = false;
+    public bool canMove;
 
     //Sencivilidad a la que se muenve el mause 
     public float sencitivily;
@@ -23,19 +23,19 @@ public class Camera_FPS_Controller : MonoBehaviour
     {
         if (canMove)
         {
-        //Detectar el movimiento del mause
-        mouseX = Input.GetAxis("Mouse X") * sencitivily * Time.deltaTime; //Time.deltatime estandariza los frimes para que
-        mouseY = Input.GetAxis("Mouse Y") * sencitivily * Time.deltaTime; //todos las gamas de PC lo ejecute de manera igual    
+            //Detectar el movimiento del mause
+            mouseX = Input.GetAxis("Mouse X") * sencitivily * Time.deltaTime; //Time.deltatime estandariza los frimes para que
+            mouseY = Input.GetAxis("Mouse Y") * sencitivily * Time.deltaTime; //todos las gamas de PC lo ejecute de manera igual    
 
-        //Toma la rotacion en Y para rotar la camara
-        player.Rotate(player.transform.up * mouseX);
+            //Toma la rotacion en Y para rotar la camara
+            player.Rotate(player.transform.up * mouseX);
 
-        //Con estas lineas podemos limitar rotacion del mause
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -50, 50);
+            //Con estas lineas podemos limitar rotacion del mause
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -50, 50);
 
-        //Se le está dando la rotacion a la camara en eje X
-        transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            //Se le está dando la rotacion a la camara en eje X
+            transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
         }
     }
 

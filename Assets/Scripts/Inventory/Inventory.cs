@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField]private bool inventoryEnabled;
+    [SerializeField] private bool inventoryEnabled;
 
     public GameObject inventory;
 
@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
-        
+
         allSlots = slotHalder.transform.childCount;
 
         slot = new GameObject[allSlots];
@@ -55,7 +55,7 @@ public class Inventory : MonoBehaviour
             inventory.SetActive(inventoryEnabled);
         }
 
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -89,7 +89,7 @@ public class Inventory : MonoBehaviour
                 slot[i].GetComponent<Slot>().UpdateSlot();
 
                 slot[i].GetComponent<Slot>().empty = false;
-            return;
+                return;
             }
         }
     }

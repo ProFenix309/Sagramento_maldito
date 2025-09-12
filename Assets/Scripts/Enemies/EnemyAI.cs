@@ -4,7 +4,6 @@ using System.Threading;
 
 public class EnemyAI : MonoBehaviour
 {
-
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
@@ -13,10 +12,8 @@ public class EnemyAI : MonoBehaviour
     [Header("Layers")]
     public LayerMask whatIsGround, whatIsPlayer, whatIsDistraction;
 
-
     Transform StartingPoint;
     float Velocity;
-
 
     [Space]
     [Header("Patroling")]
@@ -26,12 +23,10 @@ public class EnemyAI : MonoBehaviour
     public bool walkPointSet;
     public float walkPointRange;
 
-
     [Space]
     [Header("Chasing")]
     public float velocity;
     public float ChaseVelocity;
-
 
     [Space]
     [Header("Atacking")]
@@ -47,23 +42,17 @@ public class EnemyAI : MonoBehaviour
     [Header("States")]
     public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
 
-
-
-
     private void Awake()
     {
         //detects object by names on scene
-
         StartingPoint = GameObject.Find("StartingPoint").transform;
         player = GameObject.Find("Player").transform;
 
         if (GameObject.Find("Distraction"))
             Distraction = GameObject.Find("Distraction").transform;
 
-
         agent = GetComponent<NavMeshAgent>();
         velocity = agent.speed;
-
     }
 
     private void Start()
@@ -81,9 +70,7 @@ public class EnemyAI : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
         DistractionISinRange = Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
 
-
         //Enemy checks states to be in
-
         if (playerInAttackRange && playerInSightRange && !DistractionISinRange) AttackPlayer();
 
         if (randomTime <= 0.2f)
@@ -92,7 +79,6 @@ public class EnemyAI : MonoBehaviour
             if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
             if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
             randomTime = initialRandomTime;
-
         }
         else
             walkPointSet = false;
@@ -113,29 +99,21 @@ public class EnemyAI : MonoBehaviour
         //the distance between the enemy and the point
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-
         //walkpoint reached
-
         if (distanceToWalkPoint.magnitude >= 0)
             walkPointSet = true;
         else walkPointSet = false;
-
     }
     private void SearchWalkPoint()
     {
-
-
-
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
-
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
         NavMesh.SamplePosition(walkPoint, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas);
         walkPoint = hit.position;
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
-
     }
     private void ChasePlayer()
     {
@@ -144,7 +122,6 @@ public class EnemyAI : MonoBehaviour
 
         //agent moves towards player
         agent.SetDestination(player.position);
-
     }
     private void ChaseDistraction()
     {
@@ -152,50 +129,33 @@ public class EnemyAI : MonoBehaviour
         agent.SetDestination(Distraction.position);
         if (!alreadyAtacked)
         {
-
             alreadyAtacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAtacks);
-
         }
-
     }
     private void AttackPlayer()
     {
-
         //Makes sure enemy doesn´t move
         agent.SetDestination(transform.position);
-
 
         transform.LookAt(player);
 
         if (!alreadyAtacked)
         {
-
             ///Attack code here
 
             Debug.Log("is Attacking");
 
-            ///
-
-
             //sets potsition to starting one (optional)
             transform.position = StartingPoint.position;
 
-
-
             alreadyAtacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAtacks);
-
         }
-
     }
-
-
-
     private void ResetAttack()
     {
         alreadyAtacked = false;
-
     }
 
     private void OnDrawGizmosSelected()
@@ -206,12 +166,7 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, distractionRange);
-
     }
-
-
-
     //valores a modificar desde el inspector
-
     //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity,, initialRandomTime walkPointRange, crear un objetao vacio para StartingPoint (punto inicial) 
 }
