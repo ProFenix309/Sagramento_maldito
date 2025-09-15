@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
+    
 
     [Space]
     [Header("Layers")]
@@ -145,7 +146,7 @@ public class EnemyAI : MonoBehaviour
             ///Attack code here
 
             Debug.Log("is Attacking");
-
+            
             //sets potsition to starting one (optional)
             transform.position = StartingPoint.position;
 
