@@ -1,13 +1,15 @@
 using UnityEngine.AI;
 using UnityEngine;
 using System.Threading;
+using UnityEngine.Rendering;
 
-public class EnemyAI : MonoBehaviour
+public class ErranteAI : MonoBehaviour
 {
+    public bool lastChase = false;
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
-    
+
 
     [Space]
     [Header("Layers")]
@@ -26,8 +28,9 @@ public class EnemyAI : MonoBehaviour
 
     [Space]
     [Header("Chasing")]
-    [SerializeField] float velocity;
-    [SerializeField] float ChaseVelocity;
+    public float velocity;
+    public float ChaseVelocity;
+    
 
     [Space]
     [Header("Atacking")]
@@ -36,23 +39,24 @@ public class EnemyAI : MonoBehaviour
     public float AttackingTime;
     [SerializeField] float damage;
 
-    
+
+
     [Header("Ranges")]
     public float sightRange, attackRange, distractionRange;
 
-    
+
     [Header("States")]
     public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
 
     private void Awake()
     {
         //detects object by names on scene
-        
+
         StartingPoint = GameObject.Find("StartingPoint").transform;
         player = GameObject.Find("Player").transform;
 
-        if (GameObject.Find("Distraction"))
-            Distraction = GameObject.Find("Distraction").transform;
+        if (GameObject.Find("Vela").transform)
+            Distraction = GameObject.Find("Vela").transform;
 
         //gets the agent of the enemy
         agent = GetComponent<NavMeshAgent>();
@@ -68,26 +72,34 @@ public class EnemyAI : MonoBehaviour
     }
     private void Update()
     {
-        //timer to not have a seizure/epilepsy
-        randomTime -= Time.deltaTime;
-
-        //Check for layer to attack/follow
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        DistractionISinRange = Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
-
-        //Enemy checks states to be in
-        if (playerInAttackRange && playerInSightRange && !DistractionISinRange) AttackPlayer();
-
-        if (randomTime <= 0.2f)
+        if (!lastChase)
         {
-            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
-            if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
-            if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
-            randomTime = initialRandomTime;
+            //timer to not have a seizure/epilepsy
+            randomTime -= Time.deltaTime;
+
+            //Check for layer to attack/follow
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+            DistractionISinRange = Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
+
+            //Enemy checks states to be in
+            if (playerInAttackRange && playerInSightRange && !DistractionISinRange || playerInAttackRange && playerInSightRange && DistractionISinRange) AttackPlayer();
+
+            if (randomTime <= 0.2f)
+            {
+                if (playerInSightRange && !playerInAttackRange && !DistractionISinRange || playerInSightRange &&  !playerInSightRange && DistractionISinRange) ChasePlayer();
+                if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
+                if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
+                randomTime = initialRandomTime;
+            }
+            else
+                walkPointSet = false;
         }
         else
-            walkPointSet = false;
+        {
+            agent.speed = ChaseVelocity;
+            agent.SetDestination(player.position);
+        }
     }
 
     private void Patroling()
