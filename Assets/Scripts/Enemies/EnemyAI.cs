@@ -34,25 +34,30 @@ public class EnemyAI : MonoBehaviour
     public float timeBetweenAtacks;
     public bool alreadyAtacked;
     public float AttackingTime;
+    [SerializeField] float damage;
 
-    [Space]
+    
     [Header("Ranges")]
     public float sightRange, attackRange, distractionRange;
 
-    [Space]
+    
     [Header("States")]
     public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
 
     private void Awake()
     {
         //detects object by names on scene
+        
         StartingPoint = GameObject.Find("StartingPoint").transform;
         player = GameObject.Find("Player").transform;
 
         if (GameObject.Find("Distraction"))
             Distraction = GameObject.Find("Distraction").transform;
 
+        //gets the agent of the enemy
         agent = GetComponent<NavMeshAgent>();
+
+        //sets the velocity of the agent to the one from the before pressing start
         velocity = agent.speed;
     }
 
@@ -141,12 +146,19 @@ public class EnemyAI : MonoBehaviour
 
         transform.LookAt(player);
 
+
         if (!alreadyAtacked)
         {
             ///Attack code here
 
-            Debug.Log("is Attacking");
-            
+            Health health;
+
+            if (player.gameObject.TryGetComponent(out health))
+            {
+                health.RecibirDaño(damage);
+            }
+            Debug.Log("Player attacked");
+
             //sets potsition to starting one (optional)
             transform.position = StartingPoint.position;
 
@@ -169,5 +181,5 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, distractionRange);
     }
     //valores a modificar desde el inspector
-    //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity,, initialRandomTime walkPointRange, crear un objetao vacio para StartingPoint (punto inicial) 
+    //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity, initialRandomTime, walkPointRange, damage, crear un objetao vacio para StartingPoint (punto inicial) 
 }

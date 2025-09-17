@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class Health : MonoBehaviour
 {
     [Header("Configuración de Vida")]
-    public int vidaMaxima = 100;
-    private float vidaActual;
+    public int vidaMaxima;
+    [SerializeField] float vidaActual;
 
     [Header("Daño por colisión")]
     public string etiquetaEnemigo = "Enemy";
@@ -23,6 +23,9 @@ public class Health : MonoBehaviour
     {
         if (vidaActual < vidaMaxima)
         {
+            //altered state
+
+            //regeneration
             vidaActual += Time.deltaTime;
         }
         else
@@ -52,6 +55,7 @@ public class Health : MonoBehaviour
     void Morir()
     {
         Debug.Log(gameObject.name + " ha muerto.");
+
         // Puedes desactivar, destruir o reiniciar el objeto aquí:
         Scene escenaActual = SceneManager.GetActiveScene();
         SceneManager.LoadScene(escenaActual.buildIndex);
