@@ -7,11 +7,8 @@ public class Health : MonoBehaviour
     public int vidaMaxima;
     [SerializeField] float vidaActual;
 
-    [Header("Daño por colisión")]
+    [Header("Deteccion de enemigo")]
     public string etiquetaEnemigo = "Enemy";
-    public int dañoPorColision = 10;
-
-    
 
     void Start()
     {
@@ -33,13 +30,7 @@ public class Health : MonoBehaviour
             vidaActual = vidaMaxima;
         }
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag(etiquetaEnemigo))
-        {
-            RecibirDaño(dañoPorColision);
-        }
-    }
+
 
     public void RecibirDaño(float daño)
     {

@@ -27,7 +27,7 @@ public class Items : MonoBehaviour
 
         if (!playersBullets)
         {
-            int allBullet = bulletManager.transform.childCount;
+            /*int allBullet = bulletManager.transform.childCount;
 
             for (int i = 0; i < allBullet; i++)
             {
@@ -35,8 +35,8 @@ public class Items : MonoBehaviour
                 {
                     bullet = bulletManager.transform.GetChild(i).gameObject;
                 }
+        }*/
             }
-        }
     }
 
     private void Update()
