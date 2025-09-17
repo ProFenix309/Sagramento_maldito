@@ -1,8 +1,8 @@
 using UnityEngine.AI;
 using UnityEngine;
-using System.Threading;
 
-public class EnemyAI : MonoBehaviour
+
+public class AhogadoAI : MonoBehaviour
 {
     NavMeshAgent agent;
     Transform player;
@@ -34,7 +34,7 @@ public class EnemyAI : MonoBehaviour
     public float timeBetweenAtacks;
     public bool alreadyAtacked;
     public float AttackingTime;
-    [SerializeField] float daño;
+    [SerializeField] float damage;
 
     
     [Header("Ranges")]
@@ -155,7 +155,7 @@ public class EnemyAI : MonoBehaviour
 
             if (player.gameObject.TryGetComponent(out health))
             {
-                health.RecibirDaño(daño);
+                health.RecibirDaño(damage);
             }
             Debug.Log("Player attacked");
 
