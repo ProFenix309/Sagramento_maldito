@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float radiusGround;
     [SerializeField] private bool isGround;
 
+
+    [SerializeField] private float interactableRadius;
+
     [Space, Header("Animator")]
 
     [SerializeField] Animator animator;
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        canMove = true;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
@@ -54,6 +58,27 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
     }
+
+    public void Interact()
+    {
+        Collider[] interactables = Physics.OverlapSphere(transform.position, interactableRadius);
+
+        foreach (var item in interactables)
+        {
+            if (item.TryGetComponent(out Interactable interactable))
+            {
+                if (item.TryGetComponent(out ItemRequierement requierement))
+                {
+
+                }
+                else
+                {
+                    interactable?.Interact();
+                }
+            }
+        }
+    }
+
     public void MovePlayer()
     {
         float currentSpeed = run ? speedRun : (crouched ? speedCrouched : speed);
@@ -112,5 +137,7 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(checkedGround.position, radiusGround);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, interactableRadius);
     }
 }

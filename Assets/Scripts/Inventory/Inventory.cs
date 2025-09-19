@@ -1,38 +1,28 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private bool inventoryEnabled;
+    public Dictionary<int, Items> Items { get => _items; }
+    Dictionary<int, Items> _items = new();
+
+    public Action InventoryUpdated;
+
+    [SerializeField] private bool inventoryEnabled = false;
 
     public GameObject inventory;
-
-    private int allSlots;
-
-    private GameObject[] slot;
 
     public GameObject slotHalder;
 
     PlayerController playerController;
     Camera_FPS_Controller cameraController;
 
+
     void Start()
     {
         playerController = GetComponent<PlayerController>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
-
-        allSlots = slotHalder.transform.childCount;
-
-        slot = new GameObject[allSlots];
-
-        for (int i = 0; i < allSlots; i++)
-        {
-            slot[i] = slotHalder.transform.GetChild(i).gameObject;
-
-            if (slot[i].GetComponent<Slot>().item == null)
-            {
-                slot[i].GetComponent<Slot>().empty = true;
-            }
-        }
     }
 
     void Update()
@@ -54,43 +44,22 @@ public class Inventory : MonoBehaviour
             }
             inventory.SetActive(inventoryEnabled);
         }
-
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Item")
+        if (other.TryGetComponent(out Items item))
         {
-            GameObject itemPickedUp = other.gameObject;
-
-            Items items = itemPickedUp.GetComponent<Items>();
-
-            AddItem(itemPickedUp, items.ID, items.type, items.description, items.icon);
+            AddItem(item);
+            item.gameObject.SetActive(false);
         }
     }
-    public void AddItem(GameObject itemObject, int itemID, string itemType, string itemDescription, Sprite itemIcon)
+    public void AddItem(Items item)
     {
-        for (int i = 0; i < allSlots; i++)
+        if (!_items.ContainsKey(item.ID))
         {
-            if (slot[i].GetComponent<Slot>().empty)
-            {
-                itemObject.GetComponent<Items>().pickedUp = true;
-
-                slot[i].GetComponent<Slot>().item = itemObject;
-                slot[i].GetComponent<Slot>().ID = itemID;
-                slot[i].GetComponent<Slot>().type = itemType;
-                slot[i].GetComponent<Slot>().description = itemDescription;
-                slot[i].GetComponent<Slot>().icon = itemIcon;
-
-                itemObject.transform.parent = slot[i].transform;
-                itemObject.SetActive(false);
-
-                slot[i].GetComponent<Slot>().UpdateSlot();
-
-                slot[i].GetComponent<Slot>().empty = false;
-                return;
-            }
+            _items.Add(item.ID, item);
+            InventoryUpdated?.Invoke();
         }
     }
 }

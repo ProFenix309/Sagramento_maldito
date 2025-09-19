@@ -18,7 +18,14 @@ public class Camera_FPS_Controller : MonoBehaviour
 
     public float xRotation;
 
-    // Update is called once per frame
+    
+    private void Start()
+    {
+        canMove = true;
+        //Es para ocultar el cursor en la pantalla
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void Update()
     {
         if (canMove)
@@ -39,9 +46,5 @@ public class Camera_FPS_Controller : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        //Es para ocultar el cursor en la pantalla
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+ 
 }

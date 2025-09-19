@@ -1,36 +1,33 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject item;
-    public int ID;
-    public string type;
-    public string description;
+    public Action<Items> SlotClicked;
+    Items currentItem;
 
-    public bool empty;
-    public Sprite icon;
+    public Image icon;
 
-    public Transform slotIconGameObject;
-
-    private void Start()
+    public void UpdateSlot(Items item)
     {
-        slotIconGameObject = transform.GetChild(0);
-    }
+        currentItem = item;
 
-    public void UpdateSlot()
-    {
-        slotIconGameObject.GetComponent<Image>().sprite = icon;
+        if (item != null)
+        {
+            icon.sprite = item.icon;
+        }
+        else
+        {
+            icon.sprite = null;
+        }
     }
-
-    public void UseItem()
-    {
-        item.GetComponent<Items>().ItemUsage();
-    }
-
     public void OnPointerClick(PointerEventData pointer)
     {
-        UseItem();
+        if (currentItem != null)
+        {
+            SlotClicked?.Invoke(currentItem);
+        }
     }
 }
