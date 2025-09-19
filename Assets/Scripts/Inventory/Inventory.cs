@@ -62,4 +62,14 @@ public class Inventory : MonoBehaviour
             InventoryUpdated?.Invoke();
         }
     }
+    public bool TrySpendItem(int id)
+    {
+        if (_items.ContainsKey(id))
+        {
+            _items.Remove(id);
+            InventoryUpdated?.Invoke();
+            return true;
+        }
+        return false;
+    }
 }

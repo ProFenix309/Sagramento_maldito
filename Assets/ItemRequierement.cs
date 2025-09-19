@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface ItemRequierement
 {
-    string ItemID { get; }
+   public int ItemID { get; }
 }
