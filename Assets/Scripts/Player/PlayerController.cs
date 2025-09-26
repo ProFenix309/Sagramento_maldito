@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -25,7 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isGround;
 
 
-    [SerializeField] private float interactableRadius;
+    [SerializeField] private float maxInteractDistance;
+    [SerializeField] private Transform rayPivot;
+    [SerializeField] private LayerMask layerInteract;
 
     [Space, Header("Animator")]
 
@@ -33,6 +36,13 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] Inventory inventory;
+
+    [SerializeField] GameObject interact;
+    [SerializeField] GameObject grab;
+
+    GameObject interactableObject;
+    GameObject grabbableObject;
+
 
     bool jump;
     bool run;
@@ -42,6 +52,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+
     }
 
     private void Update()
@@ -56,33 +67,43 @@ public class PlayerController : MonoBehaviour
     {
         if (canMove)
         {
+            ChectkInteraction();
             GroundDetection();
             MovePlayer();
             Jump();
         }
     }
 
-    public void Interact()
+    public void ChectkInteraction()
     {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, interactableRadius);
-
-        foreach (var item in interactables)
+        if (Physics.Raycast(rayPivot.position, rayPivot.forward, out RaycastHit hit, maxInteractDistance, layerInteract, QueryTriggerInteraction.Collide))
         {
-            if (item.TryGetComponent(out Interactable interactable))
+            if (hit.collider.TryGetComponent(out Interactable interact))
             {
-                if (item.TryGetComponent(out ItemRequierement requierement))
-                {
-                    if (inventory.TrySpendItem(requierement.ItemID))
-                    {
-                        interactable?.Interact();
-                    }
-                }
-                else
-                {
-                    interactable?.Interact();
-                }
+                interactableObject = hit.collider.gameObject;
+            }
+            else
+            {
+                interactableObject = null;
+            }
+
+            if (hit.collider.CompareTag("GrabingObject"))
+            {
+                grabbableObject= hit.collider.gameObject;
+            }
+            else
+            {
+                grabbableObject = null;
             }
         }
+        else
+        {
+            interactableObject = null;
+            grabbableObject = null;
+        }
+
+        grab.SetActive(grabbableObject != null ? true : false);
+        interact.SetActive(interactableObject != null ? true : false);
     }
 
     public void MovePlayer()
@@ -124,9 +145,27 @@ public class PlayerController : MonoBehaviour
             jump = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.E) && interactableObject)
         {
             Interact();
+        }
+    }
+
+    public void Interact()
+    {
+        if (interactableObject.TryGetComponent(out Interactable interactableItem))
+        {
+            if (interactableObject.TryGetComponent(out ItemRequierement requierement))
+            {
+                if (inventory.TrySpendItem(requierement.ItemID))
+                {
+                    interactableItem?.Interact();
+                }
+            }
+            else
+            {
+                interactableItem?.Interact();
+            }
         }
     }
 
@@ -149,6 +188,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(checkedGround.position, radiusGround);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, interactableRadius);
+        Gizmos.DrawLine(rayPivot.position, rayPivot.position + (rayPivot.forward * maxInteractDistance));
     }
 }
