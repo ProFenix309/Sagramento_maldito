@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, Interactable, ItemRequierement
 {
-    public string ItemID { get => _itemID; }
-    private string _itemID;
+    public int ItemID { get => _itemID; }
+    [SerializeField] private int _itemID;
 
     public void Interact()
     {

@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Animator animator;
 
+
+    [SerializeField] Inventory inventory;
+
     bool jump;
     bool run;
 
@@ -69,7 +72,10 @@ public class PlayerController : MonoBehaviour
             {
                 if (item.TryGetComponent(out ItemRequierement requierement))
                 {
-
+                    if (inventory.TrySpendItem(requierement.ItemID))
+                    {
+                        interactable?.Interact();
+                    }
                 }
                 else
                 {
@@ -116,6 +122,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             jump = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Interact();
         }
     }
 
