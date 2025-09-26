@@ -1,12 +1,31 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Door : MonoBehaviour, Interactable, ItemRequierement
+public class Door : MonoBehaviour, Interactable
 {
-    public int ItemID { get => _itemID; }
-    [SerializeField] private int _itemID;
-
+    [SerializeField] Transform door, open, close, target;
+    [SerializeField] float speed;
+    private void Start()
+    {
+        open.SetParent(null);
+        close.SetParent(null);
+    }
     public void Interact()
     {
-        Debug.Log("Usando puerta");
+        if (target == open)
+        {
+            target = close;
+        }
+        else
+        {
+            target = open;
+        }
+    }
+    private void Update()
+    {
+        if (transform.rotation != target.rotation)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, speed * Time.deltaTime);
+        }
     }
 }
