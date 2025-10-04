@@ -123,6 +123,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void ChasePlayer()
     {
+        randomTime = 5.5f;
         //increases agent velocity
         agent.speed = ChaseVelocity;
 

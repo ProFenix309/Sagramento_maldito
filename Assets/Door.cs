@@ -12,14 +12,16 @@ public class Door : MonoBehaviour, Interactable
     }
     public void Interact()
     {
-        if (target == open)
-        {
-            target = close;
-        }
-        else
-        {
-            target = open;
-        }
+        
+            if (target == open)
+            {
+                target = close;
+            }
+            else
+            {
+                target = open;
+            }
+       
     }
     private void Update()
     {

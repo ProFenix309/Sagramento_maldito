@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [Space, Header("Animator")]
 
     [SerializeField] Animator animator;
+    [SerializeField] Animator meshAnimator;
 
 
     [SerializeField] Inventory inventory;
@@ -45,13 +46,14 @@ public class PlayerController : MonoBehaviour
 
 
     bool jump;
-    bool run;
+    public bool run;
 
     private void Awake()
     {
         canMove = true;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        meshAnimator = GameObject.Find("Lucy").GetComponent<Animator>();
 
     }
 
@@ -110,7 +112,16 @@ public class PlayerController : MonoBehaviour
     {
         float currentSpeed = run ? speedRun : (crouched ? speedCrouched : speed);
         Vector3 direction = (transform.right * horizontalAxis) + (transform.forward * verticalAxis);
+        
         rb.linearVelocity = new Vector3(direction.x * currentSpeed, rb.linearVelocity.y, direction.z * currentSpeed);
+        if (rb.maxLinearVelocity < 0.2f)
+        {
+            meshAnimator.SetBool("Walking", false);
+        }
+        else
+        {
+            meshAnimator.SetBool("Walking", true);
+        }
     }
 
     void GetInputs()
@@ -118,7 +129,7 @@ public class PlayerController : MonoBehaviour
         horizontalAxis = Input.GetAxis("Horizontal");
         verticalAxis = Input.GetAxis("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && isGround)
         {
             run = true;
 
@@ -126,6 +137,7 @@ public class PlayerController : MonoBehaviour
             {
                 crouched = false;
                 animator.SetBool("Crouched", false);
+                meshAnimator.SetBool("Crouched", false);
             }
         }
 
@@ -134,18 +146,19 @@ public class PlayerController : MonoBehaviour
             run = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && !Input.GetKey(KeyCode.LeftShift) && isGround)
         {
             crouched = !crouched;
             animator.SetBool("Crouched", crouched);
+            meshAnimator.SetBool("Crouched", crouched);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround && !crouched)
         {
             jump = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && interactableObject)
+        if (Input.GetKeyDown(KeyCode.E) && interactableObject && isGround)
         {
             Interact();
         }

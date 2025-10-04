@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +11,18 @@ public class Health : MonoBehaviour
     [Header("Deteccion de enemigo")]
     public string etiquetaEnemigo = "Enemy";
 
+    Animator animatior;
+
+    private void Awake()
+    {
+        animatior = GameObject.Find("Altered State").GetComponent<Animator>();
+    }
     void Start()
     {
+        
         vidaActual = vidaMaxima;
         Debug.Log("Vida inicial: " + vidaActual);
+        
     }
 
     private void Update()
@@ -23,7 +32,7 @@ public class Health : MonoBehaviour
             //altered state
 
             //regeneration
-            vidaActual += Time.deltaTime;
+            vidaActual += Time.deltaTime *1.4f;
         }
         else
         {
@@ -41,6 +50,7 @@ public class Health : MonoBehaviour
         {
             Morir();
         }
+        StartEffect();
     }
 
     void Morir()
@@ -50,5 +60,18 @@ public class Health : MonoBehaviour
         // Puedes desactivar, destruir o reiniciar el objeto aquí:
         Scene escenaActual = SceneManager.GetActiveScene();
         SceneManager.LoadScene(escenaActual.buildIndex);
+
+        }
+
+    public void StartEffect()
+    {
+
+        animatior.SetBool("StartedEffect", true);
+        
+
+
     }
+
+
+
 }
