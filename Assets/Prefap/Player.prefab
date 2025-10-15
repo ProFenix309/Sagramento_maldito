@@ -425,12 +425,12 @@ MonoBehaviour:
   layerInteract:
     serializedVersion: 2
     m_Bits: 4294967295
-  animator: {fileID: 0}
-  meshAnimator: {fileID: 0}
-  inventory: {fileID: 0}
-  interact: {fileID: 0}
-  grab: {fileID: 0}
-  run: 0
+  animator: {fileID: 1585725011726092319}
+  meshAnimator: {fileID: 684009611914039475}
+  inventory: {fileID: 7797154515480307037}
+  interact: {fileID: 6327659479340697181}
+  grab: {fileID: 8962202859394138281}
+  run: 1
 --- !u!114 &7797154515480307037
 MonoBehaviour:
   m_ObjectHideFlags: 0
