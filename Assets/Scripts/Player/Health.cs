@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IDataPersistence
 {
     [Header("Configuración de Vida")]
     public int vidaMaxima;
@@ -24,6 +24,15 @@ public class Health : MonoBehaviour
         Debug.Log("Vida inicial: " + vidaActual);
         
     }
+    public void LoadData(GameData data)
+    {
+        this.vidaActual = data.vidaActual;
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.vidaActual = this.vidaActual;
+    }
+
 
     private void Update()
     {
