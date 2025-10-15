@@ -12,7 +12,6 @@ public class Door : MonoBehaviour, Interactable
     }
     public void Interact()
     {
-        
             if (target == open)
             {
                 target = close;
@@ -21,7 +20,6 @@ public class Door : MonoBehaviour, Interactable
             {
                 target = open;
             }
-       
     }
     private void Update()
     {
