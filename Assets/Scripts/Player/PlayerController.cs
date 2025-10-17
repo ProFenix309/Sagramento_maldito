@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Inventory inventory;
 
+    [Space,Header("Paneles del canvas")]
     [SerializeField] GameObject interact;
     [SerializeField] GameObject grab;
 
@@ -89,7 +90,7 @@ public class PlayerController : MonoBehaviour
                 interactableObject = null;
             }
 
-            if (hit.collider.CompareTag("GrabingObject"))
+            if (hit.collider.CompareTag("GrabbingObject"))
             {
                 grabbableObject= hit.collider.gameObject;
             }
