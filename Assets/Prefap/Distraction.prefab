@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2512525357760119127}
   m_Layer: 8
   m_Name: Distraction
-  m_TagString: Throwable
+  m_TagString: GrabingObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4283650177916301685}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bec96d0e169c1dd4f8eae9c9e2ac99f5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
