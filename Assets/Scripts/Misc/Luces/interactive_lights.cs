@@ -1,30 +1,23 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-
-public class interactive_lights : MonoBehaviour, Interactable
+public class LightSwitch : MonoBehaviour, Interactable
 {
-    public Light Light;
-    public float lightRange;
+    private Light lightComponent;
 
-    public float onLight;
-    public float offLight;
-
-    private void Start()
+    private void Awake()
     {
-        Light = GetComponent<Light>();
+        lightComponent = GetComponent<Light>();
+        if (lightComponent == null)
+        {
+            lightComponent = GetComponentInChildren<Light>(); 
+        }
     }
+
     public void Interact()
     {
-        if (Light.intensity == onLight)
+        if (lightComponent != null)
         {
-            Light.intensity = offLight;
-        }
-        else
-        {
-            Light.intensity = onLight;
+            lightComponent.enabled = !lightComponent.enabled;
         }
     }
-
-  
 }

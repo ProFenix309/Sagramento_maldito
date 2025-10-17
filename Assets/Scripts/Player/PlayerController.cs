@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float radiusGround;
     [SerializeField] private bool isGround;
 
-
+    [Space,Header("Deteccion del Raycast")]
     [SerializeField] private float maxInteractDistance;
     [SerializeField] private Transform rayPivot;
     [SerializeField] private LayerMask layerInteract;
