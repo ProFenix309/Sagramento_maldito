@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour 
 {
     public Dictionary<int, Items> Items { get => _items; }
     Dictionary<int, Items> _items = new();

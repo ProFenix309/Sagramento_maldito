@@ -38,7 +38,7 @@ public class MenuControlscript : MonoBehaviour
         panelConfiguracion.SetActive(true);
         panelCreditos.SetActive(false);
 
-       
+
     }
 
 
@@ -52,7 +52,19 @@ public class MenuControlscript : MonoBehaviour
     public void Salir()
     {
         Application.Quit();
-        Debug.Log("Salir del juego");
+    }
+
+    public void OnNewGameClicked()
+    {
+        DataPersistenceManager.instance.NewGame();
+    }
+    public void OnLoadGameClicked()
+    {
+        DataPersistenceManager.instance.LoadGame();
+    }
+    public void OnSaveGameClicked()
+    {
+        DataPersistenceManager.instance.SaveGame();
     }
 
 }
