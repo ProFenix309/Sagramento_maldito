@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuControlscript : MonoBehaviour
 {
-
     public GameObject panelMenuPrincipal;
     public GameObject panelConfiguracion;
     public GameObject subpanelSonido;
@@ -60,11 +59,11 @@ public class MenuControlscript : MonoBehaviour
     }
     public void OnLoadGameClicked()
     {
-        DataPersistenceManager.instance.LoadGame();
+        //DataPersistenceManager.instance.LoadGame();
     }
     public void OnSaveGameClicked()
     {
-        DataPersistenceManager.instance.SaveGame();
+        //DataPersistenceManager.instance.SaveGame();
     }
 
 }

@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour, IDataPersistence
+public class Health : MonoBehaviour/*, IDataPersistence*/
 {
     [Header("Configuración de Vida")]
     public int vidaMaxima;
@@ -16,37 +16,41 @@ public class Health : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         animatior = GameObject.Find("Altered State").GetComponent<Animator>();
+        vidaActual = vidaMaxima;
+        GameEvents.PlayerLoaded?.Invoke(new PlayerData(vidaMaxima));
     }
     void Start()
     {
-        
-        vidaActual = vidaMaxima;
+
+        // vidaActual = vidaMaxima;
         Debug.Log("Vida inicial: " + vidaActual);
-        
+
     }
-    public void LoadData(GameData data)
-    {
-        this.vidaActual = data.vidaActual;
-    }
-    public void SaveData(ref GameData data)
-    {
-        data.vidaActual = this.vidaActual;
-    }
+
+    ////Data
+    //public void LoadData(GameData data)
+    //{
+    //    this.vidaActual = data.vidaActual;
+    //}
+    //public void SaveData(ref GameData data)
+    //{
+    //    data.vidaActual = this.vidaActual;
+    //}
 
 
     private void Update()
     {
-        if (vidaActual < vidaMaxima)
-        {
-            //altered state
+        //if (vidaActual < vidaMaxima)
+        //{
+        //    //altered state
 
-            //regeneration
-            vidaActual += Time.deltaTime *1.4f;
-        }
-        else
-        {
-            vidaActual = vidaMaxima;
-        }
+        //    //regeneration
+        //    vidaActual += Time.deltaTime * 1.4f;
+        //}
+        //else
+        //{
+        //    vidaActual = vidaMaxima;
+        //}
     }
 
 
@@ -70,17 +74,23 @@ public class Health : MonoBehaviour, IDataPersistence
         Scene escenaActual = SceneManager.GetActiveScene();
         SceneManager.LoadScene(escenaActual.buildIndex);
 
-        }
+    }
 
     public void StartEffect()
     {
-
         animatior.SetBool("StartedEffect", true);
-        
-
-
     }
 
-
-
+    private void OnEnable()
+    {
+        GameEvents.GameDataLoaded += LoadData;
+    }
+    private void OnDisable()
+    {
+        GameEvents.GameDataLoaded -= LoadData;
+    }
+    public void LoadData(GameData data)
+    {
+        vidaActual = data.SavedPlayerData.VidaActual;
+    }
 }

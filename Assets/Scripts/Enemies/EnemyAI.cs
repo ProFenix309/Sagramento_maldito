@@ -2,12 +2,14 @@ using UnityEngine.AI;
 using UnityEngine;
 using System.Threading;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] EnemyData enemyData;
+
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
-    
+
 
     [Space]
     [Header("Layers")]
@@ -36,18 +38,18 @@ public class EnemyAI : MonoBehaviour
     public float AttackingTime;
     [SerializeField] float daño;
 
-    
+
     [Header("Ranges")]
     public float sightRange, attackRange, distractionRange;
 
-    
+
     [Header("States")]
     public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
 
     private void Awake()
     {
         //detects object by names on scene
-        
+
         StartingPoint = GameObject.Find("StartingPoint").transform;
         player = GameObject.Find("Player").transform;
 
@@ -59,6 +61,8 @@ public class EnemyAI : MonoBehaviour
 
         //sets the velocity of the agent to the one from the before pressing start
         velocity = agent.speed;
+
+        GameEvents.EnemyLoaded?.Invoke(enemyData);
     }
 
     private void Start()
@@ -180,6 +184,19 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, distractionRange);
+    }
+    private void OnEnable()
+    {
+        GameEvents.GameDataLoaded += LoadData;
+    }
+    private void OnDisable()
+    {
+        GameEvents.GameDataLoaded -= LoadData;
+    }
+    public void LoadData(GameData data)
+    {
+        EnemyData enemy = data.GetEnemyDataById(enemyData.Id);
+        gameObject.SetActive(enemy.Active);
     }
     //valores a modificar desde el inspector
     //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity, initialRandomTime, walkPointRange, damage, crear un objetao vacio para StartingPoint (punto inicial) 

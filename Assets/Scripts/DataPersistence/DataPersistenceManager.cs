@@ -1,61 +1,79 @@
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using System.Linq;
+using System.IO;
 
+[DefaultExecutionOrder(-10)]
 public class DataPersistenceManager : MonoBehaviour
 {
-    private GameData gameData;
-    private List<IDataPersistence> dataPersistenceObjects;
-public static DataPersistenceManager instance { get; private set; }
+    string path;
+    [SerializeField] private GameData gameData = new();
+    public static DataPersistenceManager instance { get; private set; }
 
+    private void OnEnable()
+    {
+        GameEvents.EnemyLoaded += gameData.AddEnemyData;
+        GameEvents.PlayerLoaded += gameData.SetPlayerData;
+    }
+    private void OnDisable()
+    {
+        GameEvents.EnemyLoaded -= gameData.AddEnemyData;
+        GameEvents.PlayerLoaded -= gameData.SetPlayerData;
+    }
     private void Awake()
     {
-        if (instance != null) 
+        if (instance != null)
         {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene");
-        } 
+            Debug.LogError("Found more than one Data Persistence Manager in the scene.");
+        }
         instance = this;
+        path = Application.persistentDataPath + "/GameData.txt";
+        Debug.Log(path);
     }
+
     private void Start()
     {
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        LoadGame();
+        CheckGameData();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SaveGameData();
+        }
     }
     public void NewGame()
     {
-        this.gameData = new GameData();
+        gameData = new GameData();
+        SaveGameData();
     }
-    public void LoadGame()
+    public void CheckGameData()
     {
-        //load any saved data from a file using the data handler
-        //if no data can be loaded, initialize to a new game
-        if(this.gameData == null)
+        if (!File.Exists(path))
         {
-            Debug.Log("No data was found, initializing data to default.");
-            NewGame();
+            StreamWriter file = File.CreateText(path);
+            file.Close();
         }
-        // push the loaded data to all other scripts that need it
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+        else
         {
-            dataPersistenceObj.LoadData(gameData);
+            LoadGameData();
         }
     }
-    public void SaveGame()
+    public void LoadGameData()
     {
-        // pass the data to other scripts so they can update it 
+        string json = File.ReadAllText(path);
+        gameData = JsonUtility.FromJson<GameData>(json);
+        GameEvents.GameDataLoaded?.Invoke(gameData);
+    }
 
-        // save that data to a file using the data handler
+    public void SaveGameData()
+    {
+        string json = JsonUtility.ToJson(gameData);
+        File.WriteAllText(path, json);
     }
     private void OnApplicationQuit()
     {
-        SaveGame();
+        SaveGameData();
     }
-
-    private List<IDataPersistence> FindAllDataPersistenceObjects()
-    {
-        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsByType<MonoBehaviour>().OfType<IDataPersistence>();
-        return new List<IDataPersistence>(dataPersistenceObjects);
-    }
-
 }

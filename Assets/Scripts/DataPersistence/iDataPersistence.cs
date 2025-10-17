@@ -3,7 +3,6 @@ using UnityEngine;
 public interface IDataPersistence
 {
     void LoadData(GameData data);
-    void SaveData(ref GameData data);
 }
 
 //for saving data in scripts you have to do this:
