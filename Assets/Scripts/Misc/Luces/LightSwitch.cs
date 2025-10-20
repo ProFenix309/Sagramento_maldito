@@ -1,10 +1,8 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class LightSwitch : MonoBehaviour, Interactable 
 {
-    public
-        Light luz;
+    private Light luz;
     private bool encendida = false;
 
     private void Awake()

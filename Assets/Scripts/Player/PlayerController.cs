@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float radiusGround;
     [SerializeField] private bool isGround;
 
-    [Space,Header("Deteccion del Raycast")]
+    [Space, Header("Deteccion del Raycast")]
     [SerializeField] private float maxInteractDistance;
     [SerializeField] private Transform rayPivot;
     [SerializeField] private LayerMask layerInteract;
@@ -38,12 +38,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Inventory inventory;
 
-    [Space,Header("Paneles del canvas")]
+    [Space, Header("Paneles del canvas")]
     [SerializeField] GameObject interact;
     [SerializeField] GameObject grab;
 
     GameObject interactableObject;
     GameObject grabbableObject;
+
+    private Health health;
 
 
     bool jump;
@@ -55,12 +57,14 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         meshAnimator = GameObject.Find("Lucy").GetComponent<Animator>();
-
+        health = GetComponent<Health>();
     }
 
     private void Update()
     {
-        if (canMove)
+        if (health.vidaMaxima == 0) return;
+
+        else if (canMove)
         {
             GetInputs();
         }
@@ -92,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider.CompareTag("GrabbingObject"))
             {
-                grabbableObject= hit.collider.gameObject;
+                grabbableObject = hit.collider.gameObject;
             }
             else
             {
@@ -113,7 +117,7 @@ public class PlayerController : MonoBehaviour
     {
         float currentSpeed = run ? speedRun : (crouched ? speedCrouched : speed);
         Vector3 direction = (transform.right * horizontalAxis) + (transform.forward * verticalAxis);
-        
+
         rb.linearVelocity = new Vector3(direction.x * currentSpeed, rb.linearVelocity.y, direction.z * currentSpeed);
         if (rb.maxLinearVelocity < 0.2f)
         {

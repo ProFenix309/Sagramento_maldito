@@ -27,6 +27,13 @@ public class Health : MonoBehaviour/*, IDataPersistence*/
 
     }
 
+    void OnLifeChanged (float vidaActual, float vidaAnterior) 
+    {
+
+
+
+    }
+
   
 
 
