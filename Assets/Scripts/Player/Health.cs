@@ -22,35 +22,27 @@ public class Health : MonoBehaviour/*, IDataPersistence*/
     void Start()
     {
 
-        // vidaActual = vidaMaxima;
+        vidaActual = vidaMaxima;
         Debug.Log("Vida inicial: " + vidaActual);
 
     }
 
-    ////Data
-    //public void LoadData(GameData data)
-    //{
-    //    this.vidaActual = data.vidaActual;
-    //}
-    //public void SaveData(ref GameData data)
-    //{
-    //    data.vidaActual = this.vidaActual;
-    //}
+  
 
 
     private void Update()
     {
-        //if (vidaActual < vidaMaxima)
-        //{
-        //    //altered state
+        if (vidaActual < vidaMaxima)
+        {
+            //altered state
 
-        //    //regeneration
-        //    vidaActual += Time.deltaTime * 1.4f;
-        //}
-        //else
-        //{
-        //    vidaActual = vidaMaxima;
-        //}
+            //regeneration
+          vidaActual += Time.deltaTime * 1.4f;
+        }
+        else
+        {
+            vidaActual = vidaMaxima;
+        }
     }
 
 
