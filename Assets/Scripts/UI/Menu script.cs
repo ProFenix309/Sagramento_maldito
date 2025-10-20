@@ -57,13 +57,6 @@ public class MenuControlscript : MonoBehaviour
     {
         DataPersistenceManager.instance.NewGame();
     }
-    public void OnLoadGameClicked()
-    {
-        //DataPersistenceManager.instance.LoadGame();
-    }
-    public void OnSaveGameClicked()
-    {
-        //DataPersistenceManager.instance.SaveGame();
-    }
+
 
 }
