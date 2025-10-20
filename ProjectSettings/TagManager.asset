@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - GrabingObject
   - Throwable
+  - GrabbingObject
   layers:
   - Default
   - TransparentFX

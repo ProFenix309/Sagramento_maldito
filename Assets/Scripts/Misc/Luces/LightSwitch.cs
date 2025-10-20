@@ -1,24 +1,28 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-public class LightSwitch : MonoBehaviour
+public class LightSwitch : MonoBehaviour, Interactable 
 {
-    [SerializeField] private Light targetLight;
+    public
+        Light luz;
+    private bool encendida = false;
 
     private void Awake()
     {
-        if (targetLight == null)
-            targetLight = GetComponentInChildren<Light>();
+        luz = GetComponent<Light>();
+        if (luz == null)
+        {
+            Debug.LogWarning("No se encontró un componente Light en este objeto interactuable.");
+        }
     }
 
-    public void ToggleLight()
+    public  void Interact()
     {
-        if (targetLight != null)
-        {
-            targetLight.enabled = !targetLight.enabled;
-        }
-        else
-        {
-            Debug.LogWarning("LightSwitch: No se encontró ninguna luz.");
-        }
+        if (luz == null) return;
+
+        encendida = !encendida;
+        luz.enabled = encendida;
+
+        Debug.Log($"Luz {(encendida ? "encendida" : "apagada")}");
     }
 }
