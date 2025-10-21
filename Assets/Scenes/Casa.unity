@@ -2742,8 +2742,12 @@ PrefabInstance:
       value: valbula (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d5ef8be7f568b774397fb40a3e60f04b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d5ef8be7f568b774397fb40a3e60f04b, type: 3}
       propertyPath: m_TagString
-      value: Item
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3016,9 +3020,9 @@ GameObject:
   - component: {fileID: 1253564773}
   - component: {fileID: 1253564775}
   - component: {fileID: 1253564774}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bottle
-  m_TagString: GrabingObject
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3032,7 +3036,7 @@ Transform:
   m_GameObject: {fileID: 1253564772}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000074505806, y: -0.000000014901161, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7123814, y: 0.1451649, z: -1.5786965}
+  m_LocalPosition: {x: -1.7123814, y: 1.145165, z: -1.5786965}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3061,7 +3065,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -3457,9 +3461,9 @@ GameObject:
   - component: {fileID: 1492785657}
   - component: {fileID: 1492785656}
   - component: {fileID: 1492785655}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Valve
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3504,7 +3508,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3523,7 +3527,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -3538,7 +3542,7 @@ Transform:
   m_GameObject: {fileID: 1492785654}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.49999997, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: -1.8920271, y: 0.14027263, z: -4.298476}
+  m_LocalPosition: {x: -1.8920271, y: 1.1402726, z: -4.298476}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3844,6 +3848,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_Size.z
+      value: 1.8998566
+      objectReference: {fileID: 0}
+    - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_Center.x
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_Center.y
+      value: 0.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_Center.z
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708424950865336249, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: objectName
+      value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 5091505287543067493, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5091505287543067493, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 5091505287543067493, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.04
+      objectReference: {fileID: 0}
     - target: {fileID: 7106673507547191727, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: grab
       value: 
@@ -3852,6 +3888,14 @@ PrefabInstance:
       propertyPath: interact
       value: 
       objectReference: {fileID: 1360193542}
+    - target: {fileID: 7106673507547191727, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: maxInteractDistance
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106673507547191727, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: layerInteract.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 7797154515480307037, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: inventory
       value: 
@@ -3860,6 +3904,10 @@ PrefabInstance:
       propertyPath: slotHalder
       value: 
       objectReference: {fileID: 336784051}
+    - target: {fileID: 7797154515480307037, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: inventoryEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7894873773746425047, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -3902,6 +3950,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8078212662175657501, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8078212662175657501, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

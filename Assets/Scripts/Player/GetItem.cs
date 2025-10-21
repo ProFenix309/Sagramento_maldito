@@ -6,6 +6,7 @@ public class GetItem : MonoBehaviour
     public Camera playerCamera; 
     public float launchForce = 500f;
     public string objectName;
+    public GameObject Item;
 
     private GameObject pikedObject = null;
     private bool isHolding = false;
@@ -20,7 +21,7 @@ public class GetItem : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag(objectName) && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.CompareTag(objectName) && Input.GetKeyDown(KeyCode.E) && other.gameObject.GetComponent<Items>()==null)
         {
             isHolding = !isHolding;
             if (isHolding)
@@ -32,6 +33,14 @@ public class GetItem : MonoBehaviour
                 SoltarObjeto();
                 pikedObject = null;
             }
+        }
+        else if (other.gameObject.CompareTag(objectName) && Input.GetKeyDown(KeyCode.E) && other.gameObject.GetComponent<Items>() == null)
+        {
+            Item=other.gameObject;
+        }
+        else
+        {
+            Item = null;
         }
     }
 

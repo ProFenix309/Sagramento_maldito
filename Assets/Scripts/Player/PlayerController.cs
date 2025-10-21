@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -94,7 +93,7 @@ public class PlayerController : MonoBehaviour
                 interactableObject = null;
             }
 
-            if (hit.collider.CompareTag("GrabbingObject"))
+            if (hit.collider.CompareTag("Item"))
             {
                 grabbableObject = hit.collider.gameObject;
             }

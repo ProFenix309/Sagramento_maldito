@@ -18,6 +18,8 @@ public class Inventory : MonoBehaviour
     PlayerController playerController;
     Camera_FPS_Controller cameraController;
 
+    Items item;
+
 
     void Start()
     {
@@ -27,6 +29,7 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
+        item = GetComponent<Items>();
         if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryEnabled = !inventoryEnabled;
@@ -46,13 +49,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+
+
+    private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent(out Items item))
-        {
-            AddItem(item);
-            item.gameObject.SetActive(false);
-        }
+        if (Input.GetKeyDown(KeyCode.E))
+
+            if (other.TryGetComponent(out Items item))
+            {
+                AddItem(item);
+                item.gameObject.SetActive(false);
+            }
     }
     public void AddItem(Items item)
     {
