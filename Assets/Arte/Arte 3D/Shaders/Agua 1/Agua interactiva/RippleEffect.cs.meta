@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c6beed7d14e0b3547bb70f31797fa6b8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ObjectsRT: {fileID: 8400000, guid: 2599f83cade94da43aa821f98a563e44, type: 2}
+  - RippleShader: {fileID: 4800000, guid: 2b85de0820a6f73478fda8476e5f2233, type: 3}
+  - AddShader: {fileID: 4800000, guid: 416d1cfc741304d4d8fbeab54f4aa2b7, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
