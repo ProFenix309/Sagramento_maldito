@@ -6,13 +6,14 @@ public class GetItem : MonoBehaviour
     public Camera playerCamera; 
     public float launchForce = 500f;
     public string objectName;
+    public GameObject Item;
 
-    private GameObject pikedObject = null;
+    private GameObject pickedObject = null;
     private bool isHolding = false;
 
     void Update()
     {
-        if (isHolding && pikedObject != null && Input.GetMouseButtonDown(0))
+        if (isHolding && pickedObject != null && Input.GetMouseButtonDown(0))
         {
             LanzarObjeto();
         }
@@ -20,19 +21,36 @@ public class GetItem : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag(objectName) && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.CompareTag(objectName) && Input.GetKeyDown(KeyCode.E) && other.gameObject.GetComponent<Items>()==null)
         {
             isHolding = !isHolding;
             if (isHolding)
             {
+                other.isTrigger = true;
                 AgarrarObjeto(other.gameObject);
             }
             else
             {
+                
                 SoltarObjeto();
-                pikedObject = null;
+                pickedObject = null;
             }
+            
         }
+        else if (other.gameObject.CompareTag(objectName) && other.gameObject.GetComponent<Items>() != null)
+        {
+            Item=other.gameObject;
+           
+        }
+      
+            
+        
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        Item = null;
+        
     }
 
     private void AgarrarObjeto(GameObject objeto)
@@ -44,30 +62,33 @@ public class GetItem : MonoBehaviour
 
         objeto.transform.SetParent(handPoint.transform);
 
-        pikedObject = objeto;
+        pickedObject = objeto;
         isHolding = true;
     }
 
     private void SoltarObjeto()
     {
-        if (pikedObject != null)
+        if (pickedObject != null)
         {
-            pikedObject.GetComponent<Rigidbody>().useGravity = true;
-            pikedObject.GetComponent<Rigidbody>().isKinematic = false;
+            pickedObject.GetComponent<Collider>().isTrigger = false;
+            pickedObject.GetComponent<Rigidbody>().useGravity = true;
+            pickedObject.GetComponent<Rigidbody>().isKinematic = false;
+            
 
-            pikedObject.transform.SetParent(null);
+            pickedObject.transform.SetParent(null);
 
-            pikedObject = null;
+            pickedObject = null;
             isHolding = false;
         }
     }
 
     private void LanzarObjeto()
     {
-        if (pikedObject == null) return;
+        if (pickedObject == null) return;
 
-        Rigidbody rb = pikedObject.GetComponent<Rigidbody>();
+        Rigidbody rb = pickedObject.GetComponent<Rigidbody>();
 
+        pickedObject.GetComponent<Collider>().isTrigger = false;
         // Soltar objeto para que la física actúe sobre él
         SoltarObjeto();
 
