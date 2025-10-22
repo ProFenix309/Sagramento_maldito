@@ -234,6 +234,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98832fde707946a43ab2034ca25097e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData:
+    _id: PerritoMalo
+    _active: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -251,7 +254,7 @@ MonoBehaviour:
   timeBetweenAtacks: 1
   alreadyAtacked: 0
   AttackingTime: 2
-  damage: 0
+  "da\xF1o": 19
   sightRange: 5.36
   attackRange: 1.14
   distractionRange: 6.48
