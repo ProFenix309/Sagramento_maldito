@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour 
 {
@@ -18,18 +20,49 @@ public class Inventory : MonoBehaviour
     PlayerController playerController;
     Camera_FPS_Controller cameraController;
 
-    Items item;
+    public  GameObject HandDetection;
+    public GetItem itemH;
+    public GameObject inventoryItem;
 
 
+
+    private void Awake()
+    {
+        HandDetection = GameObject.Find("Hand");
+        
+    }
     void Start()
     {
+        itemH = HandDetection.GetComponent<GetItem>();
         playerController = GetComponent<PlayerController>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
+        
     }
 
     void Update()
     {
-        item = GetComponent<Items>();
+        if (itemH.Item != null)
+        {
+            Debug.Log(inventoryItem);
+
+            inventoryItem = itemH.Item.gameObject;
+            if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
+            {
+            
+                AddItem(item);
+                inventoryItem.gameObject.SetActive(false);
+                Debug.Log(inventoryItem + "is in your inventory");
+            }
+        }
+        else
+        {
+            
+            inventoryItem = null;
+            Debug.Log(inventoryItem + "is not in your inventory");
+        }
+
+
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryEnabled = !inventoryEnabled;
@@ -51,16 +84,16 @@ public class Inventory : MonoBehaviour
 
 
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-
-            if (other.TryGetComponent(out Items item))
-            {
-                AddItem(item);
-                item.gameObject.SetActive(false);
-            }
-    }
+   // private void OnTriggerStay(Collider other)
+    //{
+     //   if (Input.GetKeyDown(KeyCode.E))
+     //
+       //     if (other.TryGetComponent(out Items item))
+         //   {
+           //     AddItem(item);
+            //    item.gameObject.SetActive(false);
+         //   }
+   // }
     public void AddItem(Items item)
     {
         if (!_items.ContainsKey(item.ID))

@@ -61,6 +61,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+       
+
+
         if (health.vidaMaxima == 0) return;
 
         else if (canMove)

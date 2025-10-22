@@ -446,6 +446,9 @@ MonoBehaviour:
   inventoryEnabled: 0
   inventory: {fileID: 0}
   slotHalder: {fileID: 0}
+  HandDetection: {fileID: 0}
+  itemH: {fileID: 0}
+  inventoryItem: {fileID: 0}
 --- !u!114 &6640746821152912828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,7 +555,8 @@ MonoBehaviour:
   handPoint: {fileID: 2740180164457741189}
   playerCamera: {fileID: 6429867571095112991}
   launchForce: 500
-  objectName: GrabingObject
+  objectName: Item
+  Item: {fileID: 0}
 --- !u!54 &7718513330956264285
 Rigidbody:
   m_ObjectHideFlags: 0

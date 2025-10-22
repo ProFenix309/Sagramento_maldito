@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 106774939}
   - component: {fileID: 106774938}
   - component: {fileID: 106774937}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Key
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72af7a06999d39c4a8291bcf0f0433ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 1
+  ID: 2
   type: Key
   description: Llave que abre una puerta importante
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
@@ -2867,6 +2867,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Llave (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 72eb229603ab0d6439ce338a398d44bb, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3848,21 +3852,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2426965438245376528, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_Size.z
-      value: 1.8998566
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_Center.x
-      value: -0.2
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_Center.y
-      value: 0.81
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 2558818214197555220, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_Center.z
-      value: 0.11
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 3708424950865336249, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: objectName
@@ -3870,7 +3878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5091505287543067493, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.16
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 5091505287543067493, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_LocalPosition.y
