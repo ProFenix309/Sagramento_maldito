@@ -20,23 +20,19 @@ public class Inventory : MonoBehaviour
     PlayerController playerController;
     Camera_FPS_Controller cameraController;
 
-    public  GameObject HandDetection;
-    public GetItem itemH;
-    public GameObject inventoryItem;
-
-
+    [HideInInspector]public  GameObject HandDetection;
+    [HideInInspector]public GetItem itemH;
+    [HideInInspector]public GameObject inventoryItem;
 
     private void Awake()
     {
         HandDetection = GameObject.Find("Hand");
-        
     }
     void Start()
     {
         itemH = HandDetection.GetComponent<GetItem>();
         playerController = GetComponent<PlayerController>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
-        
     }
 
     void Update()
@@ -47,8 +43,7 @@ public class Inventory : MonoBehaviour
 
             inventoryItem = itemH.Item.gameObject;
             if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
-            {
-            
+            {   
                 AddItem(item);
                 inventoryItem.gameObject.SetActive(false);
                 Debug.Log(inventoryItem + "is in your inventory");
@@ -56,12 +51,9 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            
             inventoryItem = null;
             Debug.Log(inventoryItem + "is not in your inventory");
         }
-
-
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -81,19 +73,6 @@ public class Inventory : MonoBehaviour
             inventory.SetActive(inventoryEnabled);
         }
     }
-
-
-
-   // private void OnTriggerStay(Collider other)
-    //{
-     //   if (Input.GetKeyDown(KeyCode.E))
-     //
-       //     if (other.TryGetComponent(out Items item))
-         //   {
-           //     AddItem(item);
-            //    item.gameObject.SetActive(false);
-         //   }
-   // }
     public void AddItem(Items item)
     {
         if (!_items.ContainsKey(item.ID))
