@@ -695,6 +695,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3785296276508407262, guid: 1c4009694677179499b14372e632ca27, type: 3}
+--- !u!1 &328204599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2853085846177895336, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+  m_PrefabInstance: {fileID: 1646487208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &340776248
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3812,28 +3817,32 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 349257302822090835, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 349257302822090835, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4424159002487552065, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4424159002487552065, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4424159002487552065, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -45.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5087627485122485324, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5724286129377430163, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      propertyPath: inventoryPanel
+      value: 
+      objectReference: {fileID: 328204599}
     - target: {fileID: 6395999330470878803, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
       propertyPath: m_IsActive
       value: 0
