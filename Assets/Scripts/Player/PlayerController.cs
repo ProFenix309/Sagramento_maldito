@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float horizontalAxis, verticalAxis;
     [SerializeField] private bool crouched;
     [HideInInspector] public bool canMove;
+    [HideInInspector] float stopMovement = 0f;
 
     [Space, Header("Fuerza jump y Gravedad")]
 
@@ -61,9 +62,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-       
-
-
         if (health.vidaMaxima == 0) return;
 
         else if (canMove)
@@ -80,6 +78,10 @@ public class PlayerController : MonoBehaviour
             GroundDetection();
             MovePlayer();
             Jump();
+        }
+        else
+        {
+            MovePlayer();
         }
     }
 
@@ -118,6 +120,11 @@ public class PlayerController : MonoBehaviour
     public void MovePlayer()
     {
         float currentSpeed = run ? speedRun : (crouched ? speedCrouched : speed);
+
+        if (!canMove)
+        {
+            currentSpeed = stopMovement;
+        }
         Vector3 direction = (transform.right * horizontalAxis) + (transform.forward * verticalAxis);
 
         rb.linearVelocity = new Vector3(direction.x * currentSpeed, rb.linearVelocity.y, direction.z * currentSpeed);

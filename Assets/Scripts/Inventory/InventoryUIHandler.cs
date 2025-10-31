@@ -22,11 +22,13 @@ public class InventoryUIHandler : MonoBehaviour
 
     private readonly List<Slot> currentSlots = new();
 
+    public GameObject ItemInfoPanel { get => itemInfoPanel; set => itemInfoPanel = value; }
+
     private void OnEnable()
     {
         inventory.InventoryUpdated += ShowInventory;
         ShowInventory();
-        itemInfoPanel.SetActive(false);
+        ItemInfoPanel.SetActive(false);
     }
 
     private void OnDisable()
@@ -57,18 +59,19 @@ public class InventoryUIHandler : MonoBehaviour
 
     public void ShowItem(Items item)
     {
-        float alphaIncrease = Mathf.Lerp(200,0, 2.5f*Time.deltaTime);
-        float alphaDecrease = Mathf.Lerp(0, 200, 2.5f * Time.deltaTime);
+       
 
         // Desactivar panel de inventario
-        inventoryPanel.GetComponent<Image>().color = new Color(0, 0, 0, alphaIncrease);
+        
+     
         inventoryPanel.SetActive(false);
 
 
         // Activar panel de información
         
-        itemInfoPanel.SetActive(true);
-        inventoryPanel.GetComponent<Image>().color = new Color(0, 0, 0, alphaDecrease);
+      
+        ItemInfoPanel.SetActive(true);
+        
 
         // Mostrar datos del ítem
         itemIcon.sprite = item.icon;
@@ -85,9 +88,9 @@ public class InventoryUIHandler : MonoBehaviour
     }
 
     public void CloseItemInfoPanel()
-    {
-        itemInfoPanel.SetActive(false);
-        inventoryPanel.SetActive(true); //reactiva el panel de slots
+    { 
+            ItemInfoPanel.SetActive(false);
+            inventoryPanel.SetActive(true); //reactiva el panel de slots
     }
 
 }

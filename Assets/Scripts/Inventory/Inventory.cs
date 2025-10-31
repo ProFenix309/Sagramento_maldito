@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
+
 
 public class Inventory : MonoBehaviour 
 {
@@ -14,6 +13,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private bool inventoryEnabled = false;
 
     public GameObject inventory;
+
+    InventoryUIHandler inventoryUIHandler;
 
     public GameObject slotHalder;
 
@@ -30,6 +31,7 @@ public class Inventory : MonoBehaviour
     }
     void Start()
     {
+        inventoryUIHandler = inventory.GetComponent<InventoryUIHandler>();
         itemH = HandDetection.GetComponent<GetItem>();
         playerController = GetComponent<PlayerController>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
@@ -39,8 +41,6 @@ public class Inventory : MonoBehaviour
     {
         if (itemH.Item != null)
         {
-            Debug.Log(inventoryItem);
-
             inventoryItem = itemH.Item.gameObject;
             if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
             {   
@@ -52,10 +52,10 @@ public class Inventory : MonoBehaviour
         else
         {
             inventoryItem = null;
-            Debug.Log(inventoryItem + "is not in your inventory");
+            Debug.Log("no item for your inventory");
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I) && inventoryUIHandler.ItemInfoPanel.activeSelf ==false)
         {
             inventoryEnabled = !inventoryEnabled;
             if (inventoryEnabled)
@@ -67,6 +67,7 @@ public class Inventory : MonoBehaviour
             else
             {
                 playerController.canMove = true;
+                cameraController.canMove = true;
                 cameraController.canMove = true;
                 Cursor.lockState = CursorLockMode.Locked;
             }
