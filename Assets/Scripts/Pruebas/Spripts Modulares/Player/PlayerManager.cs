@@ -1,0 +1,53 @@
+using UnityEngine;
+
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInteraction))]
+[RequireComponent(typeof(EnemyLock))]
+[RequireComponent(typeof(PlayerAnimationController))]
+[RequireComponent(typeof(Health))]
+public class PlayerControllerr : MonoBehaviour
+{
+    // Referencias a componentes
+    private PlayerMovement movement;
+    private PlayerInteraction interaction;
+    private EnemyLock enemyLock;
+    private PlayerAnimationController animController;
+    private Health health;
+
+    private void Awake()
+    {
+        // Obtener todos los componentes
+        movement = GetComponent<PlayerMovement>();
+        interaction = GetComponent<PlayerInteraction>();
+        enemyLock = GetComponent<EnemyLock>();
+        animController = GetComponent<PlayerAnimationController>();
+        health = GetComponent<Health>();
+    }
+
+    private void Start()
+    {
+        // Inicialización
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {
+        // Verificar si el jugador está muerto
+        if (health.vidaMaxima <= 0)
+        {
+            DisableAllControls();
+            return;
+        }
+    }
+
+    private void DisableAllControls()
+    {
+        movement.CanMove = false;
+    }
+
+    // Propiedades públicas para acceso externo (opcional)
+    public PlayerMovement Movement => movement;
+    public PlayerInteraction Interaction => interaction;
+    public EnemyLock Combat => enemyLock;
+    public Health Health => health;
+}

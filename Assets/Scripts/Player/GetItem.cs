@@ -30,27 +30,19 @@ public class GetItem : MonoBehaviour
                 AgarrarObjeto(other.gameObject);
             }
             else
-            {
-                
+            {   
                 SoltarObjeto();
                 pickedObject = null;
             }
-            
         }
         else if (other.gameObject.CompareTag(objectName) && other.gameObject.GetComponent<Items>() != null)
         {
-            Item=other.gameObject;
-           
-        }
-      
-            
-        
-
+            Item=other.gameObject;  
+        }    
     }
     private void OnTriggerExit(Collider other)
     {
         Item = null;
-        
     }
 
     private void AgarrarObjeto(GameObject objeto)
@@ -73,8 +65,7 @@ public class GetItem : MonoBehaviour
             pickedObject.GetComponent<Collider>().isTrigger = false;
             pickedObject.GetComponent<Rigidbody>().useGravity = true;
             pickedObject.GetComponent<Rigidbody>().isKinematic = false;
-            
-
+           
             pickedObject.transform.SetParent(null);
 
             pickedObject = null;
@@ -96,7 +87,5 @@ public class GetItem : MonoBehaviour
         Vector3 direction = playerCamera.transform.forward;
 
         rb.AddForce(direction * launchForce);
-
-        // Opcional: si quieres que se suelte inmediatamente, isHolding debe ser false y pikedObject null
     }
 }

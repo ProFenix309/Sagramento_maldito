@@ -7,9 +7,6 @@ TagManager:
   - Item
   - Bullet Manager
   - Enemy
-  - GrabingObject
-  - Throwable
-  - GrabbingObject
   layers:
   - Default
   - TransparentFX

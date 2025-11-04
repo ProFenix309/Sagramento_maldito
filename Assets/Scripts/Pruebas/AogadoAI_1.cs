@@ -2,12 +2,12 @@ using UnityEngine.AI;
 using UnityEngine;
 
 
-public class AhogadoAI : MonoBehaviour
+public class AhogadoAI_1 : MonoBehaviour
 {
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
-    
+
 
     [Space]
     [Header("Layers")]
@@ -35,12 +35,13 @@ public class AhogadoAI : MonoBehaviour
     public bool alreadyAtacked;
     public float AttackingTime;
     [SerializeField] float damage;
+    private bool isAttacking = false; // Nuevo: controla si está en animación de ataque
 
-    
+
     [Header("Ranges")]
     public float sightRange, attackRange, distractionRange;
 
-    
+
     [Header("States")]
     public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
 
@@ -50,7 +51,7 @@ public class AhogadoAI : MonoBehaviour
     private void Awake()
     {
         //detects object by names on scene
-        
+
         StartingPoint = GameObject.Find("StartingPoint").transform;
         player = GameObject.Find("Player").transform;
 
@@ -104,6 +105,7 @@ public class AhogadoAI : MonoBehaviour
         //sets animation states
         animator.SetBool("isWalking", true);
         animator.SetBool("isRunnig", false);
+        animator.SetBool("isAttacking", false);
 
         //checks for points to travel to
         if (!walkPointSet) SearchWalkPoint();
@@ -139,6 +141,7 @@ public class AhogadoAI : MonoBehaviour
         //sets animation states
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunnig", true);
+        animator.SetBool("isAttacking", false);
 
         //agent moves towards player
         agent.SetDestination(player.position);
@@ -150,6 +153,7 @@ public class AhogadoAI : MonoBehaviour
         //sets animation states
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunnig", true);
+        animator.SetBool("isAttacking", false);
 
         agent.SetDestination(Distraction.position);
         if (!alreadyAtacked)
@@ -169,25 +173,47 @@ public class AhogadoAI : MonoBehaviour
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunnig", false);
 
-        if (!alreadyAtacked)
+        if (!alreadyAtacked && !isAttacking)
         {
-            ///Attack code here
+            // Inicia la animación de ataque
+            isAttacking = true;
+            animator.SetBool("isAttacking", true);
+            animator.SetTrigger("Attack"); // Trigger para iniciar la animación
 
-            Health health;
-
-            if (player.gameObject.TryGetComponent(out health))
+            // Hace que el jugador mire al enemigo
+            PlayerLookAtEnemy playerLook = player.GetComponent<PlayerLookAtEnemy>();
+            if (playerLook != null)
             {
-                health.RecibirDaño(damage);
+                playerLook.StartLookingAtEnemy(transform);
             }
-            Debug.Log("Player attacked");
 
-            //sets potsition to starting one (optional)
-            transform.position = StartingPoint.position;
+            // Espera el tiempo de la animación antes de hacer daño
+            Invoke(nameof(DealDamage), AttackingTime);
 
             alreadyAtacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAtacks);
         }
     }
+
+    // Nuevo método: se ejecuta después de que termine la animación de ataque
+    private void DealDamage()
+    {
+        Health health;
+
+        if (player.gameObject.TryGetComponent(out health))
+        {
+            health.RecibirDaño(damage);
+        }
+        Debug.Log("Player attacked - Damage dealt!");
+
+        //sets position to starting one (optional)
+        transform.position = StartingPoint.position;
+
+        // Termina la animación de ataque
+        animator.SetBool("isAttacking", false);
+        isAttacking = false;
+    }
+
     private void ResetAttack()
     {
         alreadyAtacked = false;
@@ -202,6 +228,4 @@ public class AhogadoAI : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, distractionRange);
     }
-    //valores a modificar desde el inspector
-    //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity, initialRandomTime, walkPointRange, damage, crear un objetao vacio para StartingPoint (punto inicial) 
 }
