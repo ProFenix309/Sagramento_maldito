@@ -3353,16 +3353,16 @@ GameObject:
   - component: {fileID: 8329682636301682424}
   - component: {fileID: 179191139289106316}
   - component: {fileID: 5698012271979604192}
-  - component: {fileID: 8329682636301682425}
   - component: {fileID: 6561201197617195924}
   - component: {fileID: 936875012}
+  - component: {fileID: 8329682636301682425}
   m_Layer: 9
   m_Name: Ahogado
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &5636351652470851039
 GameObject:
   m_ObjectHideFlags: 0
@@ -11948,12 +11948,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7894873772732160536}
   - component: {fileID: 7437209474543612517}
-  - component: {fileID: 8078212663055841497}
   - component: {fileID: 1585725013278416592}
-  - component: {fileID: 7797154517031777170}
   - component: {fileID: 7046811331028320758}
-  - component: {fileID: 8078212663055841491}
   - component: {fileID: 2253176655633271379}
+  - component: {fileID: 7797154517031777170}
+  - component: {fileID: 8078212663055841497}
   - component: {fileID: 8078212663055841496}
   - component: {fileID: 8078212663055841495}
   - component: {fileID: 8078212663055841494}
@@ -11966,20 +11965,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8078212663055841491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8078212663055841490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b39d2a2b5bd5747b8f50e524cdc936, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lookSpeed: 5
-  isBeingAttacked: 0
 --- !u!114 &8078212663055841492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12059,7 +12044,7 @@ MonoBehaviour:
   jumpForce: 5
   layerColision:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   checkedGround: {fileID: 6907591951631185640}
   radiusGround: 0.2
 --- !u!114 &8078212663055841497
@@ -12231,6 +12216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303f748ca24282f4bbd393479cef29a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameTarget: Player 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -12578,9 +12564,9 @@ SceneRoots:
   - {fileID: 589763566}
   - {fileID: 764352867}
   - {fileID: 516997362}
-  - {fileID: 2131198200419538363}
   - {fileID: 1891235099}
   - {fileID: 1200816779}
   - {fileID: 2093800494}
+  - {fileID: 2131198200419538363}
   - {fileID: 1855450595}
   - {fileID: 7894873772732160536}

@@ -8,6 +8,7 @@ public class AhogadoAI_1 : MonoBehaviour
     Transform player;
     Transform Distraction;
 
+    [SerializeField] string nameTarget;
 
     [Space]
     [Header("Layers")]
@@ -53,7 +54,7 @@ public class AhogadoAI_1 : MonoBehaviour
         //detects object by names on scene
 
         StartingPoint = GameObject.Find("StartingPoint").transform;
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find(nameTarget).transform;
 
         if (GameObject.Find("Distraction"))
             Distraction = GameObject.Find("Distraction").transform;
