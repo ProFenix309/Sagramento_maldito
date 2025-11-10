@@ -15,7 +15,6 @@ public class GetItem : MonoBehaviour
     {
         if (isHolding && pickedObject != null && Input.GetMouseButtonDown(0))
         {
-           
             LanzarObjeto();
         }
     }
@@ -76,14 +75,11 @@ public class GetItem : MonoBehaviour
 
     private void LanzarObjeto()
     {
-        pickedObject.GetComponent<Collider>().isTrigger = false;
-
         if (pickedObject == null) return;
-        
 
         Rigidbody rb = pickedObject.GetComponent<Rigidbody>();
 
-        
+        pickedObject.GetComponent<Collider>().isTrigger = false;
         // Soltar objeto para que la física actúe sobre él
         SoltarObjeto();
 
