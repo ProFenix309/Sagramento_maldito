@@ -2819,7 +2819,7 @@ MonoBehaviour:
   inventory: {fileID: 7797154515480307037}
   slotPrefab: {fileID: 6860877789180327080, guid: fa38c43070eb8c142af5d17b74b9e09a, type: 3}
   slotParent: {fileID: 5186057245504717468}
-  inventoryPanel: {fileID: 0}
+  inventoryPanel: {fileID: 5087627485122485324}
   useButton: {fileID: 5399687878364781916}
   useButtonText: {fileID: 1135641945937483875}
   itemInfoPanel: {fileID: 6395999330470878803}
@@ -3294,7 +3294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f05a71a7f05a7e64188170f8724a8cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidaMaxima: 20
+  vidaMaxima: 0
   vidaActual: 0
   etiquetaEnemigo: Enemy
 --- !u!114 &7046811330165053241

@@ -22,7 +22,7 @@ public class MenuControlscript : MonoBehaviour
     }
     public void Jugar()
     {
-        SceneManager.LoadScene("NombreEscenaJuego");  // Cambia por el nombre real de tu escena
+        SceneManager.LoadScene(1);  // Cambia por el nombre real de tu escena
     }
     public void ShowMenuPrincipal()
     {
