@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
 
     public GameObject slotHalder;
 
-    PlayerController playerController;
+    PlayerMovement playerMovement;
     Camera_FPS_Controller cameraController;
 
     [HideInInspector]public  GameObject HandDetection;
@@ -33,7 +33,7 @@ public class Inventory : MonoBehaviour
     {
         inventoryUIHandler = inventory.GetComponent<InventoryUIHandler>();
         itemH = HandDetection.GetComponent<GetItem>();
-        playerController = GetComponent<PlayerController>();
+        playerMovement = GetComponent<PlayerMovement>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
     }
 
@@ -61,13 +61,12 @@ public class Inventory : MonoBehaviour
             if (inventoryEnabled)
             {
                 Cursor.lockState = CursorLockMode.None;
-                playerController.canMove = false;
+                playerMovement.CanMove = false;
                 cameraController.canMove = false;
             }
             else
             {
-                playerController.canMove = true;
-                cameraController.canMove = true;
+                playerMovement.CanMove = true;
                 cameraController.canMove = true;
                 Cursor.lockState = CursorLockMode.Locked;
             }
