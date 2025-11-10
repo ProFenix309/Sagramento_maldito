@@ -68,7 +68,6 @@ public class Inventory : MonoBehaviour
             {
                 playerController.canMove = true;
                 cameraController.canMove = true;
-                cameraController.canMove = true;
                 Cursor.lockState = CursorLockMode.Locked;
             }
             inventory.SetActive(inventoryEnabled);
