@@ -4,15 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInteraction))]
 [RequireComponent(typeof(EnemyLock))]
 [RequireComponent(typeof(PlayerAnimationController))]
-[RequireComponent(typeof(Health))]
-public class PlayerControllerr : MonoBehaviour
+[RequireComponent(typeof(HealthManager))]
+public class PlayerManager : MonoBehaviour
 {
     // Referencias a componentes
     private PlayerMovement movement;
     private PlayerInteraction interaction;
     private EnemyLock enemyLock;
     private PlayerAnimationController animController;
-    private Health health;
+    private HealthManager health;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class PlayerControllerr : MonoBehaviour
         interaction = GetComponent<PlayerInteraction>();
         enemyLock = GetComponent<EnemyLock>();
         animController = GetComponent<PlayerAnimationController>();
-        health = GetComponent<Health>();
+        health = GetComponent<HealthManager>();
     }
 
     private void Start()
@@ -45,9 +45,9 @@ public class PlayerControllerr : MonoBehaviour
         movement.CanMove = false;
     }
 
-    // Propiedades públicas para acceso externo (opcional)
+    // Propiedades públicas para acceso externo
     public PlayerMovement Movement => movement;
     public PlayerInteraction Interaction => interaction;
     public EnemyLock Combat => enemyLock;
-    public Health Health => health;
+    public HealthManager Health => health;
 }

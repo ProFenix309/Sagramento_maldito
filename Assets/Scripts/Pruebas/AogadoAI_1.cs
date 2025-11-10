@@ -199,7 +199,7 @@ public class AhogadoAI_1 : MonoBehaviour
     // Nuevo método: se ejecuta después de que termine la animación de ataque
     private void DealDamage()
     {
-        Health health;
+        HealthManager health;
 
         if (player.gameObject.TryGetComponent(out health))
         {

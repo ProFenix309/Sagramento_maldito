@@ -173,7 +173,7 @@ public class AhogadoAI : MonoBehaviour
         {
             ///Attack code here
 
-            Health health;
+            HealthManager health;
 
             if (player.gameObject.TryGetComponent(out health))
             {
