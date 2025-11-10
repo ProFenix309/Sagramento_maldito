@@ -92,25 +92,20 @@ public class PlayerController_Original : MonoBehaviour
             if (hit.collider.TryGetComponent(out Interactable interact))
             {
                 interactableObject = hit.collider.gameObject;
+
+                grabbableObject = null;
+            }
+            else if (hit.collider.CompareTag("Item"))
+            {
+                grabbableObject = hit.collider.gameObject;
+
+                interactableObject = null;
             }
             else
             {
                 interactableObject = null;
-            }
-
-            if (hit.collider.CompareTag("Item"))
-            {
-                grabbableObject = hit.collider.gameObject;
-            }
-            else
-            {
                 grabbableObject = null;
             }
-        }
-        else
-        {
-            interactableObject = null;
-            grabbableObject = null;
         }
 
         grab.SetActive(grabbableObject != null ? true : false);
