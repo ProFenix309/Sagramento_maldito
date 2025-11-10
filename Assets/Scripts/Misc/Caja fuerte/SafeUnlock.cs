@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class SafeUnlock : MonoBehaviour
 {
-    GameObject dialObject;
+    public GameObject dialObject;
     public int minimumDegres = 5;
     public int DialNumberAngles = 45;
 
-    private int[] digitAngles = new int[] { 90, 135, 0 };
-    private bool[] digitSet = new bool[3];
-    private int[] digitPasses = new int[] { 3, 3, 2 };
-    private bool[] digitLeftTurn = new bool[] {true,false,true};
+    public int[] digitAngles = new int[] { 90, 135, 0 };
+    public bool[] digitSet = new bool[3];
+    public int[] digitPasses = new int[] { 3, 3, 2 };
+    public bool[] digitLeftTurn = new bool[] {true,false,true};
 
 
-    private int passCount;
-    private bool passReset;
-    private int currentDigit;
+    public int passCount;
+    public bool passReset;
+    public int currentDigit;
 
-    private bool turningLeft;
+    public bool turningLeft;
 
-    private bool unlocked;
+    public bool unlocked;
 
-    private int oldAngle;
-    private int currentAngle;
+    public int oldAngle;
+    public int currentAngle;
 
     private void Update()
     {
@@ -43,13 +43,13 @@ public class SafeUnlock : MonoBehaviour
          }
 
          //Reset the dial rotation back to zero at 360 degrees
-         if (dialObject.transform.localEulerAngles.y > 360 || dialObject.transform.localEulerAngles.y < -360)
+         if (dialObject.transform.localEulerAngles.x > 360 || dialObject.transform.localEulerAngles.x < -360)
          {
             dialObject.transform.localEulerAngles = Vector3.zero;
          }
 
          //set currentAngle to dial rotation by the sensitivity
-         currentAngle = (int)(Mathf.RoundToInt(dialObject.transform.localEulerAngles.y/minimumDegres*minimumDegres));
+         currentAngle = (int)(Mathf.RoundToInt(dialObject.transform.localEulerAngles.x/ minimumDegres) * minimumDegres);
 
         //Reset pass so you only increment passCount once
         if (!passReset && currentAngle != digitAngles[currentDigit]) //when you turn the dial after making a pass
@@ -64,14 +64,14 @@ public class SafeUnlock : MonoBehaviour
             //if the currentAngle has changed to a diferent dial number and the oldAngle is not zero
             if (currentAngle < oldAngle) 
             {
-                if (oldAngle != 0 && oldAngle != 360) turningLeft = false; //set turningLeft to false if the current angle has increased from the old angle
-
+                if (oldAngle != 0 && oldAngle != 360) 
+                    turningLeft = false; // set turningLeft to false if the current angle has increased from the old angle
                 oldAngle = Mathf.RoundToInt(currentAngle / DialNumberAngles) * DialNumberAngles; //update oldAngle to current dial number
             }
             if (currentAngle > oldAngle)
             {
-                if (oldAngle != 0 && oldAngle != 360) turningLeft = true; //set turningLeft to true if the current angle has increased from the old angle
-
+                if (oldAngle != 0 && oldAngle != 360) 
+                    turningLeft = true; //set turningLeft to true if the current angle has increased from the old angle
                 oldAngle = Mathf.RoundToInt(currentAngle / DialNumberAngles) * DialNumberAngles; //update oldAngle to current dial number
             }
         }

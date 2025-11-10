@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
 
     public GameObject slotHalder;
 
-    PlayerController playerController;
+    PlayerController_Original playerController;
     Camera_FPS_Controller cameraController;
 
     [HideInInspector]public  GameObject HandDetection;
@@ -33,7 +33,7 @@ public class Inventory : MonoBehaviour
     {
         inventoryUIHandler = inventory.GetComponent<InventoryUIHandler>();
         itemH = HandDetection.GetComponent<GetItem>();
-        playerController = GetComponent<PlayerController>();
+        playerController = GetComponent<PlayerController_Original>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
     }
 
