@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
 
     public Action InventoryUpdated;
 
-    [SerializeField] private bool inventoryEnabled = false;
+    [SerializeField] public bool inventoryEnabled = false;
 
     public GameObject inventory;
 
@@ -60,12 +60,16 @@ public class Inventory : MonoBehaviour
             inventoryEnabled = !inventoryEnabled;
             if (inventoryEnabled)
             {
-                Cursor.lockState = CursorLockMode.None;
-                playerController.canMove = false;
-                cameraController.canMove = false;
+                if (playerController.canMove)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    playerController.canMove = false;
+                    cameraController.canMove = false;
+                }
             }
             else
             {
+
                 playerController.canMove = true;
                 cameraController.canMove = true;
                 Cursor.lockState = CursorLockMode.Locked;

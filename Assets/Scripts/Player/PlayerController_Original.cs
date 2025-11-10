@@ -87,6 +87,10 @@ public class PlayerController_Original : MonoBehaviour
 
     public void ChectkInteraction()
     {
+        if (gameObject.GetComponent<Inventory>().inventoryEnabled == true)
+        {
+            return;
+        }
         if (Physics.Raycast(rayPivot.position, rayPivot.forward, out RaycastHit hit, maxInteractDistance, layerInteract, QueryTriggerInteraction.Collide))
         {
             if (hit.collider.TryGetComponent(out Interactable interact))
@@ -101,8 +105,8 @@ public class PlayerController_Original : MonoBehaviour
             }
             else
             {
-                grabbableObject = null;
                 interactableObject = null;
+                grabbableObject = null;
             }
         }
         else
@@ -170,7 +174,7 @@ public class PlayerController_Original : MonoBehaviour
             jump = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && interactableObject && isGround)
+        if (Input.GetKeyDown(KeyCode.E) && interactableObject && isGround && canMove)
         {
             Interact();
         }
