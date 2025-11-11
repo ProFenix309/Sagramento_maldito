@@ -65,7 +65,8 @@ public class GetItem : MonoBehaviour
             pickedObject.GetComponent<Collider>().isTrigger = false;
             pickedObject.GetComponent<Rigidbody>().useGravity = true;
             pickedObject.GetComponent<Rigidbody>().isKinematic = false;
-           
+            pickedObject.GetComponent<Disappear>().Spawned = false;
+
             pickedObject.transform.SetParent(null);
 
             pickedObject = null;
@@ -76,7 +77,7 @@ public class GetItem : MonoBehaviour
     private void LanzarObjeto()
     {
         if (pickedObject == null) return;
-
+        pickedObject.GetComponent<Disappear>().Spawned = false;
         Rigidbody rb = pickedObject.GetComponent<Rigidbody>();
 
         pickedObject.GetComponent<Collider>().isTrigger = false;
