@@ -57,6 +57,7 @@ public class DoorWithValves : MonoBehaviour, Interactable
         locked = true;
         isOpen = false;
         targetPosition = closePosition;
+        Debug.Log("La Puerta esta abierta");
     }
 
     private void Update()
