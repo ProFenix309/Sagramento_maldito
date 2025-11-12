@@ -8,15 +8,18 @@ public class SceneTransition : MonoBehaviour
     public Animator transitionAnimator;
     public float transitionTime = 2f;
 
+
+
     public void LoadScene(string sceneName)
     {
-
+        
         StartCoroutine(Transition(sceneName));
 
     }
 
-    IEnumerator Transition(string sceneName)
+    public IEnumerator Transition(string sceneName)
     {
+        
         // Activar animación
         transitionAnimator.SetBool("Start", true);
 
@@ -26,6 +29,7 @@ public class SceneTransition : MonoBehaviour
         // Desactivar animación
 
         transitionAnimator.SetBool("Start", false);
+        
 
 
         // Cargar la escena

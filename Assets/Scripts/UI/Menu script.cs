@@ -12,6 +12,7 @@ public class MenuControlscript : MonoBehaviour
     Resolution[] resoluciones;
     void Start()
     {
+        TransitionPanel.gameObject.SetActive(false);
         ShowMenuPrincipal();
         resoluciones = Screen.resolutions; // obtiene resoluciones disponibles
     }
@@ -56,7 +57,8 @@ public class MenuControlscript : MonoBehaviour
 
     public void OnNewGameClicked()
     {
-        TransitionPanel.LoadScene("Casa");
+        TransitionPanel.gameObject.SetActive(true);
+        TransitionPanel.StartCoroutine(TransitionPanel.Transition("Casa"));
         DataPersistenceManager.instance.NewGame();
     }
 
