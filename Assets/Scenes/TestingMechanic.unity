@@ -226,6 +226,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Distraction
       objectReference: {fileID: 0}
+    - target: {fileID: 5785280980538745445, guid: 1a95ba770440e7343b667f041b1e13d9, type: 3}
+      propertyPath: ripplePlane
+      value: 
+      objectReference: {fileID: 1097744494}
+    - target: {fileID: 5785280980538745445, guid: 1a95ba770440e7343b667f041b1e13d9, type: 3}
+      propertyPath: waterTrigger
+      value: 
+      objectReference: {fileID: 1893856282}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -324,6 +332,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6da5815a9289fb84c96bf4002be28cd1, type: 3}
+--- !u!1001 &779288296
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1188519787580760198, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_Name
+      value: ObjectTriggeredRippleWaterPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.23631287
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.69899
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960658891640830524, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
 --- !u!43 &853101348
 Mesh:
   m_ObjectHideFlags: 0
@@ -511,6 +576,50 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1059327921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1059327923}
+  - component: {fileID: 1059327922}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1059327922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059327921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6117b8702afa674484e39d6b878aff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1059327923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059327921}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.3996072, y: -4.7474823, z: 8.488996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1090018666 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5782894297004490311, guid: e05f6846e491bed419ea00a5c11e2813, type: 3}
@@ -522,6 +631,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688a5b46387f0204293b4d3dc6c70d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!23 &1097744494 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 828244530270142803, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+  m_PrefabInstance: {fileID: 779288296}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1200816778
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +1089,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1893856282 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1499328823771968654, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
+  m_PrefabInstance: {fileID: 779288296}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1927096700 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5782894297004490311, guid: e05f6846e491bed419ea00a5c11e2813, type: 3}
@@ -1515,6 +1634,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8273700854268408360, guid: a47a0a49cb10a174088f162f3c8da8d1, type: 3}
+      propertyPath: ripplePlane
+      value: 
+      objectReference: {fileID: 1097744494}
+    - target: {fileID: 8273700854268408360, guid: a47a0a49cb10a174088f162f3c8da8d1, type: 3}
+      propertyPath: waterTrigger
+      value: 
+      objectReference: {fileID: 1893856282}
     - target: {fileID: 8865544716379392149, guid: a47a0a49cb10a174088f162f3c8da8d1, type: 3}
       propertyPath: m_Name
       value: Bottle
@@ -1776,6 +1903,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Modular
       objectReference: {fileID: 0}
+    - target: {fileID: 3515230371073073339, guid: 01e91aa7827983c4ab314b477c1d842d, type: 3}
+      propertyPath: layerColision.m_Bits
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120995390284317623, guid: 01e91aa7827983c4ab314b477c1d842d, type: 3}
+      propertyPath: ripplePlane
+      value: 
+      objectReference: {fileID: 1097744494}
+    - target: {fileID: 4120995390284317623, guid: 01e91aa7827983c4ab314b477c1d842d, type: 3}
+      propertyPath: waterTrigger
+      value: 
+      objectReference: {fileID: 1893856282}
     - target: {fileID: 7144566743398484812, guid: 01e91aa7827983c4ab314b477c1d842d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.72
@@ -2226,3 +2365,5 @@ SceneRoots:
   - {fileID: 1651418576}
   - {fileID: 1393899043}
   - {fileID: 1267873495}
+  - {fileID: 779288296}
+  - {fileID: 1059327923}

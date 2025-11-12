@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Estado público
     public bool CanMove { get; set; } = true;
+    public bool unlockInputs { get; set; } = true;
     public bool IsGrounded { get; private set; }
     public bool IsRunning { get; private set; }
     public bool IsCrouched { get; private set; }
@@ -38,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (CanMove)
+        if (CanMove && unlockInputs)
         {
             GetMovementInput();
         }
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GroundDetection();
 
-        if (CanMove)
+        if (CanMove && unlockInputs)
         {
             MovePlayer();
             Jump();

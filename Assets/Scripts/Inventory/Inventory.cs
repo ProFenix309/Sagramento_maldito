@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Inventory : MonoBehaviour 
+public class Inventory : MonoBehaviour
 {
     public Dictionary<int, Items> Items { get => _items; }
+
     Dictionary<int, Items> _items = new();
 
     public Action InventoryUpdated;
@@ -21,9 +22,12 @@ public class Inventory : MonoBehaviour
     PlayerController_Original playerController;
     Camera_FPS_Controller cameraController;
 
-    [HideInInspector]public  GameObject HandDetection;
-    [HideInInspector]public GetItem itemH;
-    [HideInInspector]public GameObject inventoryItem;
+    [HideInInspector] public GameObject HandDetection;
+    [HideInInspector] public GetItem itemH;
+    [HideInInspector] public GameObject inventoryItem;
+
+    bool unlockInputs;
+    public bool UnlockInputs { get => unlockInputs; set => unlockInputs = value; }
 
     private void Awake()
     {
@@ -39,42 +43,45 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        if (itemH.Item != null && !inventoryEnabled)
+        if (unlockInputs)
         {
-            inventoryItem = itemH.Item.gameObject;
-            if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
-            {   
-                AddItem(item);
-                inventoryItem.gameObject.SetActive(false);
-                Debug.Log(inventoryItem + "is in your inventory");
-            }
-        }
-        else
-        {
-            inventoryItem = null;
-            Debug.Log("no detected item for your inventory");
-        }
-
-        if (Input.GetKeyDown(KeyCode.I) && inventoryUIHandler.ItemInfoPanel.activeSelf ==false)
-        {
-            inventoryEnabled = !inventoryEnabled;
-            if (inventoryEnabled)
+            if (itemH.Item != null && !inventoryEnabled)
             {
-                if (playerController.canMove)
+                inventoryItem = itemH.Item.gameObject;
+                if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
                 {
-                    Cursor.lockState = CursorLockMode.None;
-                    playerController.canMove = false;
-                    cameraController.canMove = false;
+                    AddItem(item);
+                    inventoryItem.gameObject.SetActive(false);
+                    Debug.Log(inventoryItem + "is in your inventory");
                 }
             }
             else
             {
-
-                playerController.canMove = true;
-                cameraController.canMove = true;
-                Cursor.lockState = CursorLockMode.Locked;
+                inventoryItem = null;
+                Debug.Log("no detected item for your inventory");
             }
-            inventory.SetActive(inventoryEnabled);
+
+            if (Input.GetKeyDown(KeyCode.I) && inventoryUIHandler.ItemInfoPanel.activeSelf == false)
+            {
+                inventoryEnabled = !inventoryEnabled;
+                if (inventoryEnabled)
+                {
+                    if (playerController.canMove)
+                    {
+                        Cursor.lockState = CursorLockMode.None;
+                        playerController.canMove = false;
+                        cameraController.canMove = false;
+                    }
+                }
+                else
+                {
+
+                    playerController.canMove = true;
+                    cameraController.canMove = true;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+                inventory.SetActive(inventoryEnabled);
+            }
         }
     }
     public void AddItem(Items item)

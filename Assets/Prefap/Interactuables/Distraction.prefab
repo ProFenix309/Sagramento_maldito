@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4192263209625666423}
   - component: {fileID: 788623213795976145}
   - component: {fileID: 2512525357760119127}
+  - component: {fileID: 5785280980538745445}
   m_Layer: 8
   m_Name: Distraction
   m_TagString: Item
@@ -154,3 +155,20 @@ MonoBehaviour:
   enemy:
     serializedVersion: 2
     m_Bits: 512
+  Spawned: 1
+--- !u!114 &5785280980538745445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283650177916301685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdeae7d0d9b3c448cdf7a0fd6222c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ripplePlane: {fileID: 0}
+  waterTrigger: {fileID: 0}
+  isFloatingWithWater: 1
+  moveUpHeight: 1

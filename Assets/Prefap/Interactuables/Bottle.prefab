@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6693418810423738840}
   - component: {fileID: 2189371706726489360}
   - component: {fileID: 2201565584658281498}
+  - component: {fileID: 8273700854268408360}
   m_Layer: 8
   m_Name: Bottle
   m_TagString: Item
@@ -100,6 +101,23 @@ MonoBehaviour:
   enemy:
     serializedVersion: 2
     m_Bits: 512
+  Spawned: 1
+--- !u!114 &8273700854268408360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865544716379392149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdeae7d0d9b3c448cdf7a0fd6222c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ripplePlane: {fileID: 0}
+  waterTrigger: {fileID: 0}
+  isFloatingWithWater: 1
+  moveUpHeight: 1
 --- !u!1001 &5148929320006553420
 PrefabInstance:
   m_ObjectHideFlags: 0
