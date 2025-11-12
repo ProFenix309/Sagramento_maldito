@@ -13,7 +13,6 @@ public class ValveController : MonoBehaviour
 
     private void Start()
     {
-        // Suscribirse al evento de cada válvula
         foreach (Valve valve in valves)
         {
             if (valve != null)
@@ -75,7 +74,6 @@ public class ValveController : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Desuscribirse de los eventos
         foreach (Valve valve in valves)
         {
             if (valve != null)
