@@ -81,41 +81,39 @@ public class PlayerController_Original : MonoBehaviour
         }
         else
         {
+            interactableObject = null;
+            grabbableObject = null;
             MovePlayer();
         }
     }
 
     public void ChectkInteraction()
     {
-        if (gameObject.GetComponent<Inventory>().inventoryEnabled == true)
-        {
-            interactableObject = null;
-            grabbableObject = null;
-            return;
-        }
         if (Physics.Raycast(rayPivot.position, rayPivot.forward, out RaycastHit hit, maxInteractDistance, layerInteract, QueryTriggerInteraction.Collide))
         {
-
-            if (hit.collider.TryGetComponent(out Interactable interact))
+            if (!inventory.inventoryEnabled)
             {
-                interactableObject = hit.collider.gameObject;
+                if (hit.collider.TryGetComponent(out Interactable interact))
+                {
+                    interactableObject = hit.collider.gameObject;
 
-                grabbableObject = null;
-            }
-            else if (hit.collider.CompareTag("Item"))
-            {
-                grabbableObject = hit.collider.gameObject;
+                    grabbableObject = null;
+                }
+                else if (hit.collider.CompareTag("Item"))
+                {
+                    grabbableObject = hit.collider.gameObject;
 
-                interactableObject = null;
+                    interactableObject = null;
+                }
+                else
+                {
+                    interactableObject = null;
+                    grabbableObject = null;
+                }
             }
-            else
-            {
-                interactableObject = null;
-                grabbableObject = null;
-            }
-
+           
         }
-        else 
+        else
         {
             interactableObject = null;
             grabbableObject = null;
