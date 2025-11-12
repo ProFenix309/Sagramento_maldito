@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuControlscript : MonoBehaviour
 {
+    public SceneTransition TransitionPanel;
     public GameObject panelMenuPrincipal;
     public GameObject panelConfiguracion;
     public GameObject subpanelSonido;
@@ -55,6 +56,7 @@ public class MenuControlscript : MonoBehaviour
 
     public void OnNewGameClicked()
     {
+        TransitionPanel.LoadScene("Casa");
         DataPersistenceManager.instance.NewGame();
     }
 
