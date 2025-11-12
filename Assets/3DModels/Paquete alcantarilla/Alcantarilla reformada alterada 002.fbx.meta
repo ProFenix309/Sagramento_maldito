@@ -3,7 +3,37 @@ guid: 4501655a050cbde4385d70b652258e7c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Acesso alcantarilla
+    second: {fileID: 2100000, guid: 9e3731bc37cee6847ac43429dbf18721, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Concreto escalera
+    second: {fileID: 2100000, guid: 574f7dd657579f049906ed4704323b48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Escalera alterada
+    second: {fileID: 2100000, guid: b6c0b13f5482295439f09bf0663a59da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Interior acceso
+    second: {fileID: 2100000, guid: 002326b8611579c4db08056d428e175d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 8be60c25718978d4989fe5f9a831a9b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 976b01a1d7c5d9b448893e3e45350670, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

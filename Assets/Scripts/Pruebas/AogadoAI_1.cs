@@ -78,7 +78,7 @@ public class AhogadoAI_1 : MonoBehaviour
     {
         //timer to not have a seizure/epilepsy
         randomTime -= Time.deltaTime;
-
+       
         //Check for layer to attack/follow
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -89,9 +89,17 @@ public class AhogadoAI_1 : MonoBehaviour
 
         if (randomTime <= 0.2f)
         {
-            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
             if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
-            if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
+            else  if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) 
+            {
+                Distraction.TryGetComponent<Disappear>(out Disappear spawn);
+                if (spawn.Spawned == false)
+                {
+                    ChaseDistraction();
+                }
+                
+            }
+            else if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
             randomTime = initialRandomTime;
         }
         else
@@ -140,9 +148,9 @@ public class AhogadoAI_1 : MonoBehaviour
         agent.speed = ChaseVelocity;
 
         //sets animation states
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isRunnig", true);
-        animator.SetBool("isAttacking", false);
+        //animator.SetBool("isWalking", false);
+        //animator.SetBool("isRunnig", true);
+        //animator.SetBool("isAttacking", false);
 
         //agent moves towards player
         agent.SetDestination(player.position);
@@ -152,11 +160,14 @@ public class AhogadoAI_1 : MonoBehaviour
         agent.speed += ChaseVelocity;
 
         //sets animation states
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isRunnig", true);
-        animator.SetBool("isAttacking", false);
+        //animator.setbool("iswalking", false);
+        //animator.setbool("isrunnig", true);
+        //animator.setbool("isattacking", false);
 
-        agent.SetDestination(Distraction.position);
+        if (Distraction != null)
+            agent.SetDestination(Distraction.position);
+
+
         if (!alreadyAtacked)
         {
             alreadyAtacked = true;

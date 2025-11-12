@@ -85,7 +85,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
 
         if (randomTime <= 0.2f)
         {
-            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
+            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange && Distraction.GetComponent<Disappear>().Spawned == false) ChaseDistraction();
             if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
             if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
             randomTime = initialRandomTime;
@@ -136,13 +136,16 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     }
     private void ChaseDistraction()
     {
-        agent.speed = agent.speed + ChaseVelocity;
-        agent.SetDestination(Distraction.position);
-        if (!alreadyAtacked)
-        {
-            alreadyAtacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAtacks);
-        }
+       
+      
+            agent.speed = agent.speed + ChaseVelocity;
+            agent.SetDestination(Distraction.position);
+            if (!alreadyAtacked)
+            {
+                alreadyAtacked = true;
+                Invoke(nameof(ResetAttack), timeBetweenAtacks);
+            }
+        
     }
     private void AttackPlayer()
     {
