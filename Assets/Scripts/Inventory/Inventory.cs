@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour
         else
         {
             inventoryItem = null;
-            Debug.Log("no item for your inventory");
+            Debug.Log("no detected item for your inventory");
         }
 
         if (Input.GetKeyDown(KeyCode.I) && inventoryUIHandler.ItemInfoPanel.activeSelf ==false)
