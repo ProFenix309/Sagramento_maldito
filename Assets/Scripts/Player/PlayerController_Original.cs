@@ -42,8 +42,8 @@ public class PlayerController_Original : MonoBehaviour
     [SerializeField] GameObject interact;
     [SerializeField] GameObject grab;
 
-    GameObject interactableObject;
-    GameObject grabbableObject;
+    public GameObject interactableObject;
+    public GameObject grabbableObject;
 
     private Health health;
 
@@ -89,10 +89,13 @@ public class PlayerController_Original : MonoBehaviour
     {
         if (gameObject.GetComponent<Inventory>().inventoryEnabled == true)
         {
+            interactableObject = null;
+            grabbableObject = null;
             return;
         }
         if (Physics.Raycast(rayPivot.position, rayPivot.forward, out RaycastHit hit, maxInteractDistance, layerInteract, QueryTriggerInteraction.Collide))
         {
+
             if (hit.collider.TryGetComponent(out Interactable interact))
             {
                 interactableObject = hit.collider.gameObject;
@@ -110,6 +113,12 @@ public class PlayerController_Original : MonoBehaviour
                 interactableObject = null;
                 grabbableObject = null;
             }
+
+        }
+        else 
+        {
+            interactableObject = null;
+            grabbableObject = null;
         }
 
         grab.SetActive(grabbableObject != null ? true : false);
