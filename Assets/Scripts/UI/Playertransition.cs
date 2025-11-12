@@ -22,14 +22,14 @@ public class Playertransition : MonoBehaviour
     IEnumerator Transition(bool activatePlayer)
     {
         // Activar animación
-        transitionAnimator.SetBool("Start", true);
+        transitionAnimator.SetBool("End", true);
 
         // Esperar la duración
         yield return new WaitForSeconds(transitionTime);
 
         // Desactivar animación
 
-        transitionAnimator.SetBool("Start", false);
+        transitionAnimator.SetBool("End", false);
 
 
         // Activar jugador
