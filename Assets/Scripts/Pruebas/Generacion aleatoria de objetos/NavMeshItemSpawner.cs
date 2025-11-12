@@ -4,7 +4,7 @@ using UnityEngine.AI; // ¡Importante! Necesario para NavMesh
 
 public class NavMeshItemSpawner : MonoBehaviour
 {
-    [Header("Configuración de Prefabs")]
+    [Header("Listas de Prefabs")]
     public List<GameObject> prefabList;
 
     public int cantidadAInstanciar;
