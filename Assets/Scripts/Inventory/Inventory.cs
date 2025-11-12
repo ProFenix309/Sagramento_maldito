@@ -39,7 +39,7 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        if (itemH.Item != null)
+        if (itemH.Item != null && !inventoryEnabled)
         {
             inventoryItem = itemH.Item.gameObject;
             if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
