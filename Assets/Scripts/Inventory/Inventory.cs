@@ -26,16 +26,17 @@ public class Inventory : MonoBehaviour
     [HideInInspector] public GetItem itemH;
     [HideInInspector] public GameObject inventoryItem;
 
-    bool unlockInputs;
+    bool unlockInputs = true;
     public bool UnlockInputs { get => unlockInputs; set => unlockInputs = value; }
 
     private void Awake()
     {
         HandDetection = GameObject.Find("Hand");
+        inventoryUIHandler = inventory.GetComponent<InventoryUIHandler>();
     }
     void Start()
     {
-        inventoryUIHandler = inventory.GetComponent<InventoryUIHandler>();
+        
         itemH = HandDetection.GetComponent<GetItem>();
         playerController = GetComponent<PlayerController_Original>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();

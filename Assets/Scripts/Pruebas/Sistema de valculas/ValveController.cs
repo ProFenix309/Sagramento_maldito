@@ -6,8 +6,8 @@ public class ValveController : MonoBehaviour
     [Header("Válvulas Requeridas")]
     [SerializeField] private List<Valve> valves = new List<Valve>();
 
-    [Header("Puerta a Controlar")]
-    [SerializeField] private DoorWithValves door;
+    [Header("Plataformas a Controlar")]
+    [SerializeField] private PlatformWithValves platforms;
 
     private int activatedCount = 0;
 
@@ -45,20 +45,20 @@ public class ValveController : MonoBehaviour
 
         if (allActivated)
         {
-            UnlockDoor();
+            UnlockPlatforms();
         }
     }
 
-    private void UnlockDoor()
+    private void UnlockPlatforms()
     {
-        if (door != null)
+        if (platforms != null)
         {
-            door.Unlock();
-            Debug.Log("¡Todas las válvulas activadas! Desbloqueando puerta...");
+            platforms.Unlock();
+            Debug.Log("¡Todas las válvulas activadas! Descendiendo plataformas...");
         }
         else
         {
-            Debug.LogWarning("No hay puerta asignada al ValveController.");
+            Debug.LogWarning("No hay plataformas asignadas al ValveController.");
         }
     }
 
