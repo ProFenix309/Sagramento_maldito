@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 8765663032347767499}
   - component: {fileID: 3525356183789717577}
   - component: {fileID: 4021869638196411387}
+  - component: {fileID: 4120995390284317623}
   m_Layer: 7
   m_Name: Player Modular
   m_TagString: Player
@@ -496,7 +497,7 @@ MonoBehaviour:
   jumpForce: 5
   layerColision:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 80
   checkedGround: {fileID: 1264991035943921804}
   radiusGround: 0.2
 --- !u!114 &5841860371285604092
@@ -575,6 +576,22 @@ MonoBehaviour:
   vidaMaxima: 20
   vidaActual: 0
   etiquetaEnemigo: Enemy
+--- !u!114 &4120995390284317623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884450356577884219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdeae7d0d9b3c448cdf7a0fd6222c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ripplePlane: {fileID: 0}
+  waterTrigger: {fileID: 0}
+  isFloatingWithWater: 1
+  moveUpHeight: 1
 --- !u!1 &990171932566267905
 GameObject:
   m_ObjectHideFlags: 0

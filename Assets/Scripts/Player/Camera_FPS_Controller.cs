@@ -12,6 +12,7 @@ public class Camera_FPS_Controller : MonoBehaviour
     public float mouseY;
 
     public bool canMove;
+    public bool unlockInputs;
 
     //Sencivilidad a la que se muenve el mause 
     public float sencitivily;
@@ -22,13 +23,14 @@ public class Camera_FPS_Controller : MonoBehaviour
     private void Start()
     {
         canMove = true;
+        unlockInputs = true;
         //Es para ocultar el cursor en la pantalla
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        if (canMove)
+        if (canMove && unlockInputs)
         {
             //Detectar el movimiento del mause
             mouseX = Input.GetAxis("Mouse X") * sencitivily * Time.deltaTime; //Time.deltatime estandariza los frimes para que

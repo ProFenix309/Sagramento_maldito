@@ -59,20 +59,14 @@ public class InventoryUIHandler : MonoBehaviour
 
     public void ShowItem(Items item)
     {
-       
-
         // Desactivar panel de inventario
         
-     
         inventoryPanel.SetActive(false);
-
 
         // Activar panel de información
         
-      
         ItemInfoPanel.SetActive(true);
         
-
         // Mostrar datos del ítem
         itemIcon.sprite = item.icon;
         itemNameText.text = item.type;
