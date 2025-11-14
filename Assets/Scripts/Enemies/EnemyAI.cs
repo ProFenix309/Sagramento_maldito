@@ -85,7 +85,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
 
         if (randomTime <= 0.2f)
         {
-            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange && Distraction.GetComponent<Disappear>().Spawned == false) ChaseDistraction();
+            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
             if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
             if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
             randomTime = initialRandomTime;
