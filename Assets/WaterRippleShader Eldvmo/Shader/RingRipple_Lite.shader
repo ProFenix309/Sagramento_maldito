@@ -5,11 +5,11 @@ Shader "Custom/RingRipple_Lite"
         _Color("Color", Color) = (1,1,1,1)
         _Texture("Texture", 2D) = "white"{}
         _Decay("Decay", Range(0,20)) = 5
-        _WaveLiftTime("Wave Life Time", Range(1,10)) = 2
-        _WaveFrequency("Wave Frequency", Range(0,100)) = 25
-        _WaveSpeed("Wave Speed", Range(0,10)) = 0.1
+        _WaveLiftTime("Wave Life Time", Range(1,10)) = 5
+        _WaveFrequency("Wave Frequency", Range(0,100)) = 15
+        _WaveSpeed("Wave Speed", Range(0,10)) = 0.5
         _WaveStrength("Wave Strength", Range(0,5)) = 0.5
-        _StencilRef("Stencil Ref", Range(0,255)) = 1
+        _StencilRef("Stencil Ref", Range(0,255)) = 2
     }
 
     SubShader

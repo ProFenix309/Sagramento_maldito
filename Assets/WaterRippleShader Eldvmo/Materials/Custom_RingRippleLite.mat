@@ -30,11 +30,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _Decay: 1
-    - _StencilRef: 0
-    - _WaveFrequency: 20
-    - _WaveLiftTime: 2
-    - _WaveSpeed: 0.1
-    - _WaveStrength: 0.2
+    - _StencilRef: 0.5
+    - _WaveFrequency: 15
+    - _WaveLiftTime: 5
+    - _WaveSpeed: 0.3
+    - _WaveStrength: 1
     m_Colors:
     - _Color: {r: 0.4554071, g: 0.4641509, b: 0.15676036, a: 1}
   m_BuildTextureStacks: []

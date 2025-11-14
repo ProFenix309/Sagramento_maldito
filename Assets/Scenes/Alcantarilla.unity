@@ -2170,6 +2170,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 688a5b46387f0204293b4d3dc6c70d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &713775773 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8078212662175657501, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+  m_PrefabInstance: {fileID: 1909807677}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &713775782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713775773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdeae7d0d9b3c448cdf7a0fd6222c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ripplePlane: {fileID: 82481822}
+  waterTrigger: {fileID: 1289305145}
+  isFloatingWithWater: 1
+  moveUpHeight: 2
 --- !u!1 &749633347
 GameObject:
   m_ObjectHideFlags: 0
@@ -3350,7 +3371,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2464903721374318889, guid: 53a5d0aaac668d44582877da77042b00, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2056502547}
   m_SourcePrefab: {fileID: 100100000, guid: 53a5d0aaac668d44582877da77042b00, type: 3}
 --- !u!1 &1038594607
 GameObject:
@@ -5784,7 +5808,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8078212662175657501, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 713775782}
   m_SourcePrefab: {fileID: 100100000, guid: 0de73b87e5f5dc347b25f3d3a4436f60, type: 3}
 --- !u!1 &1921160102
 GameObject:
@@ -6044,11 +6071,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7020379481999170989, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
       propertyPath: m_Convex
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7020379481999170989, guid: a98d070db8314c44385c7c50f72d4b60, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6311,6 +6338,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052430516}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2056502538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2464903721374318889, guid: 53a5d0aaac668d44582877da77042b00, type: 3}
+  m_PrefabInstance: {fileID: 1000387025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2056502547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056502538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbdeae7d0d9b3c448cdf7a0fd6222c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ripplePlane: {fileID: 82481822}
+  waterTrigger: {fileID: 1289305145}
+  isFloatingWithWater: 1
+  moveUpHeight: 2
 --- !u!1 &2058845454 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6451035917133900507, guid: 4501655a050cbde4385d70b652258e7c, type: 3}
