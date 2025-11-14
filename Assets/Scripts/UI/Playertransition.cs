@@ -7,7 +7,7 @@ public class Playertransition : MonoBehaviour
     public Animator transitionAnimator;
     public float transitionTime = 2f;
 
-    private void Start()
+    private void OnEnable()
     {
         StartTransition(false);
     }

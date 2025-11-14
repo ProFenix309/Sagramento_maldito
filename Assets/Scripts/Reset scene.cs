@@ -5,7 +5,7 @@ public class Resetscene : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Player Modular")
+        if (collision.gameObject.name == "Player_Original")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
