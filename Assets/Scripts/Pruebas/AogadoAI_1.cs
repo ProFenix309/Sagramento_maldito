@@ -78,7 +78,7 @@ public class AhogadoAI_1 : MonoBehaviour
     {
         //timer to not have a seizure/epilepsy
         randomTime -= Time.deltaTime;
-       
+
         //Check for layer to attack/follow
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -89,17 +89,9 @@ public class AhogadoAI_1 : MonoBehaviour
 
         if (randomTime <= 0.2f)
         {
+            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
             if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
-            else  if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) 
-            {
-                Distraction.TryGetComponent<Disappear>(out Disappear spawn);
-                if (spawn.Spawned == false)
-                {
-                    ChaseDistraction();
-                }
-                
-            }
-            else if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
+            if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
             randomTime = initialRandomTime;
         }
         else
