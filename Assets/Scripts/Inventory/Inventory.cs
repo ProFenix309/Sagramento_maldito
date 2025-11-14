@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
     [HideInInspector] public GetItem itemH;
     [HideInInspector] public GameObject inventoryItem;
 
-    bool unlockInputs;
+    bool unlockInputs = true;
     public bool UnlockInputs { get => unlockInputs; set => unlockInputs = value; }
 
     private void Awake()
