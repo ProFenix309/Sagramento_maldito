@@ -3,9 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class Resetscene : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    [SerializeField] string playerName;
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.name == "Player_Original")
+        if (other.gameObject.name == "Player_Original")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

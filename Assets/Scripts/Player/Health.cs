@@ -55,7 +55,7 @@ public class Health : MonoBehaviour/*, IDataPersistence*/
     public void RecibirDaño(float daño)
     {
         vidaActual -= daño;
-        Debug.Log("Da�o recibido: " + daño + " | Vida restante: " + vidaActual);
+        Debug.Log("Daño recibido: " + daño + " | Vida restante: " + vidaActual);
 
         if (vidaActual <= 0)
         {
