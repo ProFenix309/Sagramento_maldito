@@ -22,6 +22,7 @@ public class Playertransition : MonoBehaviour
     IEnumerator Transition(bool activatePlayer)
     {
         // Activar animación
+        gameObject.SetActive(true);
         transitionAnimator.SetBool("End", true);
 
         // Esperar la duración
@@ -30,6 +31,7 @@ public class Playertransition : MonoBehaviour
         // Desactivar animación
 
         transitionAnimator.SetBool("End", false);
+        gameObject.SetActive(false);
 
 
         // Activar jugador
