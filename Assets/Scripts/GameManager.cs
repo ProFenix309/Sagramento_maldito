@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -20,12 +21,6 @@ public class GameManager : MonoBehaviour
             Debug.Log(inventory = GameObject.Find("Player Modular").GetComponent<Inventory>());
             inventory = GameObject.Find("Player Modular").GetComponent<Inventory>();
         }
-
-
-       
-        
-
-
     }
 
     // Update is called once per frame
@@ -33,4 +28,5 @@ public class GameManager : MonoBehaviour
     {
     
     }
+
 }
