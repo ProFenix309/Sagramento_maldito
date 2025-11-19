@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class Playertransition : MonoBehaviour
+public class TransparenciadelTexto : MonoBehaviour
 {
     public Animator transitionAnimator;
+    public string ValueName;
     public float transitionTime = 2f;
 
     private void OnEnable()
@@ -22,13 +23,14 @@ public class Playertransition : MonoBehaviour
     {
         // Activar animación
         gameObject.SetActive(true);
-        transitionAnimator.SetBool("End", true);
+        transitionAnimator.SetBool(ValueName, true);
 
         // Esperar la duración
         yield return new WaitForSeconds(transitionTime);
 
         // Desactivar animación
-        transitionAnimator.SetBool("End", false);
+        transitionAnimator.SetBool(ValueName, false);
+       
         gameObject.SetActive(false);
     }
 }
