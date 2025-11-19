@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
+    [SerializeField] string playerTag;
 
 
     [Space]
@@ -51,7 +52,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
         //detects object by names on scene
 
         StartingPoint = GameObject.Find("StartingPoint").transform;
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find(playerTag).transform;
 
         if (GameObject.Find("Distraction"))
             Distraction = GameObject.Find("Distraction").transform;
@@ -136,8 +137,6 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     }
     private void ChaseDistraction()
     {
-       
-      
             agent.speed = agent.speed + ChaseVelocity;
             agent.SetDestination(Distraction.position);
             if (!alreadyAtacked)
@@ -145,7 +144,6 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
                 alreadyAtacked = true;
                 Invoke(nameof(ResetAttack), timeBetweenAtacks);
             }
-        
     }
     private void AttackPlayer()
     {
