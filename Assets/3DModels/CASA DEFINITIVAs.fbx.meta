@@ -3,12 +3,87 @@ guid: 61a443b1173dbeb448a8ac6fde6c38a5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door.Common
+    second: {fileID: 2100000, guid: 6ebf81d02c9b0ed47ac28ce4412e015a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door.Entrance
+    second: {fileID: 2100000, guid: 4a89023396e99a543a15818e8c7c5d56, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor.Bathroom
+    second: {fileID: 2100000, guid: bf7a2c79282275e48adafe564b20fd2c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor.Cement
+    second: {fileID: 2100000, guid: 805cc68a10de7df48a7e5e083398bc7a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor.Steps
+    second: {fileID: 2100000, guid: 61a665982b7f5ae47b2404778584aefd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor.Wood
+    second: {fileID: 2100000, guid: b73d13a8a100ea94088b9c6e15c35d5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall.Bathroom
+    second: {fileID: 2100000, guid: a8279bd0fd8e9d241babd1c3dd3afa91, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall.Blue
+    second: {fileID: 2100000, guid: f92c4ca4acb842145b30087d55a3a245, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall.Concrete
+    second: {fileID: 2100000, guid: 06fb311e8f7828243bbf378e56ebd04a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall.Corridor
+    second: {fileID: 2100000, guid: 11f73667e47d17e48923076f966d10a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall.Red
+    second: {fileID: 2100000, guid: e425d0fb996b39d429b5925ac80fac88, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wall.Yellow
+    second: {fileID: 2100000, guid: d0ab15209b2b3f94eae99804a56351be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Window.Dark
+    second: {fileID: 2100000, guid: f16188a424c8ea74695602309f8adefd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood.Hor
+    second: {fileID: 2100000, guid: 2a893123d2a63d448b1056959bb76dbc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood.Vert
+    second: {fileID: 2100000, guid: 512966b5423533341a7a9d279b0b1dd0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
-    materialSearch: 1
-    materialLocation: 1
+    materialSearch: 2
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
