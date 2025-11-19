@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI; // ¡Importante! Necesario para NavMesh
+using UnityEngine.AI; 
 
 public class NavMeshItemSpawner : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class NavMeshItemSpawner : MonoBehaviour
 
     public float distanciaMaxBusqueda = 50.0f;
 
-    void Start()
+    void OnEnable()
     {
         if (prefabList.Count == 0)
         {
