@@ -18,15 +18,15 @@ public class Activador_Por_Teclas : MonoBehaviour
     {
         if (animationComplete)
         {
-        animator.SetBool("BoolInput", true);
+            animator.SetBool("BoolInput", true);
 
-        // Esperar la duración
-        yield return new WaitForSeconds(transitionTime);
+            // Esperar la duración
+            yield return new WaitForSeconds(transitionTime);
 
-        // Desactivar animación
-        animator.SetBool("BoolInput", false);
-        Canvas.SetActive(false);
-        animationComplete = false;
+            // Desactivar animación
+            animator.SetBool("BoolInput", false);
+            Canvas.SetActive(false);
+            animationComplete = false;
         }
     }
 

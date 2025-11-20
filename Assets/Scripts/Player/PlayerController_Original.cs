@@ -136,11 +136,11 @@ public class PlayerController_Original : MonoBehaviour
         rb.linearVelocity = new Vector3(direction.x * currentSpeed, rb.linearVelocity.y, direction.z * currentSpeed);
         if (rb.maxLinearVelocity < 0.2f)
         {
-            meshAnimator.SetBool("Walking", false);
+            //meshAnimator.SetBool("Walking", false);
         }
         else
         {
-            meshAnimator.SetBool("Walking", true);
+            //meshAnimator.SetBool("Walking", true);
         }
     }
 

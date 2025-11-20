@@ -3,34 +3,31 @@ using System.Collections;
 
 public class TransparenciadelTexto : MonoBehaviour
 {
-    public Animator transitionAnimator;
-    public string ValueName;
     public float transitionTime = 2f;
+    [SerializeField] Animator animator;
+    [SerializeField] GameObject Canvas;
+    [SerializeField] string parametros;
+    [SerializeField] bool animationComplete = true;
 
-    private void OnEnable()
+
+    public void Desvanecimiento()
     {
-        StartTransition(false);
+        StartCoroutine(Transition());
     }
 
-    public void StartTransition(bool activatePlayer)
+    IEnumerator Transition()
     {
+        if (animationComplete)
+        {
+            animator.SetBool(parametros, true);
 
-        StartCoroutine(Transition(false));
+            // Esperar la duración
+            yield return new WaitForSeconds(transitionTime);
 
-    }
-
-    IEnumerator Transition(bool activatePlayer)
-    {
-        // Activar animación
-        gameObject.SetActive(true);
-        transitionAnimator.SetBool(ValueName, true);
-
-        // Esperar la duración
-        yield return new WaitForSeconds(transitionTime);
-
-        // Desactivar animación
-        transitionAnimator.SetBool(ValueName, false);
-       
-        gameObject.SetActive(false);
+            // Desactivar animación
+            animator.SetBool(parametros, false);
+            Canvas.SetActive(false);
+            animationComplete = false;
+        }
     }
 }
