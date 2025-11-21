@@ -58,7 +58,7 @@ public class MenuControlscript : MonoBehaviour
     public void OnNewGameClicked()
     {
         TransitionPanel.gameObject.SetActive(true);
-        TransitionPanel.StartCoroutine(TransitionPanel.Transition("Alcantarilla"));
+        TransitionPanel.StartCoroutine(TransitionPanel.Transition("Casa"));
         DataPersistenceManager.instance.NewGame();
     }
 
