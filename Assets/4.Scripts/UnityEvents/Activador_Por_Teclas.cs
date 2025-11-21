@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Activador_Por_Teclas : MonoBehaviour
 {
@@ -7,27 +8,42 @@ public class Activador_Por_Teclas : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] GameObject Canvas;
     [SerializeField] bool animationComplete = true;
+
+    [SerializeField] string animatorParameters;
+
+    [SerializeField] List<KeyCode> keys;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        InteractionKey();
+    }
+
+    public void InteractionKey()
+    {
+        // Verificar si alguna tecla de la lista fue presionada
+        foreach (KeyCode key in keys)
         {
-            StartCoroutine(Transition());
+            if (Input.GetKeyDown(key))
+            {
+                StartCoroutine(Transition());
+                break;
+            }
         }
     }
+
     IEnumerator Transition()
     {
         if (animationComplete)
         {
-            animator.SetBool("BoolInput", true);
+            animator.SetBool(animatorParameters, true);
 
             // Esperar la duración
             yield return new WaitForSeconds(transitionTime);
 
             // Desactivar animación
-            animator.SetBool("BoolInput", false);
+            animator.SetBool(animatorParameters, false);
             Canvas.SetActive(false);
             animationComplete = false;
         }
     }
-
 }
