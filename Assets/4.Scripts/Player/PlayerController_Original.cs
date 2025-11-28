@@ -56,7 +56,6 @@ public class PlayerController_Original : MonoBehaviour
         canMove = true;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        meshAnimator = GameObject.Find("LUCY").GetComponent<Animator>();
         health = GetComponent<Health>();
     }
 
