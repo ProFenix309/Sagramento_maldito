@@ -28,7 +28,7 @@ public class Camera_FPS_Controller : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (canMove && unlockInputs)
         {
