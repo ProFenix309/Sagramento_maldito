@@ -14,7 +14,7 @@ public class PlayerController_Original : MonoBehaviour
     [HideInInspector] public bool canMove;
     [HideInInspector] float stopMovement = 0f;
 
-    [Space, Header("Fuerza jump y Gravedad")]
+    [Space, Header("Fuerza jump")]
 
     [SerializeField] private float jumpForce;
 
@@ -23,7 +23,7 @@ public class PlayerController_Original : MonoBehaviour
     [SerializeField] private LayerMask layerColision;
     [SerializeField] private Transform checkedGround;
     [SerializeField] private float radiusGround;
-    [SerializeField] private bool isGround;
+    [SerializeField] public bool isGround;
 
     [Space, Header("Deteccion del Raycast")]
     [SerializeField] private float maxInteractDistance;
@@ -203,7 +203,7 @@ public class PlayerController_Original : MonoBehaviour
         }
     }
 
-    void GroundDetection()
+    public void GroundDetection()
     {
         isGround = Physics.CheckSphere(checkedGround.position, radiusGround, layerColision);
     }
