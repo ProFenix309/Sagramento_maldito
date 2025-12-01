@@ -9,6 +9,7 @@ public class Activador_Por_Colicion : Activador_Eventos
     {
         if (tagName.Contains(other.tag))
         {
+            Debug.Log("entered");
             eventosFinales?.Invoke();
         }
     }
