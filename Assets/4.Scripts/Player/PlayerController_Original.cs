@@ -41,9 +41,11 @@ public class PlayerController_Original : MonoBehaviour
     [Space, Header("Paneles del canvas")]
     [SerializeField] GameObject interact;
     [SerializeField] GameObject grab;
-
     public GameObject interactableObject;
     public GameObject grabbableObject;
+
+    [Space, Header("Audio")]
+    
 
     private Health health;
 
@@ -213,6 +215,11 @@ public class PlayerController_Original : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jump = false;
         }
+    }
+
+    public void AudioStep()
+    {
+        //AudioManager.instance.PlaySound("Step", transform.position);
     }
 
     private void OnDrawGizmos()
