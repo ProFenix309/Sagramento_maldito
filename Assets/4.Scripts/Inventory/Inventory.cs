@@ -21,6 +21,9 @@ public class Inventory : MonoBehaviour
     PlayerController_Original playerController;
     Camera_FPS_Controller cameraController;
 
+    [Header("Items Iniciales")]
+    [SerializeField] private List<Items> initialItems = new List<Items>();
+
     [HideInInspector] public GameObject HandDetection;
     [HideInInspector] public GetItem itemH;
     [HideInInspector] public GameObject inventoryItem;
@@ -39,6 +42,15 @@ public class Inventory : MonoBehaviour
         itemH = HandDetection.GetComponent<GetItem>();
         playerController = GetComponent<PlayerController_Original>();
         cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
+
+        foreach (var item in initialItems)
+        {
+            if (item != null)
+            {
+                AddItem(item);
+                Debug.Log($"Item inicial '{item.type}' agregado al inventario");
+            }
+        }
     }
 
     void Update()
