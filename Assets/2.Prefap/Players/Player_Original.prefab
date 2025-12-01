@@ -2537,6 +2537,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5180927700906878341}
+  - component: {fileID: 8377400346763213838}
   m_Layer: 7
   m_Name: Luzy
   m_TagString: Untagged
@@ -2560,6 +2561,28 @@ Transform:
   - {fileID: 6507560108106638029}
   m_Father: {fileID: 7894873773746425047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8377400346763213838
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6654916443653317332}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6de247cb966fc8341900a14e0027d318, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6839216930010274657
 GameObject:
   m_ObjectHideFlags: 0
@@ -3260,7 +3283,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   animator: {fileID: 1585725011726092319}
-  meshAnimator: {fileID: 0}
+  meshAnimator: {fileID: 8377400346763213838}
   inventory: {fileID: 7797154515480307037}
   interact: {fileID: 9097689008712227726}
   grab: {fileID: 639224993334937320}

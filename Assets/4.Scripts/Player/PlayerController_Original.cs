@@ -135,11 +135,11 @@ public class PlayerController_Original : MonoBehaviour
         rb.linearVelocity = new Vector3(direction.x * currentSpeed, rb.linearVelocity.y, direction.z * currentSpeed);
         if (rb.maxLinearVelocity < 0.2f)
         {
-            //meshAnimator.SetBool("Walking", false);
+            meshAnimator.SetBool("isWalking", false);
         }
         else
         {
-            //meshAnimator.SetBool("Walking", true);
+            meshAnimator.SetBool("isWalking", true);
         }
     }
 
@@ -156,7 +156,7 @@ public class PlayerController_Original : MonoBehaviour
             {
                 crouched = false;
                 animator.SetBool("Crouched", false);
-                meshAnimator.SetBool("Crouched", false);
+                meshAnimator.SetBool("isCrouched", false);
             }
         }
 
@@ -169,7 +169,7 @@ public class PlayerController_Original : MonoBehaviour
         {
             crouched = !crouched;
             animator.SetBool("Crouched", crouched);
-            meshAnimator.SetBool("Crouched", crouched);
+            meshAnimator.SetBool("isCrouched", crouched);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround && !crouched)
