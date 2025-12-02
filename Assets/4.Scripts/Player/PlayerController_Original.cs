@@ -9,6 +9,7 @@ public class PlayerController_Original : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float speedRun;
     private float horizontalAxis, verticalAxis;
+    [HideInInspector] public bool stop = true;
     [HideInInspector] public bool canMove;
     [HideInInspector] float stopMovement = 0f;
 
@@ -69,18 +70,21 @@ public class PlayerController_Original : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (canMove)
+        if (stop)
         {
-            ChectkInteraction();
-            GroundDetection();
-            MovePlayer();
-            Jump();
-        }
-        else
-        {
-            interactableObject = null;
-            grabbableObject = null;
-            MovePlayer();
+            if (canMove)
+            {
+                ChectkInteraction();
+                GroundDetection();
+                MovePlayer();
+                Jump();
+            }
+            else
+            {
+                interactableObject = null;
+                grabbableObject = null;
+                MovePlayer();
+            }
         }
     }
 
