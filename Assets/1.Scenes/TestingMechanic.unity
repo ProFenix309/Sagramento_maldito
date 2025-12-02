@@ -1835,62 +1835,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Amuleto 1
       objectReference: {fileID: 0}
-    - target: {fileID: 577832644695175118, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1479775287711837690, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1479775287711837690, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: maxDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1479775287711837690, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: minDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1479775287711837690, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: playOnStart
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1479775287711837690, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: spatialBlend
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: Loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: Priority
-      value: 76
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: m_Resource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: MaxDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7303742284084171234, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
-      propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1950,7 +1894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059702634317067006, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
       propertyPath: 'altarSlots.Array.data[0]'
@@ -1975,7 +1919,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1298724460630437517, guid: 87ab0379b9d5d0d428b34cc80d3767ca, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7641919758761781567, guid: 87ab0379b9d5d0d428b34cc80d3767ca, type: 3}
       propertyPath: m_Name
@@ -2084,7 +2028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8273540151731669727, guid: f0da5f486534ad84fa0deaac9dbee41e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
