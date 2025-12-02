@@ -8,9 +8,7 @@ public class PlayerController_Original : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float speedRun;
-    [SerializeField] private float speedCrouched;
     private float horizontalAxis, verticalAxis;
-    [SerializeField] private bool crouched;
     [HideInInspector] public bool canMove;
     [HideInInspector] float stopMovement = 0f;
 
@@ -31,11 +29,9 @@ public class PlayerController_Original : MonoBehaviour
     [SerializeField] private LayerMask layerInteract;
 
     [Space, Header("Animator")]
-
-    [SerializeField] Animator animator;
     [SerializeField] Animator meshAnimator;
 
-
+    [Space,Header("Inventario")]
     [SerializeField] Inventory inventory;
 
     [Space, Header("Paneles del canvas")]
@@ -57,8 +53,8 @@ public class PlayerController_Original : MonoBehaviour
     {
         canMove = true;
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
         health = GetComponent<Health>();
+        meshAnimator =  GameObject.Find("LUCY@Idle").GetComponent<Animator>();
     }
 
     private void Update()
@@ -126,7 +122,8 @@ public class PlayerController_Original : MonoBehaviour
 
     public void MovePlayer()
     {
-        float currentSpeed = run ? speedRun : (crouched ? speedCrouched : speed);
+        meshAnimator.SetBool("isWalking", true);
+        float currentSpeed = run ? speedRun : (speed);
 
         if (!canMove)
         {
@@ -135,13 +132,10 @@ public class PlayerController_Original : MonoBehaviour
         Vector3 direction = (transform.right * horizontalAxis) + (transform.forward * verticalAxis);
 
         rb.linearVelocity = new Vector3(direction.x * currentSpeed, rb.linearVelocity.y, direction.z * currentSpeed);
-        if (rb.maxLinearVelocity < 0.2f)
+
+        if (rb.linearVelocity == Vector3.zero)
         {
             meshAnimator.SetBool("isWalking", false);
-        }
-        else
-        {
-            meshAnimator.SetBool("isWalking", true);
         }
     }
 
@@ -150,31 +144,20 @@ public class PlayerController_Original : MonoBehaviour
         horizontalAxis = Input.GetAxis("Horizontal");
         verticalAxis = Input.GetAxis("Vertical");
 
+
         if (Input.GetKey(KeyCode.LeftShift) && isGround)
         {
             run = true;
-
-            if (crouched)
-            {
-                crouched = false;
-                animator.SetBool("Crouched", false);
-                meshAnimator.SetBool("isCrouched", false);
-            }
+            meshAnimator.SetBool("isRun",true);
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             run = false;
+            meshAnimator.SetBool("isRun", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && !Input.GetKey(KeyCode.LeftShift) && isGround)
-        {
-            crouched = !crouched;
-            animator.SetBool("Crouched", crouched);
-            meshAnimator.SetBool("isCrouched", crouched);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && !crouched)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             jump = true;
         }
@@ -215,11 +198,6 @@ public class PlayerController_Original : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             jump = false;
         }
-    }
-
-    public void AudioStep()
-    {
-        //AudioManager.instance.PlaySound("Step", transform.position);
     }
 
     private void OnDrawGizmos()
