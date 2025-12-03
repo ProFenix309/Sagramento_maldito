@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1.Scenes/Casa.unity
     guid: 2a3c2dd9b30b3934e8811b9bb9b44d52
-  - enabled: 0
+  - enabled: 1
     path: Assets/1.Scenes/Alcantarilla.unity
     guid: 475c754f2160cf2478f22f38fa1d181e
   m_configObjects:

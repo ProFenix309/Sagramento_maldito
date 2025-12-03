@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8948708408616464060}
   - component: {fileID: 5841317605073052563}
   - component: {fileID: 4271662597438435354}
+  - component: {fileID: 4117880929719561887}
   m_Layer: 5
   m_Name: Pause Menu
   m_TagString: Untagged
@@ -105,6 +106,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &4117880929719561887
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189200006071997203}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2139281038371223668
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +380,7 @@ GameObject:
   - component: {fileID: 8687933922376810934}
   - component: {fileID: 264214302657009527}
   m_Layer: 5
-  m_Name: "Volver al men\xFA principal"
+  m_Name: "Bot\xF3n Volver al men\xFA principal"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -636,7 +649,7 @@ GameObject:
   - component: {fileID: 7399872063293245880}
   - component: {fileID: 7381250607264929095}
   m_Layer: 5
-  m_Name: "Configuraci\xF3n"
+  m_Name: "Bot\xF3n Configuraci\xF3n"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -904,6 +917,7 @@ GameObject:
   - component: {fileID: 6248466489827845947}
   - component: {fileID: 7540701346483186611}
   - component: {fileID: 8372285735630099206}
+  - component: {fileID: 308533529683869105}
   m_Layer: 5
   m_Name: "Men\xFA Pausa"
   m_TagString: Untagged
@@ -997,6 +1011,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &308533529683869105
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763586028565521531}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7579821714046118934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,7 +1035,7 @@ GameObject:
   - component: {fileID: 3051900199411198990}
   - component: {fileID: 840123578403942558}
   m_Layer: 5
-  m_Name: Juego pausado
+  m_Name: "Bot\xF3n Juego pausado"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1223,7 +1249,7 @@ GameObject:
   - component: {fileID: 3297130020267662244}
   - component: {fileID: 5012588764348716840}
   m_Layer: 5
-  m_Name: Continuar partida
+  m_Name: "Bot\xF3n Continuar partida"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1433,7 +1459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762256240823844080, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2761410118689663925, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_Name
@@ -1441,19 +1467,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2761410118689663925, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2854528884656367631, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4275843732398809560, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5422671733053646378, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5936227222057788689, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1465,7 +1491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6296994579912022513, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6757242546397799580, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_UiScaleMode
@@ -1481,15 +1507,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6792051063887428958, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7362387697932678569, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7879396299317705127, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8762637203256744913, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_UiScaleMode
@@ -1506,10 +1532,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2761410118689663925, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6529120153423637301}
   m_SourcePrefab: {fileID: 100100000, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
 --- !u!224 &2273681262578101730 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 503067910952019377, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
   m_PrefabInstance: {fileID: 1834931620824254547}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4549905873206911974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2761410118689663925, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
+  m_PrefabInstance: {fileID: 1834931620824254547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &6529120153423637301
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549905873206911974}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
