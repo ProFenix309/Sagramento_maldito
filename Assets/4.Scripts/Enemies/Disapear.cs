@@ -8,7 +8,7 @@ public class Disappear : MonoBehaviour
     public LayerMask enemy;
     float timer = 2f;
     public bool Spawned = true;
-        
+    
     private void Update()
     {
         if (!Spawned)
