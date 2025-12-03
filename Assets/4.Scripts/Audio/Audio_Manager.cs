@@ -29,6 +29,14 @@ public class Audio_Manager : MonoBehaviour
         PlayMusic(backgroundMusic);
     }
 
+    private void Update()
+    {
+        
+    }
+
+
+
+
     public void PlaySFX(string name)
     {
         Sound s = Array.Find(sfxSounds, x => x.name == name);
@@ -39,8 +47,7 @@ public class Audio_Manager : MonoBehaviour
         }
         else
         {
-            sfxSource.clip = s.clip;
-            sfxSource.Play();
+            sfxSource.PlayOneShot(s.clip);
         }
     }
     public void PlayMusic(string name)

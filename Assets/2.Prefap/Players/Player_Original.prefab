@@ -3500,8 +3500,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: aeda0ecca37b88b41acceb56656f37d2, type: 3}
-  m_Resource: {fileID: 8300000, guid: aeda0ecca37b88b41acceb56656f37d2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 645685483b933f544aea69741a319213, type: 3}
+  m_Resource: {fileID: 8300000, guid: 645685483b933f544aea69741a319213, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 0.5
@@ -3604,7 +3604,7 @@ MonoBehaviour:
   rb: {fileID: 7437209473411507370}
   minVelocityToPlaySound: 0.1
   normalPitch: 0.5
-  runPitch: 1
+  runPitch: 0.7
 --- !u!1 &8247975228023023307
 GameObject:
   m_ObjectHideFlags: 0
@@ -4161,6 +4161,10 @@ PrefabInstance:
     - target: {fileID: 3652137038561249891, guid: 6a8f7ca79c6363f4f8dc2c943ef11164, type: 3}
       propertyPath: maxIntencity
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652137038561249891, guid: 6a8f7ca79c6363f4f8dc2c943ef11164, type: 3}
+      propertyPath: layerOff.m_Bits
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7197208344194971775, guid: 6a8f7ca79c6363f4f8dc2c943ef11164, type: 3}
       propertyPath: m_Name

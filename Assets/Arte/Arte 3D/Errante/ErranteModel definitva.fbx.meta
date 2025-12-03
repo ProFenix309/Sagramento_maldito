@@ -5,25 +5,20 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
-      type: UnityEngine:Material
+      type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Gris
-    second: {fileID: 2100000, guid: 95d4bdcbbe685924e970da5c3a4454c0, type: 2}
+      name: CARA ERRANTE
+    second: {fileID: 2800000, guid: 8454f49d989997447afe348b10a8f756, type: 3}
   - first:
-      type: UnityEngine:Material
+      type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: 28065fe8fbbe4474b9e255b6c0f4faf1, type: 2}
+      name: MANOS ERRANTE
+    second: {fileID: 2800000, guid: 2ceac023197a6914685a6679dc7d7abf, type: 3}
   - first:
-      type: UnityEngine:Material
+      type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Negro
-    second: {fileID: 2100000, guid: e2802932ad1567445aa02043dcb24dfd, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Piel
-    second: {fileID: 2100000, guid: a28d101afbd0f7440bbd7c41d65fa3bc, type: 2}
+      name: ropa errante
+    second: {fileID: 2800000, guid: 623c14c62d5459e4da8b848d374b21a6, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
