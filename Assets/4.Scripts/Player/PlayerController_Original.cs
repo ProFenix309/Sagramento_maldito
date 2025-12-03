@@ -43,9 +43,7 @@ public class PlayerController_Original : MonoBehaviour
 
     [Space, Header("Audio")]
     
-
     private Health health;
-
 
     bool jump;
     public bool run;

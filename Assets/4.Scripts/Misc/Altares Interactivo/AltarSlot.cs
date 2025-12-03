@@ -67,18 +67,17 @@ public class AltarSlot : MonoBehaviour, Interactable, ItemRequierement
         UpdateVisuals();
     }
 
-    private AltarManager FindAltarManager()
+private AltarManager FindAltarManager()
+{
+    AltarManager manager = GetComponentInParent<AltarManager>();
+    
+    if (manager == null)
     {
-        AltarManager manager = GetComponentInParent<AltarManager>();
-        
-        if (manager == null)
-        {
-            manager = FindObjectOfType<AltarManager>();
-        }
-        
-        return manager;
+        manager = FindAnyObjectByType<AltarManager>();
     }
-
+    
+    return manager;
+}
     private void OnDrawGizmos()
     {
         Gizmos.color = isActivated ? Color.green : Color.yellow;

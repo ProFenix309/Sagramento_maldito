@@ -39,7 +39,7 @@ public class AltarManager : MonoBehaviour
         
         if (altarSlots.Count == 0 && searchInSceneIfNotFound)
         {
-            AltarSlot[] sceneSlots = FindObjectsOfType<AltarSlot>();
+            AltarSlot[] sceneSlots = FindObjectsByType<AltarSlot>(FindObjectsSortMode.None);
             
             if (sceneSlots.Length > 0)
             {
