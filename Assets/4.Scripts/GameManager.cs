@@ -1,32 +1,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IDataPersistence
 {
     public static GameManager instance;
 
-    Inventory inventory;
+    public Inventory inventory;
     PlayerController_Original playerController;
     PlayerMovement playerMovement;
     Camera_FPS_Controller cameraController;
+
+    [HideInInspector]public int loadAct =1;
 
     private void Awake()
     {
         if (instance == null)
         {
+            DontDestroyOnLoad(gameObject);
             instance = this;
         }
-        if (GameObject.Find("Player Modular") && inventory == null)
+
+        GameEvents.Worldloaded?.Invoke(new WorldData());
+    }
+    private void Update()
+    {
+
+        GetGameInfo();
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.GameDataLoaded += LoadData;
+    }
+    private void OnDisable()
+    {
+        GameEvents.GameDataLoaded -= LoadData;
+    }
+    public void LoadData(GameData data)
+    {
+       loadAct = data.SavedWorldData.SavedAct;
+    }
+
+    public void GetGameInfo()
+    {
+        if (GameObject.Find("Player_Original") && inventory == null)
         {
-            Debug.Log(inventory = GameObject.Find("Player Modular").GetComponent<Inventory>());
-            inventory = GameObject.Find("Player Modular").GetComponent<Inventory>();
+            Debug.Log("waos");
+            inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
+        }
+        else
+        {
+            return;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    
-    }
-
 }

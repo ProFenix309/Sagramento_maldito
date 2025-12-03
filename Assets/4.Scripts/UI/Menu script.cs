@@ -9,7 +9,16 @@ public class MenuControlscript : MonoBehaviour
     public GameObject subpanelSonido;
     public GameObject subpanelGraficos;
     public GameObject panelCreditos;
+    public GameObject panelSonido;
     Resolution[] resoluciones;
+
+    GameManager gameManager;
+
+
+    private void Awake()
+    {
+        GetGameData();
+    }
     void Start()
     {
         TransitionPanel.gameObject.SetActive(false);
@@ -22,10 +31,7 @@ public class MenuControlscript : MonoBehaviour
         Resolution res = resoluciones[indice];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
     }
-    public void Jugar()
-    {
-        SceneManager.LoadScene(1);  // Cambia por el nombre real de tu escena
-    }
+
     public void ShowMenuPrincipal()
     {
         panelMenuPrincipal.SetActive(true);
@@ -55,12 +61,27 @@ public class MenuControlscript : MonoBehaviour
         Application.Quit();
     }
 
+    public void OnContinueClicked()
+    {
+        TransitionPanel.gameObject.SetActive(true);
+        TransitionPanel.StartCoroutine(TransitionPanel.Transition(gameManager.loadAct));
+          // Cambia por el nombre real de tu escena
+    }
+
     public void OnNewGameClicked()
     {
         TransitionPanel.gameObject.SetActive(true);
-        TransitionPanel.StartCoroutine(TransitionPanel.Transition("Casa"));
         DataPersistenceManager.instance.NewGame();
+        TransitionPanel.StartCoroutine(TransitionPanel.Transition(gameManager.loadAct));
+        
     }
-
+    
+    void GetGameData()
+    {
+        if (GameObject.Find("GameManager") && gameManager == null)
+        {
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+    }
 
 }

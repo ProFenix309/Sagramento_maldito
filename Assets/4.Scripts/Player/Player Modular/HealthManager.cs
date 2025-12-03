@@ -84,6 +84,6 @@ public class HealthManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        vidaActual = data.SavedPlayerData.VidaActual;
+        vidaActual = data.SavedPlayerData.CurrentHealth;
     }
 }

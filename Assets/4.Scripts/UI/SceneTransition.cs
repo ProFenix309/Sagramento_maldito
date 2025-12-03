@@ -8,16 +8,19 @@ public class SceneTransition : MonoBehaviour
     public Animator transitionAnimator;
     public float transitionTime = 2f;
 
+    private void Awake()
+    {
+        transitionAnimator = GetComponent<Animator>();
+    }
 
-
-    public void LoadScene(string sceneName)
+    public void LoadScene(int sceneName)
     {
         
         StartCoroutine(Transition(sceneName));
 
     }
 
-    public IEnumerator Transition(string sceneName)
+    public IEnumerator Transition(int sceneNumber)
     {
         
         // Activar animación
@@ -27,13 +30,12 @@ public class SceneTransition : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         // Desactivar animación
-
         transitionAnimator.SetBool("Start", false);
         
-
-
         // Cargar la escena
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneNumber);
+
+       
     }
 }
 

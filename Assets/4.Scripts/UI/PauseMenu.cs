@@ -36,6 +36,7 @@ public class PauseMenu : MonoBehaviour
     {
        
         sceneManager = SceneManager.GetActiveScene().buildIndex;
+
         if (sceneManager != 0)
         {
             if (instance == null)
@@ -48,17 +49,18 @@ public class PauseMenu : MonoBehaviour
             {
                 instance = this;
             }
+            if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null)
+            {
+                inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
+                playerController = GameObject.Find("Player_Original").GetComponent<PlayerController_Original>();
+                configutionPanel = GameObject.Find("Configuración").gameObject;
+                pausePanel = GameObject.Find("Pause Menu").gameObject;
+                menuPanel = GameObject.Find("Menú Pausa").gameObject;
+            }
         }
 
        
-        if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null)
-        {
-            inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
-            playerController = GameObject.Find("Player_Original").GetComponent<PlayerController_Original>();
-            configutionPanel = GameObject.Find("Configuración").gameObject;
-            pausePanel = GameObject.Find("Pause Menu").gameObject;
-            menuPanel = GameObject.Find("Menú Pausa").gameObject;
-        }
+
 
     }
 
@@ -83,6 +85,7 @@ public class PauseMenu : MonoBehaviour
         inventory.UnlockInputs = false;
         playerController.stop = false; 
 
+        // Desbloquea el curso
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 

@@ -4,6 +4,12 @@ using UnityEngine.UI;
 
 public class AudioSettings : MonoBehaviour
 {
+    private void Awake()
+    {
+        
+    }
+
+
     public AudioMixer audioMixer; // Asignar AudioMixer en el Inspector
     public Slider sliderMaster;
     public Slider sliderMusica;

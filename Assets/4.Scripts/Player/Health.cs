@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour/*, IDataPersistence*/
+public class Health : MonoBehaviour, IDataPersistence
 {
     [Header("Configuraci�n de Vida")]
     public int vidaMaxima;
@@ -26,17 +26,6 @@ public class Health : MonoBehaviour/*, IDataPersistence*/
         Debug.Log("Vida inicial: " + vidaActual);
 
     }
-
-    void OnLifeChanged(float vidaActual, float vidaAnterior)
-    {
-
-
-
-    }
-
-
-
-
     private void Update()
     {
         if (vidaActual < vidaMaxima)
@@ -89,6 +78,6 @@ public class Health : MonoBehaviour/*, IDataPersistence*/
     }
     public void LoadData(GameData data)
     {
-        vidaActual = data.SavedPlayerData.VidaActual;
+        vidaActual = data.SavedPlayerData.CurrentHealth;
     }
 }

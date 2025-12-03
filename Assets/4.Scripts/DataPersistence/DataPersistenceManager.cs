@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-10)]
 public class DataPersistenceManager : MonoBehaviour
@@ -12,11 +13,14 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnEnable()
     {
+
+        GameEvents.Worldloaded += gameData.SetWorldData;
         GameEvents.EnemyLoaded += gameData.AddEnemyData;
         GameEvents.PlayerLoaded += gameData.SetPlayerData;
     }
     private void OnDisable()
     {
+        GameEvents.Worldloaded -= gameData.SetWorldData;
         GameEvents.EnemyLoaded -= gameData.AddEnemyData;
         GameEvents.PlayerLoaded -= gameData.SetPlayerData;
     }
@@ -26,7 +30,12 @@ public class DataPersistenceManager : MonoBehaviour
         {
             Debug.LogError("Found more than one Data Persistence Manager in the scene.");
         }
-        instance = this;
+        else
+        {
+            instance = this;
+        }
+        DontDestroyOnLoad(gameObject);
+        
         path = Application.persistentDataPath + "/GameData.txt";
         Debug.Log(path);
     }
@@ -38,7 +47,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (SceneManager.GetActiveScene().buildIndex > 0)
         {
             SaveGameData();
         }
@@ -76,6 +85,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         SaveGameData();
     }
+    
 
 
 
