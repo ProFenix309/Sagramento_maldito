@@ -12,6 +12,7 @@ public class MenuControlscript : MonoBehaviour
     public GameObject panelSonido;
     Resolution[] resoluciones;
 
+
     GameManager gameManager;
 
 
@@ -73,7 +74,6 @@ public class MenuControlscript : MonoBehaviour
         TransitionPanel.gameObject.SetActive(true);
         DataPersistenceManager.instance.NewGame();
         TransitionPanel.StartCoroutine(TransitionPanel.Transition(gameManager.loadAct));
-        
     }
     
     void GetGameData()

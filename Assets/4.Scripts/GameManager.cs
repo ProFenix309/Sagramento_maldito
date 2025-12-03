@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour, IDataPersistence
@@ -6,9 +7,15 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public static GameManager instance;
 
     public Inventory inventory;
+    public GameObject player;
+
     PlayerController_Original playerController;
     PlayerMovement playerMovement;
     Camera_FPS_Controller cameraController;
+
+
+
+    
 
     [HideInInspector]public int loadAct =1;
 
@@ -43,10 +50,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void GetGameInfo()
     {
+        
         if (GameObject.Find("Player_Original") && inventory == null)
         {
             Debug.Log("waos");
             inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
+            player = GameObject.Find("Player_Original");
         }
         else
         {

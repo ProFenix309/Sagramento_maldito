@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using System.IO;
 using UnityEngine.SceneManagement;
 
@@ -83,12 +81,9 @@ public class DataPersistenceManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        
         SaveGameData();
     }
-    
-
-
-
 }
 
 
