@@ -241,6 +241,7 @@ public class AudioObject3D : MonoBehaviour
         }
     }
 
+
     public void SetWaitTime(bool enable, float min = 1f, float max = 5f)
     {
         useWaitTime = enable;
