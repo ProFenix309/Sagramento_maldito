@@ -39,6 +39,8 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     public float AttackingTime;
     [SerializeField] float daño;
 
+    [SerializeField] Animator anim;
+
 
     [Header("Ranges")]
     public float sightRange, attackRange, distractionRange;
@@ -50,7 +52,6 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         //detects object by names on scene
-
         StartingPoint = GameObject.Find("StartingPoint").transform;
         player = GameObject.Find(playerTag).transform;
 
@@ -59,6 +60,9 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
 
         //gets the agent of the enemy
         agent = GetComponent<NavMeshAgent>();
+
+        //Animation
+        anim.GetComponent<Animator>();
 
         //sets the velocity of the agent to the one from the before pressing start
         velocity = agent.speed;
@@ -97,6 +101,7 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
 
     private void Patroling()
     {
+        anim.SetBool("isAttack", false);
         //sets speed by default
         agent.speed = Velocity;
 
@@ -128,6 +133,7 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     }
     private void ChasePlayer()
     {
+        anim.SetBool("isAttack", true);
         randomTime = 5.5f;
         //increases agent velocity
         agent.speed = ChaseVelocity;
@@ -137,16 +143,19 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     }
     private void ChaseDistraction()
     {
-            agent.speed = agent.speed + ChaseVelocity;
-            agent.SetDestination(Distraction.position);
-            if (!alreadyAtacked)
-            {
-                alreadyAtacked = true;
-                Invoke(nameof(ResetAttack), timeBetweenAtacks);
-            }
+        anim.SetBool("isAttack", false);
+        agent.speed = agent.speed + ChaseVelocity;
+        agent.SetDestination(Distraction.position);
+        if (!alreadyAtacked)
+        {
+            alreadyAtacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAtacks);
+        }
     }
     private void AttackPlayer()
     {
+        anim.SetBool("isAttack", true);
+
         //Makes sure enemy doesn�t move
         agent.SetDestination(transform.position);
 
