@@ -30,8 +30,9 @@ public class SceneTransition : MonoBehaviour
         // Desactivar animación
         transitionAnimator.SetBool("End", false);
 
+
         // Cargar la escena
-        gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        gameObject.SetActive(false);
     }
 
     public void LoadScene(int sceneName)
@@ -45,6 +46,7 @@ public class SceneTransition : MonoBehaviour
     {
         // Activar animación
         transitionAnimator.SetBool("Start", true);
+        gameObject.SetActive(true);
 
         // Esperar la duración
         yield return new WaitForSeconds(transitionTime);
