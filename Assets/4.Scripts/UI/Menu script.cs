@@ -22,7 +22,7 @@ public class MenuControlscript : MonoBehaviour
     }
     void Start()
     {
-        TransitionPanel.gameObject.SetActive(false);
+        
         ShowMenuPrincipal();
         resoluciones = Screen.resolutions; // obtiene resoluciones disponibles
     }
