@@ -65,7 +65,7 @@ public class PauseMenu : MonoBehaviour
             inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
             configutionPanel = GameObject.Find("Configuraci�n").gameObject;
             pausePanel = GameObject.Find("Pause Menu").gameObject;
-            menuPanel = GameObject.Find("Men� Pausa").gameObject;
+            menuPanel = GameObject.Find("Menu Pausa").gameObject;
         }
         // Detecta si el jugador presiona la tecla Escape (o la que definas)
         if (Input.GetKeyDown(KeyCode.Escape) ||Input.GetKeyDown(KeyCode.Q))
