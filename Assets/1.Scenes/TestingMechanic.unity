@@ -1416,6 +1416,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: sfxSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: sfxSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d8bd8d418380894ab15dd19823dd414, type: 3}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: sfxSounds.Array.data[0].name
+      value: Mechero
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: sfxSounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 76b331d4240165c4d9b5aa84f52e1fdc, type: 3}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: sfxSounds.Array.data[1].name
+      value: Rock
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1815,8 +1835,8 @@ SceneRoots:
   - {fileID: 6155249264177563326}
   - {fileID: 3667198187311597601}
   - {fileID: 4214519558930062331}
-  - {fileID: 1158084464090813215}
   - {fileID: 1778139136}
+  - {fileID: 1158084464090813215}
   - {fileID: 1095928202}
   - {fileID: 3779502754697962400}
   - {fileID: 266433197}

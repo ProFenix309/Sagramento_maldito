@@ -29,17 +29,9 @@ public class Audio_Manager : MonoBehaviour
         PlayMusic(backgroundMusic);
     }
 
-    private void Update()
-    {
-        
-    }
-
-
-
-
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        Sound s = Array.Find(sfxSounds, x => x.nameSound == name);
 
         if (s == null)
         {
@@ -52,7 +44,7 @@ public class Audio_Manager : MonoBehaviour
     }
     public void PlayMusic(string name)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(musicSounds, x => x.nameSound == name);
 
         if (s == null)
         {
@@ -82,5 +74,42 @@ public class Audio_Manager : MonoBehaviour
     {
         sfxSource.volume = volume;
     }
+
+    public void ConfigurarSonido3D(Sound s, GameObject owner)
+    {
+        AudioSource source = owner.AddComponent<AudioSource>();
+
+        s.audioSource = source;
+        s.audioSource.clip = s.clip;
+        s.audioSource.volume = s.volume;
+        s.audioSource.loop = s.loop;
+
+        s.audioSource.minDistance = s.minDistance;
+        s.audioSource.maxDistance = s.maxDistance;
+        s.audioSource.spatialBlend = s.spacialBlend;
+
+        s.audioSource.playOnAwake = false;
+    }
+
+    private void CopySoundToSource(Sound s, AudioSource source)
+{
+    source.clip = s.clip;
+    source.volume = s.volume;
+    source.spatialBlend = s.spacialBlend;
+    source.minDistance = s.minDistance;
+    source.maxDistance = s.maxDistance;
+    source.playOnAwake = false;
+
+    if (s.usePlayOneShot)
+    {
+        source.loop = false;
+    }
+    else
+    {
+        source.loop = s.loop;
+    }
+}
+
+
 
 }
