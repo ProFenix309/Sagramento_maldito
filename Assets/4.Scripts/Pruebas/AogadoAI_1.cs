@@ -36,7 +36,7 @@ public class AhogadoAI_1 : MonoBehaviour
     public bool alreadyAtacked;
     public float AttackingTime;
     [SerializeField] float damage;
-    private bool isAttacking = false; // Nuevo: controla si está en animación de ataque
+    private bool isAttacking = false; // Nuevo: controla si estï¿½ en animaciï¿½n de ataque
 
 
     [Header("Ranges")]
@@ -104,9 +104,7 @@ public class AhogadoAI_1 : MonoBehaviour
         agent.speed = Velocity;
 
         //sets animation states
-        animator.SetBool("isWalking", true);
-        animator.SetBool("isRunnig", false);
-        animator.SetBool("isAttacking", false);
+        animator.SetBool("isAttack", false);
 
         //checks for points to travel to
         if (!walkPointSet) SearchWalkPoint();
@@ -140,9 +138,7 @@ public class AhogadoAI_1 : MonoBehaviour
         agent.speed = ChaseVelocity;
 
         //sets animation states
-        //animator.SetBool("isWalking", false);
-        //animator.SetBool("isRunnig", true);
-        //animator.SetBool("isAttacking", false);
+        animator.SetBool("isAttack", true);
 
         //agent moves towards player
         agent.SetDestination(player.position);
@@ -152,9 +148,7 @@ public class AhogadoAI_1 : MonoBehaviour
         agent.speed += ChaseVelocity;
 
         //sets animation states
-        //animator.setbool("iswalking", false);
-        //animator.setbool("isrunnig", true);
-        //animator.setbool("isattacking", false);
+        animator.SetBool("isAttack", false);
 
         if (Distraction != null)
             agent.SetDestination(Distraction.position);
@@ -168,22 +162,16 @@ public class AhogadoAI_1 : MonoBehaviour
     }
     private void AttackPlayer()
     {
-        //Makes sure enemy doesn´t move
+        //Makes sure enemy doesnï¿½t move
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
 
         //sets animation states
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isRunnig", false);
+        animator.SetBool("isAttack", true);
 
         if (!alreadyAtacked && !isAttacking)
         {
-            // Inicia la animación de ataque
-            isAttacking = true;
-            animator.SetBool("isAttacking", true);
-            animator.SetTrigger("Attack"); // Trigger para iniciar la animación
-
             // Hace que el jugador mire al enemigo
             PlayerLookAtEnemy playerLook = player.GetComponent<PlayerLookAtEnemy>();
             if (playerLook != null)
@@ -191,7 +179,7 @@ public class AhogadoAI_1 : MonoBehaviour
                 playerLook.StartLookingAtEnemy(transform);
             }
 
-            // Espera el tiempo de la animación antes de hacer daño
+            // Espera el tiempo de la animaciï¿½n antes de hacer daï¿½o
             Invoke(nameof(DealDamage), AttackingTime);
 
             alreadyAtacked = true;
@@ -199,21 +187,21 @@ public class AhogadoAI_1 : MonoBehaviour
         }
     }
 
-    // Nuevo método: se ejecuta después de que termine la animación de ataque
+    // Nuevo mï¿½todo: se ejecuta despuï¿½s de que termine la animaciï¿½n de ataque
     private void DealDamage()
     {
         HealthManager health;
 
         if (player.gameObject.TryGetComponent(out health))
         {
-            health.RecibirDaño(damage);
+            health.RecibirDaÃ±o(damage);
         }
         Debug.Log("Player attacked - Damage dealt!");
 
         //sets position to starting one (optional)
         transform.position = StartingPoint.position;
 
-        // Termina la animación de ataque
+        // Termina la animaciï¿½n de ataque
         animator.SetBool("isAttacking", false);
         isAttacking = false;
     }

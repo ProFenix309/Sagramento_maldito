@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEditor.Timeline;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {

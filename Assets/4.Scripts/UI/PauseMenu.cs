@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement; // Necesario para cambiar de escena
 
@@ -21,10 +20,10 @@ public class PauseMenu : MonoBehaviour
     public PlayerController_Original playerController;
 
 
-    // Bandera para saber si el juego está pausado
+    // Bandera para saber si el juego estï¿½ pausado
     private bool gamePause = false;
 
-    // Nombre de la escena del menú principal (ej: "MenuPrincipal")
+    // Nombre de la escena del menï¿½ principal (ej: "MenuPrincipal")
     public string namePrincipalMenu = "PrincipalMenu";
 
     // En tu script ControladorPausa:
@@ -64,9 +63,9 @@ public class PauseMenu : MonoBehaviour
         {
             inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
             playerController = GameObject.Find("Player_Original(Clone)").GetComponent<PlayerController_Original>();
-            configutionPanel = GameObject.Find("Configuración").gameObject;
+            configutionPanel = GameObject.Find("Configuraciï¿½n").gameObject;
             pausePanel = GameObject.Find("Pause Menu").gameObject;
-            menuPanel = GameObject.Find("Menú Pausa").gameObject;
+            menuPanel = GameObject.Find("Menï¿½ Pausa").gameObject;
         }
         // Detecta si el jugador presiona la tecla Escape (o la que definas)
         if (Input.GetKeyDown(KeyCode.Q))
@@ -91,7 +90,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // Muestra el panel del menú de pausa
+        // Muestra el panel del menï¿½ de pausa
         pausePanel.GetComponent<CanvasGroup>().alpha = 1;
         pausePanel.GetComponent<CanvasGroup>().interactable = true;
         pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -113,7 +112,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Oculta el panel del menú de pausa
+        // Oculta el panel del menï¿½ de pausa
         pausePanel.GetComponent<CanvasGroup>().alpha = 0;
         pausePanel.GetComponent<CanvasGroup>().interactable = false;
         pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -131,7 +130,7 @@ public class PauseMenu : MonoBehaviour
         // de lo contrario la carga de la escena puede fallar o comportarse mal.
         Time.timeScale = 1f;
 
-        // Carga la escena del menú principal 
+        // Carga la escena del menï¿½ principal 
         SceneManager.LoadScene(namePrincipalMenu);
     }
 
@@ -139,21 +138,21 @@ public class PauseMenu : MonoBehaviour
     {
         menuPanel.GetComponent<CanvasGroup>().alpha = 0;
         menuPanel.GetComponent<CanvasGroup>().interactable = false;
-        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = false; // Oculta el menú de pausa
+        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = false; // Oculta el menï¿½ de pausa
 
         configutionPanel.GetComponent<CanvasGroup>().alpha = 1;
         configutionPanel.GetComponent<CanvasGroup>().interactable = true;
-        configutionPanel.GetComponent<CanvasGroup>().blocksRaycasts = true; // Muestra el panel de configuración
+        configutionPanel.GetComponent<CanvasGroup>().blocksRaycasts = true; // Muestra el panel de configuraciï¿½n
     }
 
     public void CloseConfiguration()
     {
         configutionPanel.GetComponent<CanvasGroup>().alpha = 0;
         configutionPanel.GetComponent<CanvasGroup>().interactable = false;
-        configutionPanel.GetComponent<CanvasGroup>().blocksRaycasts = false; // Oculta el panel de configuración
+        configutionPanel.GetComponent<CanvasGroup>().blocksRaycasts = false; // Oculta el panel de configuraciï¿½n
 
         menuPanel.GetComponent<CanvasGroup>().alpha = 1;
         menuPanel.GetComponent<CanvasGroup>().interactable = true;
-        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;  // Muestra de nuevo el menú de pausa
+        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;  // Muestra de nuevo el menï¿½ de pausa
     }
 }
