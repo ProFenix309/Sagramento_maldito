@@ -28,6 +28,8 @@ public class AudioObject3D : MonoBehaviour
     private bool isWaiting = false;
     private Sound currentSound;
 
+    float temp;
+
     private void Start()
     {
         // Crear el AudioSource
