@@ -1,14 +1,15 @@
 using UnityEngine.AI;
 using UnityEngine;
 using System.Threading;
-using UnityEngine.Rendering;
 
-public class ErranteAI : MonoBehaviour
+public class ErranteAI : MonoBehaviour, IDataPersistence
 {
-    public bool lastChase = false;
+    [SerializeField] EnemyData enemyData;
+
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
+    [SerializeField] string playerTag;
 
 
     [Space]
@@ -28,17 +29,15 @@ public class ErranteAI : MonoBehaviour
 
     [Space]
     [Header("Chasing")]
-    public float velocity;
-    public float ChaseVelocity;
-    
+    [SerializeField] float velocity;
+    [SerializeField] float ChaseVelocity;
 
     [Space]
     [Header("Atacking")]
     public float timeBetweenAtacks;
     public bool alreadyAtacked;
     public float AttackingTime;
-    [SerializeField] float damage;
-
+    [SerializeField] float daño;
 
 
     [Header("Ranges")]
@@ -53,16 +52,18 @@ public class ErranteAI : MonoBehaviour
         //detects object by names on scene
 
         StartingPoint = GameObject.Find("StartingPoint").transform;
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find(playerTag).transform;
 
-        if (GameObject.Find("Vela").transform)
-            Distraction = GameObject.Find("Vela").transform;
+        if (GameObject.Find("Distraction"))
+            Distraction = GameObject.Find("Distraction").transform;
 
         //gets the agent of the enemy
         agent = GetComponent<NavMeshAgent>();
 
         //sets the velocity of the agent to the one from the before pressing start
         velocity = agent.speed;
+
+        GameEvents.EnemyLoaded?.Invoke(enemyData);
     }
 
     private void Start()
@@ -72,34 +73,26 @@ public class ErranteAI : MonoBehaviour
     }
     private void Update()
     {
-        if (!lastChase)
+        //timer to not have a seizure/epilepsy
+        randomTime -= Time.deltaTime;
+
+        //Check for layer to attack/follow
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        DistractionISinRange = Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
+
+        //Enemy checks states to be in
+        if (playerInAttackRange && playerInSightRange && !DistractionISinRange) AttackPlayer();
+
+        if (randomTime <= 0.2f)
         {
-            //timer to not have a seizure/epilepsy
-            randomTime -= Time.deltaTime;
-
-            //Check for layer to attack/follow
-            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-            DistractionISinRange = Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
-
-            //Enemy checks states to be in
-            if (playerInAttackRange && playerInSightRange && !DistractionISinRange || playerInAttackRange && playerInSightRange && DistractionISinRange) AttackPlayer();
-
-            if (randomTime <= 0.2f)
-            {
-                if (playerInSightRange && !playerInAttackRange && !DistractionISinRange || playerInSightRange &&  !playerInSightRange && DistractionISinRange) ChasePlayer();
-                if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
-                if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
-                randomTime = initialRandomTime;
-            }
-            else
-                walkPointSet = false;
+            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
+            if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
+            if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
+            randomTime = initialRandomTime;
         }
         else
-        {
-            agent.speed = ChaseVelocity;
-            agent.SetDestination(player.position);
-        }
+            walkPointSet = false;
     }
 
     private void Patroling()
@@ -135,6 +128,7 @@ public class ErranteAI : MonoBehaviour
     }
     private void ChasePlayer()
     {
+        randomTime = 5.5f;
         //increases agent velocity
         agent.speed = ChaseVelocity;
 
@@ -143,21 +137,20 @@ public class ErranteAI : MonoBehaviour
     }
     private void ChaseDistraction()
     {
-        agent.speed = agent.speed + ChaseVelocity;
-        agent.SetDestination(Distraction.position);
-        if (!alreadyAtacked)
-        {
-            alreadyAtacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAtacks);
-        }
+            agent.speed = agent.speed + ChaseVelocity;
+            agent.SetDestination(Distraction.position);
+            if (!alreadyAtacked)
+            {
+                alreadyAtacked = true;
+                Invoke(nameof(ResetAttack), timeBetweenAtacks);
+            }
     }
     private void AttackPlayer()
     {
-        //Makes sure enemy doesn�t move
+        //Makes sure enemy doesn�t move
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
-
 
         if (!alreadyAtacked)
         {
@@ -167,7 +160,7 @@ public class ErranteAI : MonoBehaviour
 
             if (player.gameObject.TryGetComponent(out health))
             {
-                health.RecibirDa�o(damage);
+                health.RecibirDaño(daño);
             }
             Debug.Log("Player attacked");
 
@@ -192,6 +185,19 @@ public class ErranteAI : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, distractionRange);
     }
+    private void OnEnable()
+    {
+        GameEvents.GameDataLoaded += LoadData;
+    }
+    private void OnDisable()
+    {
+        GameEvents.GameDataLoaded -= LoadData;
+    }
+    public void LoadData(GameData data)
+    {
+        EnemyData enemy = data.GetEnemyDataById(enemyData.Id);
+        gameObject.SetActive(enemy.Active);
+    }
     //valores a modificar desde el inspector
-    //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity, initialRandomTime, walkPointRange, damage, crear un objetao vacio para StartingPoint (punto inicial) 
+    //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity, initialRandomTime, walkPointRange, daño, crear un objetao vacio para StartingPoint (punto inicial) 
 }
