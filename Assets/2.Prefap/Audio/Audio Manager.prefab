@@ -306,10 +306,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSounds: []
   sfxSounds:
-  - name: Pasos
-    clip: {fileID: 8300000, guid: aeda0ecca37b88b41acceb56656f37d2, type: 3}
-  - name: Mechero
-    clip: {fileID: 8300000, guid: 4d8bd8d418380894ab15dd19823dd414, type: 3}
+  - nameSound: Door
+    audioSource: {fileID: 0}
+    clip: {fileID: 8300000, guid: d4f99686a070ff240850b1eae05b140d, type: 3}
+    minDistance: 1
+    maxDistance: 10
+    spacialBlend: 1
+    loop: 0
+    volume: 0.1
+    usePlayOneShot: 0
   musicSource: {fileID: 424262031973438205}
   sfxSource: {fileID: 6431029231131813578}
   backgroundMusic: 
