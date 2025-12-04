@@ -8,7 +8,7 @@ public class Audio_Manager : MonoBehaviour
 
     [Header("Sound Libraries")]
     public Sound[] musicSounds, sfxSounds;
-
+    
     [Header("Audio Sources")]
     public AudioSource musicSource, sfxSource;
 
@@ -41,7 +41,7 @@ public class Audio_Manager : MonoBehaviour
     }
 
     // === MÉTODOS PARA SFX 2D ===
-
+    
     public void PlaySFX(string name)
     {
         Sound s = Array.Find(sfxSounds, x => x.nameSound == name);
@@ -56,7 +56,7 @@ public class Audio_Manager : MonoBehaviour
     }
 
     // === MÉTODOS PARA MÚSICA ===
-
+    
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x => x.nameSound == name);
@@ -228,12 +228,12 @@ public class Audio_Manager : MonoBehaviour
     }
 
     // === VALIDACIÓN EN EDITOR ===
-
+    
     private void OnValidate()
     {
         // Verificar duplicados en musicSounds
         CheckDuplicateSoundNames(musicSounds, "Music Sounds");
-
+        
         // Verificar duplicados en sfxSounds
         CheckDuplicateSoundNames(sfxSounds, "SFX Sounds");
     }
