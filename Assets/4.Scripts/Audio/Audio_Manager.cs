@@ -6,9 +6,13 @@ public class Audio_Manager : MonoBehaviour
 {
     public static Audio_Manager instance { get; private set; }
 
+    [Header("Sound Libraries")]
     public Sound[] musicSounds, sfxSounds;
+
+    [Header("Audio Sources")]
     public AudioSource musicSource, sfxSource;
 
+    [Header("Background Music")]
     public string backgroundMusic;
 
     // Lista para trackear todos los AudioObject3D registrados
@@ -30,8 +34,13 @@ public class Audio_Manager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic(backgroundMusic);
+        if (!string.IsNullOrEmpty(backgroundMusic))
+        {
+            PlayMusic(backgroundMusic);
+        }
     }
+
+    // === MÉTODOS PARA SFX 2D ===
 
     public void PlaySFX(string name)
     {
@@ -39,13 +48,14 @@ public class Audio_Manager : MonoBehaviour
 
         if (s == null)
         {
-            Debug.Log("Sound not Found");
+            Debug.LogWarning($"SFX Sound '{name}' not found");
+            return;
         }
-        else
-        {
-            sfxSource.PlayOneShot(s.clip);
-        }
+
+        sfxSource.PlayOneShot(s.clip);
     }
+
+    // === MÉTODOS PARA MÚSICA ===
 
     public void PlayMusic(string name)
     {
@@ -53,13 +63,27 @@ public class Audio_Manager : MonoBehaviour
 
         if (s == null)
         {
-            Debug.Log("Sound not Found");
+            Debug.LogWarning($"Music Sound '{name}' not found");
+            return;
         }
-        else
-        {
-            musicSource.clip = s.clip;
-            musicSource.Play();
-        }
+
+        musicSource.clip = s.clip;
+        musicSource.Play();
+    }
+
+    public void StopMusic()
+    {
+        musicSource.Stop();
+    }
+
+    public void PauseMusic()
+    {
+        musicSource.Pause();
+    }
+
+    public void UnpauseMusic()
+    {
+        musicSource.UnPause();
     }
 
     public void ToggleMusic()
@@ -74,136 +98,160 @@ public class Audio_Manager : MonoBehaviour
 
     public void MusicVolume(float volume)
     {
-        musicSource.volume = volume;
+        musicSource.volume = Mathf.Clamp01(volume);
     }
 
     public void SFXVolume(float volume)
     {
-        sfxSource.volume = volume;
+        sfxSource.volume = Mathf.Clamp01(volume);
     }
 
-    // Registrar un AudioObject3D en el manager
+    // === MÉTODOS PARA AUDIO 3D (AudioObject3D) ===
+
     public void RegisterAudioObject(AudioObject3D audioObject)
     {
         if (!registeredAudioObjects.Contains(audioObject))
         {
             registeredAudioObjects.Add(audioObject);
+            Debug.Log($"Registered AudioObject3D: {audioObject.gameObject.name}");
         }
     }
 
-    // Desregistrar un AudioObject3D
     public void UnregisterAudioObject(AudioObject3D audioObject)
     {
         if (registeredAudioObjects.Contains(audioObject))
         {
             registeredAudioObjects.Remove(audioObject);
+            Debug.Log($"Unregistered AudioObject3D: {audioObject.gameObject.name}");
         }
     }
 
-    public void ConfigurarSonido3D(Sound s, GameObject owner)
+    // Actualizar todos los AudioObject3D con los valores actuales de las listas
+    public void UpdateAllAudioObjects3D()
     {
-        AudioSource source = owner.AddComponent<AudioSource>();
-
-        s.audioSource = source;
-        s.audioSource.clip = s.clip;
-        s.audioSource.volume = s.volume;
-        s.audioSource.loop = s.loop;
-
-        s.audioSource.minDistance = s.minDistance;
-        s.audioSource.maxDistance = s.maxDistance;
-        s.audioSource.spatialBlend = s.spacialBlend;
-
-        s.audioSource.playOnAwake = false;
-    }
-
-    // Actualizar un AudioObject3D específico por nombre
-    public void UpdateAudioObject3D(string soundName)
-    {
-        Sound s = Array.Find(sfxSounds, x => x.nameSound == soundName);
-        
-        if (s == null)
-        {
-            Debug.LogWarning($"Sound '{soundName}' not found in sfxSounds array");
-            return;
-        }
-
         int updated = 0;
         foreach (AudioObject3D audioObj in registeredAudioObjects)
         {
-            if (audioObj.sound.nameSound == soundName && audioObj.sound.audioSource != null)
+            if (audioObj != null)
             {
-                CopySoundToSource(s, audioObj.sound.audioSource);
+                audioObj.UpdateFromManager();
                 updated++;
             }
         }
-        
-        if (updated > 0)
-        {
-            Debug.Log($"Updated {updated} AudioObject3D(s) with sound '{soundName}'");
-        }
+        Debug.Log($"Updated {updated} AudioObject3D instances from manager lists");
     }
 
-    // Actualizar todos los AudioObject3D que usan sounds de la lista
-    public void UpdateAllAudioObjects3D()
+    // Actualizar AudioObject3D que usan un sonido específico
+    public void UpdateAudioObject3DBySound(string soundName)
     {
+        int updated = 0;
         foreach (AudioObject3D audioObj in registeredAudioObjects)
         {
-            Sound s = Array.Find(sfxSounds, x => x.nameSound == audioObj.sound.nameSound);
-            
-            if (s != null)
+            if (audioObj != null && audioObj.soundName == soundName)
             {
-                CopySoundToSource(s, audioObj.sound.audioSource);
+                audioObj.UpdateFromManager();
+                updated++;
             }
         }
-        Debug.Log($"Updated {registeredAudioObjects.Count} AudioObject3D instances");
+        Debug.Log($"Updated {updated} AudioObject3D(s) using sound '{soundName}'");
     }
 
-    // Actualizar volumen de todos los AudioObject3D
-    public void UpdateAllAudioObjects3DVolume(float volume)
+    // Cambiar volumen de todos los AudioObject3D
+    public void SetAllAudioObjects3DVolume(float volume)
     {
+        volume = Mathf.Clamp01(volume);
         foreach (AudioObject3D audioObj in registeredAudioObjects)
         {
-            if (audioObj.sound.audioSource != null)
+            if (audioObj != null)
             {
-                audioObj.sound.audioSource.volume = volume;
+                audioObj.SetVolume(volume);
             }
         }
     }
 
-    // Actualizar volumen de un AudioObject3D específico por nombre
-    public void UpdateAudioObject3DVolume(string soundName, float volume)
+    // Detener todos los AudioObject3D
+    public void StopAllAudioObjects3D()
     {
         foreach (AudioObject3D audioObj in registeredAudioObjects)
         {
-            if (audioObj.sound.nameSound == soundName && audioObj.sound.audioSource != null)
+            if (audioObj != null)
             {
-                audioObj.sound.audioSource.volume = volume;
+                audioObj.Stop();
             }
         }
     }
 
-    // Obtener todos los AudioObject3D registrados
+    // Reproducir todos los AudioObject3D
+    public void PlayAllAudioObjects3D()
+    {
+        foreach (AudioObject3D audioObj in registeredAudioObjects)
+        {
+            if (audioObj != null)
+            {
+                audioObj.Play();
+            }
+        }
+    }
+
+    // Obtener lista de AudioObject3D registrados
     public List<AudioObject3D> GetRegisteredAudioObjects()
     {
         return new List<AudioObject3D>(registeredAudioObjects);
     }
 
-    private void CopySoundToSource(Sound s, AudioSource source)
-    {
-        source.clip = s.clip;
-        source.volume = s.volume;
-        source.spatialBlend = s.spacialBlend;
-        source.minDistance = s.minDistance;
-        source.maxDistance = s.maxDistance;
-        source.playOnAwake = false;
+    // === MÉTODOS DE UTILIDAD ===
 
-        if (s.usePlayOneShot)
+    // Verificar si un sonido existe en la lista
+    public bool SoundExists(string soundName, bool checkMusic = false)
+    {
+        Sound[] soundArray = checkMusic ? musicSounds : sfxSounds;
+        return Array.Exists(soundArray, x => x.nameSound == soundName);
+    }
+
+    // Obtener un sonido de la lista
+    public Sound GetSound(string soundName, bool fromMusic = false)
+    {
+        Sound[] soundArray = fromMusic ? musicSounds : sfxSounds;
+        return Array.Find(soundArray, x => x.nameSound == soundName);
+    }
+
+    // Listar todos los nombres de sonidos
+    public string[] GetAllSoundNames(bool fromMusic = false)
+    {
+        Sound[] soundArray = fromMusic ? musicSounds : sfxSounds;
+        string[] names = new string[soundArray.Length];
+        for (int i = 0; i < soundArray.Length; i++)
         {
-            source.loop = false;
+            names[i] = soundArray[i].nameSound;
         }
-        else
+        return names;
+    }
+
+    // === VALIDACIÓN EN EDITOR ===
+
+    private void OnValidate()
+    {
+        // Verificar duplicados en musicSounds
+        CheckDuplicateSoundNames(musicSounds, "Music Sounds");
+
+        // Verificar duplicados en sfxSounds
+        CheckDuplicateSoundNames(sfxSounds, "SFX Sounds");
+    }
+
+    private void CheckDuplicateSoundNames(Sound[] sounds, string listName)
+    {
+        if (sounds == null) return;
+
+        HashSet<string> names = new HashSet<string>();
+        for (int i = 0; i < sounds.Length; i++)
         {
-            source.loop = s.loop;
+            if (sounds[i] != null && !string.IsNullOrEmpty(sounds[i].nameSound))
+            {
+                if (!names.Add(sounds[i].nameSound))
+                {
+                    Debug.LogWarning($"Duplicate sound name '{sounds[i].nameSound}' found in {listName}!");
+                }
+            }
         }
     }
 }

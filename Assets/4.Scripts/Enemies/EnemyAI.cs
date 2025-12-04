@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     public float timeBetweenAtacks;
     public bool alreadyAtacked;
     public float AttackingTime;
-    [SerializeField] float daño;
+    [SerializeField] float daÃ±o;
 
 
     [Header("Ranges")]
@@ -147,7 +147,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     }
     private void AttackPlayer()
     {
-        //Makes sure enemy doesn´t move
+        //Makes sure enemy doesnï¿½t move
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
@@ -161,7 +161,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
 
             if (player.gameObject.TryGetComponent(out health))
             {
-                health.RecibirDaño(daño);
+                health.RecibirDaÃ±o(daÃ±o);
             }
             Debug.Log("Player attacked");
 

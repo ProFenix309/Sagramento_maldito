@@ -11,7 +11,9 @@ public class Activador_Por_Teclas : MonoBehaviour
 
     [SerializeField] string animatorParameters;
 
+    [SerializeField] GameObject volumen;
     [SerializeField] List<KeyCode> keys;
+
 
     private void Update()
     {
@@ -37,13 +39,14 @@ public class Activador_Por_Teclas : MonoBehaviour
         {
             animator.SetBool(animatorParameters, true);
 
-            // Esperar la duración
+            // Esperar la duraciï¿½n
             yield return new WaitForSeconds(transitionTime);
 
-            // Desactivar animación
+            // Desactivar animaciï¿½n
             animator.SetBool(animatorParameters, false);
             Canvas.SetActive(false);
             animationComplete = false;
+            volumen.SetActive(false);
         }
     }
 }
