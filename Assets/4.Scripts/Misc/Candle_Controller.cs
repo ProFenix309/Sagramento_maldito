@@ -8,13 +8,13 @@ public class Candle_Controller : MonoBehaviour
     [SerializeField] float maxIntencity;
     [SerializeField] bool actived;
     [SerializeField] LayerMask layerOff;
-
-    public Audio_Manager sfx;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip audioClip;
 
     void Start()
     {
         lightPoint.GetComponent<Light>();
-        sfx = GameObject.Find("Audio Manager").GetComponent<Audio_Manager>();
+        audioSource.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -26,7 +26,7 @@ public class Candle_Controller : MonoBehaviour
             {
                 lightPoint.intensity = maxIntencity;
                 flame.SetActive(true);
-                sfx.PlaySFX("Mechero");
+                audioSource.PlayOneShot(audioClip);
             }
             else
             {
