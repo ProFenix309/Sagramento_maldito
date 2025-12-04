@@ -49,19 +49,20 @@ public class PauseMenu : MonoBehaviour
             {
                 instance = this;
             }
-            if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null)
-            {
-                inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
-                playerController = GameObject.Find("Player_Original").GetComponent<PlayerController_Original>();
-                configutionPanel = GameObject.Find("Configuración").gameObject;
-                pausePanel = GameObject.Find("Pause Menu").gameObject;
-                menuPanel = GameObject.Find("Menú Pausa").gameObject;
-            }
+
         }
+    }
 
-       
-
-
+    private void Start()
+    {
+        if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null && GameObject.Find("Player_Original"))
+        {
+            inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
+            playerController = GameObject.Find("Player_Original").GetComponent<PlayerController_Original>();
+            configutionPanel = GameObject.Find("Configuración").gameObject;
+            pausePanel = GameObject.Find("Pause Menu").gameObject;
+            menuPanel = GameObject.Find("Menú Pausa").gameObject;
+        }
     }
 
     void Update()

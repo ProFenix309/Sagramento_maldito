@@ -42,6 +42,8 @@ public class GameData
     }
 }
 
+
+
 [Serializable]
 public class ConfigData
 {
@@ -50,6 +52,8 @@ public class ConfigData
 
     
 }
+
+
 
 [Serializable]
 public class WorldData
@@ -66,6 +70,8 @@ public class WorldData
     }
 }
 
+
+
 [Serializable]
 public class PlayerData
 {
@@ -73,7 +79,10 @@ public class PlayerData
     [SerializeField] private float _currentHealth;
 
     public Vector3 PlayerPosition { get => _playerPosition; set => _playerPosition = value; }
-    [SerializeField] private Vector3 _playerPosition;
+    [SerializeField] private Vector3 _playerPosition = new Vector3 (2.16f,3.05f,3.95f);
+
+    public GameObject Player { get => _player; set => _player = value; }
+    [SerializeField] private GameObject _player;
 
     public PlayerData()
     {
@@ -85,6 +94,10 @@ public class PlayerData
     public PlayerData(float vida)
     {
         _currentHealth = vida;
+    }
+    public PlayerData(GameObject pObject) 
+    {
+        _player = pObject;
     }
 }
 

@@ -53,6 +53,7 @@ public class SceneTransition : MonoBehaviour
 
         // Desactivar animación
         transitionAnimator.SetBool("Start", false);
+
         
         // Cargar la escena
         SceneManager.LoadScene(sceneNumber);
