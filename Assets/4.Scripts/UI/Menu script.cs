@@ -31,13 +31,19 @@ public class MenuControlscript : MonoBehaviour
     {
         
         ShowMenuPrincipal();
-        resoluciones = Screen.resolutions; // obtiene resoluciones disponibles
+        if (Screen.resolutions != null)
+        {
+            resoluciones = Screen.resolutions; // obtiene resoluciones disponibles
+        }
     }
 
     public void CambiarResolucionPorIndice(int indice)
     {
+        if (resoluciones != null) 
+        { 
         Resolution res = resoluciones[indice];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        }
     }
 
     public void ShowMenuPrincipal()
