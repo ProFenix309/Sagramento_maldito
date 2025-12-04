@@ -5,6 +5,17 @@ using UnityEngine.UI;
 
 public class ResolutionSettings : MonoBehaviour
 {
+    public static ResolutionSettings instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+    }
+
+
     public TMP_Dropdown resolutionsDropdown;
     public Toggle fullscreenToggle;
     private Resolution[] resolutions;

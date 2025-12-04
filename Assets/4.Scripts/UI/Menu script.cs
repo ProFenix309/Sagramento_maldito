@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuControlscript : MonoBehaviour
 {
+    public static MenuControlscript instance;
+
     public SceneTransition TransitionPanel;
     public GameObject panelMenuPrincipal;
     public GameObject panelConfiguracion;
@@ -18,6 +20,11 @@ public class MenuControlscript : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
         GetGameData();
     }
     void Start()
@@ -35,9 +42,16 @@ public class MenuControlscript : MonoBehaviour
 
     public void ShowMenuPrincipal()
     {
-        panelMenuPrincipal.SetActive(true);
-        panelConfiguracion.SetActive(false);
-        panelCreditos.SetActive(false);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            panelMenuPrincipal.SetActive(true);
+            panelConfiguracion.SetActive(false);
+            panelCreditos.SetActive(false);
+        }
+        else 
+        {
+            GameObject.Find("ManagerPause").GetComponent<PauseMenu>().CloseConfiguration();
+        }
     }
 
     public void ShowConfiguracion()

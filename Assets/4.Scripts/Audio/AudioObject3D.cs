@@ -7,10 +7,7 @@ public class AudioObject3D : MonoBehaviour
     private void Start()
     {
         // Primero buscamos el Sound en la lista del Audio Manager
-        Sound soundFromList = System.Array.Find(
-            Audio_Manager.instance.sfxSounds, 
-            x => x.nameSound == sound.nameSound
-        );
+        Sound soundFromList = System.Array.Find(Audio_Manager.instance.sfxSounds, x => x.nameSound == sound.nameSound);
 
         if (soundFromList != null)
         {
