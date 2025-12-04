@@ -28,8 +28,6 @@ public class AudioObject3D : MonoBehaviour
     private bool isWaiting = false;
     private Sound currentSound;
 
-    float temp;
-
     private void Start()
     {
         // Crear el AudioSource
@@ -63,13 +61,6 @@ public class AudioObject3D : MonoBehaviour
         // Si estamos usando audio aleatorio
         if (useRandomAudio && audioSource != null)
         {
-            // Verificar si el audio terminó de reproducirse
-            if (isPlaying && !audioSource.isPlaying)
-            {
-                isPlaying = false;
-                Debug.Log($"[{gameObject.name}] Audio finished playing");
-            }
-
             // Si está esperando, cuenta el tiempo
             if (isWaiting)
             {
@@ -242,7 +233,6 @@ public class AudioObject3D : MonoBehaviour
             waitTimer = 0f;
         }
     }
-
 
     public void SetWaitTime(bool enable, float min = 1f, float max = 5f)
     {

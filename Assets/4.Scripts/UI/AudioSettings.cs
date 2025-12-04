@@ -4,9 +4,14 @@ using UnityEngine.UI;
 
 public class AudioSettings : MonoBehaviour
 {
+    public static AudioSettings instance;
     private void Awake()
     {
-        
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
     }
 
 
