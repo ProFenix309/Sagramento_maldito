@@ -4603,7 +4603,7 @@ GameObject:
   - component: {fileID: 4293376879610124805}
   - component: {fileID: 8215885155192683386}
   m_Layer: 5
-  m_Name: "Configuraci\xF3n"
+  m_Name: Configuracion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
