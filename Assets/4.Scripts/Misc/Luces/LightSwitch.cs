@@ -1,25 +1,32 @@
 using UnityEngine;
 
-public class LightSwitch : MonoBehaviour, Interactable 
+public class LightSwitch : MonoBehaviour, Interactable
 {
     private Light luz;
-    private bool encendida = false;
+    private bool encendida = true;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip audioClip;
+
 
     private void Awake()
     {
         luz = GetComponent<Light>();
+        audioSource.GetComponent<AudioSource>();
+
         if (luz == null)
         {
-            Debug.LogWarning("No se encontró un componente Light en este objeto interactuable.");
+            Debug.LogWarning("No se encontrï¿½ un componente Light en este objeto interactuable.");
         }
     }
 
-    public  void Interact()
+    public void Interact()
     {
         if (luz == null) return;
 
         encendida = !encendida;
         luz.enabled = encendida;
+        audioSource.PlayOneShot(audioClip);
+
 
         Debug.Log($"Luz {(encendida ? "encendida" : "apagada")}");
     }
