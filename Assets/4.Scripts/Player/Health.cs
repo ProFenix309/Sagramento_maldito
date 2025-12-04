@@ -80,4 +80,12 @@ public class Health : MonoBehaviour, IDataPersistence
     {
         vidaActual = data.SavedPlayerData.CurrentHealth;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            RecibirDaño(19);
+        }
+    }
 }

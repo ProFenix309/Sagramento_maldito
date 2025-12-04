@@ -204,6 +204,7 @@ MonoBehaviour:
   alreadyAtacked: 0
   AttackingTime: 2
   "da\xF1o": 0
+  anim: {fileID: 3410753472696891336}
   sightRange: 5.36
   attackRange: 1
   distractionRange: 6

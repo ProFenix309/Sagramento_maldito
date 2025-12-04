@@ -7,7 +7,7 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     [SerializeField] EnemyData enemyData;
 
     NavMeshAgent agent;
-    Transform player;
+    public Transform player;
     Transform Distraction;
     [SerializeField] string playerTag;
 
@@ -37,7 +37,7 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     public float timeBetweenAtacks;
     public bool alreadyAtacked;
     public float AttackingTime;
-    [SerializeField] float daño;
+    public float daño;
 
     [SerializeField] Animator anim;
 
@@ -53,7 +53,7 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     {
         //detects object by names on scene
         StartingPoint = GameObject.Find("StartingPoint").transform;
-        player = GameObject.Find(playerTag).transform;
+        
 
         if (GameObject.Find("Distraction"))
             Distraction = GameObject.Find("Distraction").transform;
@@ -71,7 +71,9 @@ public class ErranteAI : MonoBehaviour, IDataPersistence
     }
 
     private void Start()
-    {
+    { 
+//if (GameObject.Find(playerTag).transform ) player = GameObject.Find(playerTag).transform;
+
         randomTime = initialRandomTime;
         Velocity = agent.speed;
     }

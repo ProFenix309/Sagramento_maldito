@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     public float timeBetweenAtacks;
     public bool alreadyAtacked;
     public float AttackingTime;
-    [SerializeField] float daño;
+    public float daño;
 
 
     [Header("Ranges")]
@@ -166,10 +166,11 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
             Debug.Log("Player attacked");
 
             //sets potsition to starting one (optional)
-            transform.position = StartingPoint.position;
 
             alreadyAtacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAtacks);
+            transform.position = StartingPoint.position;
+
         }
     }
     private void ResetAttack()
