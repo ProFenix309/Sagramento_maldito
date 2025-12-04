@@ -342,6 +342,15 @@ MonoBehaviour:
     loop: 0
     volume: 1
     usePlayOneShot: 0
+  - nameSound: Mechero
+    audioSource: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4d8bd8d418380894ab15dd19823dd414, type: 3}
+    minDistance: 1
+    maxDistance: 30
+    spacialBlend: 1
+    loop: 0
+    volume: 1
+    usePlayOneShot: 0
   musicSource: {fileID: 424262031973438205}
   sfxSource: {fileID: 6431029231131813578}
   backgroundMusic: 

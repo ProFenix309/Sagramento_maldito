@@ -3,7 +3,7 @@ using UnityEngine;
 public class LightSwitch : MonoBehaviour, Interactable
 {
     private Light luz;
-    private bool encendida = true;
+    private bool encendida = false;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip audioClip;
 

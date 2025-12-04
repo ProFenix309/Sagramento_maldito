@@ -1541,6 +1541,10 @@ PrefabInstance:
       value: Ahogado_1
       objectReference: {fileID: 0}
     - target: {fileID: 7411532107288044861, guid: 53a5d0aaac668d44582877da77042b00, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 2036054750}
+    - target: {fileID: 7411532107288044861, guid: 53a5d0aaac668d44582877da77042b00, type: 3}
       propertyPath: nameTarget
       value: Player_Original
       objectReference: {fileID: 0}
@@ -1550,7 +1554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7733451454419332491, guid: 53a5d0aaac668d44582877da77042b00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.185
+      value: 4.18
       objectReference: {fileID: 0}
     - target: {fileID: 7733451454419332491, guid: 53a5d0aaac668d44582877da77042b00, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1926,6 +1930,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: backgroundMusic
+      value: ev
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: bc518797454c40c41b874b2571fd0e9c, type: 3}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].nameSound
+      value: ev
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].maxDistance
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].minDistance
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2141,13 +2177,103 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044781844}
+    - targetCorrespondingSourceObject: {fileID: -1086253750791215781, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044781848}
+    - targetCorrespondingSourceObject: {fileID: 9143741347941258523, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044781847}
   m_SourcePrefab: {fileID: 100100000, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
 --- !u!4 &2044781842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
   m_PrefabInstance: {fileID: 2044781841}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2044781843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+  m_PrefabInstance: {fileID: 2044781841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2044781844
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044781843}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5664010936039981762, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+--- !u!1 &2044781845 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9143741347941258523, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+  m_PrefabInstance: {fileID: 2044781841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2044781846 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1086253750791215781, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+  m_PrefabInstance: {fileID: 2044781841}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2044781847
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044781845}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3335878594405725156, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
+--- !u!64 &2044781848
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044781846}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4927589234987439827, guid: e8afad510f9d9794583430c3ff14b1b6, type: 3}
 --- !u!1 &2089866444
 GameObject:
   m_ObjectHideFlags: 0

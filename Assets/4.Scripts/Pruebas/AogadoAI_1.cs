@@ -1,216 +1,264 @@
 using UnityEngine.AI;
 using UnityEngine;
 
-
 public class AhogadoAI_1 : MonoBehaviour
 {
     NavMeshAgent agent;
     Transform player;
     Transform Distraction;
-
-    [SerializeField] string nameTarget;
-
+    
+    [SerializeField] string nameTarget = "Player";
+    
     [Space]
     [Header("Layers")]
     public LayerMask whatIsGround, whatIsPlayer, whatIsDistraction;
-
+    
     Transform StartingPoint;
     float Velocity;
-
+    
     [Space]
     [Header("Patroling")]
-    public float initialRandomTime;
+    public float initialRandomTime = 2f;
     float randomTime;
     Vector3 walkPoint;
     public bool walkPointSet;
-    public float walkPointRange;
-
+    public float walkPointRange = 10f;
+    
     [Space]
     [Header("Chasing")]
-    public float velocity;
-    public float ChaseVelocity;
-
+    public float velocity = 3.5f;
+    public float ChaseVelocity = 6f;
+    
     [Space]
     [Header("Atacking")]
-    public float timeBetweenAtacks;
+    public float timeBetweenAtacks = 2f;
     public bool alreadyAtacked;
-    public float AttackingTime;
-    [SerializeField] float damage;
-    private bool isAttacking = false; // Nuevo: controla si est� en animaci�n de ataque
-
-
+    public float AttackingTime = 1f;
+    [SerializeField] float damage = 10f;
+    private bool isAttacking = false;
+    
     [Header("Ranges")]
-    public float sightRange, attackRange, distractionRange;
-
-
+    public float sightRange = 15f;
+    public float attackRange = 3f;
+    public float distractionRange = 20f;
+    
     [Header("States")]
     public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
-
+    
     [Header("Animator")]
     public Animator animator;
-
+    
     private void Awake()
     {
-        //detects object by names on scene
-
-        StartingPoint = GameObject.Find("StartingPoint").transform;
-        player = GameObject.Find(nameTarget).transform;
-
-        if (GameObject.Find("Distraction"))
-            Distraction = GameObject.Find("Distraction").transform;
-
-        //gets the agent of the enemy
+        // Gets the agent and animator
         agent = GetComponent<NavMeshAgent>();
-
-        //gets the animation of the enemy
         animator = GetComponent<Animator>();
-
-        //sets the velocity of the agent to the one from the before pressing start
-        velocity = agent.speed;
+        
+        // Try to find StartingPoint (optional)
+        GameObject startObj = GameObject.Find("StartingPoint");
+        if (startObj != null)
+            StartingPoint = startObj.transform;
+        else
+            StartingPoint = transform; // Use current position if not found
+        
+        // Try to find player (optional - can be null)
+        if (!string.IsNullOrEmpty(nameTarget))
+        {
+            GameObject playerObj = GameObject.Find(nameTarget);
+            if (playerObj != null)
+                player = playerObj.transform;
+        }
+        
+        // Try to find distraction (optional)
+        GameObject distractionObj = GameObject.Find("Distraction");
+        if (distractionObj != null)
+            Distraction = distractionObj.transform;
+        
+        // Set velocity
+        if (agent != null)
+            velocity = agent.speed;
     }
-
+    
     private void Start()
     {
         randomTime = initialRandomTime;
-        Velocity = agent.speed;
+        Velocity = velocity;
     }
+    
     private void Update()
     {
-        //timer to not have a seizure/epilepsy
+        // Timer to control state changes
         randomTime -= Time.deltaTime;
-
-        //Check for layer to attack/follow
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        DistractionISinRange = Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
-
-        //Enemy checks states to be in
-        if (playerInAttackRange && playerInSightRange && !DistractionISinRange) AttackPlayer();
-
-        if (randomTime <= 0.2f)
+        
+        // Check for layers only if player/distraction exist
+        playerInSightRange = player != null && Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = player != null && Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        DistractionISinRange = Distraction != null && Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
+        
+        // Enemy checks states
+        if (playerInAttackRange && playerInSightRange && !DistractionISinRange)
         {
-            if (!playerInSightRange && !playerInAttackRange && DistractionISinRange || playerInSightRange && !playerInAttackRange && DistractionISinRange) ChaseDistraction();
-            if (!playerInSightRange && !playerInAttackRange && !DistractionISinRange) Patroling();
-            if (playerInSightRange && !playerInAttackRange && !DistractionISinRange) ChasePlayer();
+            AttackPlayer();
+        }
+        else if (randomTime <= 0.2f)
+        {
+            if (DistractionISinRange)
+            {
+                ChaseDistraction();
+            }
+            else if (playerInSightRange && !playerInAttackRange)
+            {
+                ChasePlayer();
+            }
+            else
+            {
+                // Default: always patrol if nothing else to do
+                Patroling();
+            }
+            
             randomTime = initialRandomTime;
         }
-        else
-            walkPointSet = false;
     }
-
+    
     private void Patroling()
     {
-        //sets speed by default
+        if (agent == null) return;
+        
+        // Set speed by default
         agent.speed = Velocity;
-
-        //sets animation states
-        animator.SetBool("isAttack", false);
-
-        //checks for points to travel to
-        if (!walkPointSet) SearchWalkPoint();
-
-        //walks to selected point
-        if (walkPointSet)
+        
+        // Set animation states
+        if (animator != null)
+            animator.SetBool("isAttack", false);
+        
+        // Check for points to travel to
+        if (!walkPointSet)
+            SearchWalkPoint();
+        
+        // Walk to selected point
+        if (walkPointSet && agent.isOnNavMesh)
             agent.SetDestination(walkPoint);
-
-        //the distance between the enemy and the point
+        
+        // Check if walkpoint reached
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //walkpoint reached
-        if (distanceToWalkPoint.magnitude >= 0)
-            walkPointSet = true;
-        else walkPointSet = false;
+        
+        if (distanceToWalkPoint.magnitude < 1f)
+            walkPointSet = false;
     }
+    
     private void SearchWalkPoint()
     {
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
-
+        
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        NavMesh.SamplePosition(walkPoint, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas);
-        walkPoint = hit.position;
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
+        
+        if (NavMesh.SamplePosition(walkPoint, out NavMeshHit hit, walkPointRange, NavMesh.AllAreas))
+        {
+            walkPoint = hit.position;
+            
+            if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+                walkPointSet = true;
+        }
     }
+    
     private void ChasePlayer()
     {
-        //increases agent velocity
+        if (agent == null || player == null) return;
+        
+        // Increase agent velocity
         agent.speed = ChaseVelocity;
-
-        //sets animation states
-        animator.SetBool("isAttack", true);
-
-        //agent moves towards player
-        agent.SetDestination(player.position);
+        
+        // Set animation states
+        if (animator != null)
+            animator.SetBool("isAttack", true);
+        
+        // Agent moves towards player
+        if (agent.isOnNavMesh)
+            agent.SetDestination(player.position);
     }
+    
     private void ChaseDistraction()
     {
-        agent.speed += ChaseVelocity;
-
-        //sets animation states
-        animator.SetBool("isAttack", false);
-
-        if (Distraction != null)
+        if (agent == null || Distraction == null) return;
+        
+        agent.speed = ChaseVelocity;
+        
+        // Set animation states
+        if (animator != null)
+            animator.SetBool("isAttack", false);
+        
+        if (agent.isOnNavMesh)
             agent.SetDestination(Distraction.position);
-
-
+        
         if (!alreadyAtacked)
         {
             alreadyAtacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAtacks);
         }
     }
+    
     private void AttackPlayer()
     {
-        //Makes sure enemy doesn�t move
-        agent.SetDestination(transform.position);
-
+        if (agent == null || player == null) return;
+        
+        // Makes sure enemy doesn't move
+        if (agent.isOnNavMesh)
+            agent.SetDestination(transform.position);
+        
         transform.LookAt(player);
-
-        //sets animation states
-        animator.SetBool("isAttack", true);
-
+        
+        // Set animation states
+        if (animator != null)
+            animator.SetBool("isAttack", true);
+        
         if (!alreadyAtacked && !isAttacking)
         {
-            // Hace que el jugador mire al enemigo
+            isAttacking = true;
+            
+            // Make player look at enemy
             PlayerLookAtEnemy playerLook = player.GetComponent<PlayerLookAtEnemy>();
             if (playerLook != null)
             {
                 playerLook.StartLookingAtEnemy(transform);
             }
-
-            // Espera el tiempo de la animaci�n antes de hacer da�o
+            
+            // Wait for animation time before dealing damage
             Invoke(nameof(DealDamage), AttackingTime);
-
             alreadyAtacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAtacks);
         }
     }
-
-    // Nuevo m�todo: se ejecuta despu�s de que termine la animaci�n de ataque
+    
     private void DealDamage()
     {
-        HealthManager health;
-
-        if (player.gameObject.TryGetComponent(out health))
+        if (player == null) return;
+        
+        HealthManager health = player.GetComponent<HealthManager>();
+        if (health != null)
         {
             health.RecibirDaño(damage);
         }
+        
         Debug.Log("Player attacked - Damage dealt!");
-
-        //sets position to starting one (optional)
-        transform.position = StartingPoint.position;
-
-        // Termina la animaci�n de ataque
-        animator.SetBool("isAttacking", false);
+        
+        // Set position to starting one (optional)
+        if (StartingPoint != null)
+            transform.position = StartingPoint.position;
+        
+        // End attack animation
+        if (animator != null)
+            animator.SetBool("isAttack", false);
+        
         isAttacking = false;
     }
-
+    
     private void ResetAttack()
     {
         alreadyAtacked = false;
+        isAttacking = false;
     }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
