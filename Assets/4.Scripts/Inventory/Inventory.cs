@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
     Camera_FPS_Controller cameraController;
 
     [Header("Items Iniciales")]
-    [SerializeField] private List<Items> initialItems = new List<Items>();
+    [SerializeField] public List<Items> initialItems = new List<Items>();
 
     [HideInInspector] public GameObject HandDetection;
     [HideInInspector] public GetItem itemH;

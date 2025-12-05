@@ -33,8 +33,8 @@ public class Camera_FPS_Controller : MonoBehaviour
         if (canMove && unlockInputs)
         {
             //Detectar el movimiento del mause
-            mouseX = Input.GetAxis("Mouse X") * sencitivily * Time.deltaTime; //Time.deltatime estandariza los frimes para que
-            mouseY = Input.GetAxis("Mouse Y") * sencitivily * Time.deltaTime; //todos las gamas de PC lo ejecute de manera igual    
+            mouseX = Input.GetAxis("Mouse X") * sencitivily ; //Time.deltatime estandariza los frimes para que
+            mouseY = Input.GetAxis("Mouse Y") * sencitivily ; //todos las gamas de PC lo ejecute de manera igual    
 
             //Toma la rotacion en Y para rotar la camara
             player.Rotate(player.transform.up * mouseX);

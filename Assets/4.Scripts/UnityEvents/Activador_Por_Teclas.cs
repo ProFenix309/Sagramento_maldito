@@ -21,7 +21,7 @@ public class Activador_Por_Teclas : MonoBehaviour
  
     private void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex >= 1) Destroy(Canvas);
+        if (SceneManager.GetActiveScene().buildIndex != 1) Destroy(Canvas);
 
         InteractionKey();
     }

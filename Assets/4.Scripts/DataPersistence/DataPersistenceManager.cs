@@ -44,7 +44,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
         if (SceneManager.GetActiveScene().buildIndex > 0)
         {
             SaveGameData();

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
@@ -13,6 +15,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
     PlayerController_Original playerController;
     PlayerMovement playerMovement;
     Camera_FPS_Controller cameraController;
+
+    public float itemAmount;
+    public int[] itemsInInv;
+
+    [SerializeField] public List<GameObject> items;
+    [SerializeField] public List<Items> itemsOut;
+   
 
 
 
@@ -30,12 +39,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
  
         GameEvents.PlayerLoaded?.Invoke(new PlayerData(player.transform.position));
         GameEvents.Worldloaded?.Invoke(new WorldData());
+       // Debug.Log(GameObject.Find("Content Panel").transform.childCount);
 
     }
     private void Update()
     {
         GetGameInfo();
         StartCoroutine(SpawnPlayer());
+       
     }
 
 
@@ -76,6 +87,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
        loadAct = data.SavedWorldData.SavedAct;
        playerPosition = data.SavedPlayerData.PlayerPosition;
+       ObtainItems();
+       
     }
 
     public void GetGameInfo()
@@ -87,12 +100,49 @@ public class GameManager : MonoBehaviour, IDataPersistence
             inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
             player = GameObject.Find("Player_Original");
             player.transform.position = playerPosition;
-
+            itemAmount = inventory.initialItems.Count -1;
+            GetItems();
             
         }
         else
         {
             return;
         }
+    }
+    public void GetItems()
+    {
+        foreach (var item in inventory.initialItems) 
+        {
+            for (int i = 1; i < inventory.initialItems.Count; i++)
+            {
+                foreach (var waos in itemsInInv)
+                {
+                    for (int j = 0; j < itemsInInv.Length; j++)
+                    {
+                        if (itemsInInv[j] != item.ID)
+                        {
+                            itemsInInv[i] = item.ID;
+                        }
+                    }
+                }    
+            }
+        }
+    }
+    public void ObtainItems()
+    {
+        foreach(var item in itemsInInv)
+        {
+         foreach(var iItem in items)
+            {
+                Items currentItem = iItem.GetComponent<Items>();
+                if (item == currentItem.ID)
+                {
+                    inventory.AddItem(currentItem);
+                }
+            }
+           
+        }
+        
+       //inventory.AddItem(item)
     }
 }

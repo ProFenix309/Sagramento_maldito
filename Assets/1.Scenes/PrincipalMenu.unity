@@ -1951,6 +1951,34 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 7406438531906146074, guid: 1fdf45d003390d04ebded3983bf55d62, type: 3}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: items.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: 'items.Array.data[0]'
+      value: 
+      objectReference: {fileID: 194127948060785229, guid: 5be773c4f1266d94bb248533da0ec044, type: 3}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: 'items.Array.data[1]'
+      value: 
+      objectReference: {fileID: 5419754313012389899, guid: b75a1f63f7ebd4346b9aedc7d52528c2, type: 3}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: 'items.Array.data[2]'
+      value: 
+      objectReference: {fileID: 577832644695175118, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: 'items.Array.data[3]'
+      value: 
+      objectReference: {fileID: 5696155201586512382, guid: af25f50d0359f99449ee1928b25f4f18, type: 3}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: 'items.Array.data[4]'
+      value: 
+      objectReference: {fileID: 7316450187369283123, guid: 52f45e1a0dba1c4469f980e11000a852, type: 3}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: 'items.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8909516086894148460, guid: f92f2aa55dd82a64689a0924c05dec9f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
