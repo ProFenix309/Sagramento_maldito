@@ -238,8 +238,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 4
   type: Amuleto
-  description: "Un amuleto ovalado de piedra p\xE1lida con un n\xFAcleo oscuro y
-    brillante, como un ojo antiguo que puede usarse en un altar."
+  description: Artefacto para uso en rituales de Altar.\n\nPorta la imagen de un
+    ojo, pero su significado es inconcluso.
   icon: {fileID: 21300000, guid: 58c524fcc2e293f4fb3c84ba06104987, type: 3}
   useInInventory: 0
 --- !u!1001 &993968615735600888

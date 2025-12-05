@@ -150,9 +150,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 6
-  type: Estatuilla
-  description: Parece muy bieja
-  icon: {fileID: 21300000, guid: fd0a90549672ab948b09205f4dc37895, type: 3}
+  type: Amuleto
+  description: "Artefacto para uso en rituales de Altar.\\n\\nEs un \xEDdolo de una
+    figura desconocida la cual tiene una inscripci\xF3n dejada por alg\xFAn ocultista:\\n\\n\"Parece
+    muy biejo\""
+  icon: {fileID: 21300000, guid: ace4c0e1f3355274089cc5e5f79a8d34, type: 3}
   useInInventory: 0
 --- !u!1001 &8396940302678197741
 PrefabInstance:
