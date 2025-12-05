@@ -148,6 +148,7 @@ MonoBehaviour:
   close: {fileID: 4485586330118182621}
   target: {fileID: 4485586330118182621}
   speed: 50
+  audioClip: {fileID: 0}
 --- !u!65 &4209357032085394505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -181,16 +182,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83803b39307e8c34a98c5b30a0c70015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound:
-    nameSound: Door
-    audioSource: {fileID: 0}
-    clip: {fileID: 0}
-    minDistance: 0
-    maxDistance: 0
-    spacialBlend: 1
-    loop: 0
-    volume: 1
-    usePlayOneShot: 0
+  soundName: Door
+  useRandomAudio: 0
+  randomSoundNames: []
+  useWaitTime: 0
+  minWaitTime: 1
+  maxWaitTime: 5
+  playOnStart: 0
 --- !u!1001 &6662497442256145868
 PrefabInstance:
   m_ObjectHideFlags: 0

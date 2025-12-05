@@ -5,7 +5,8 @@ public class Candle_Controller : MonoBehaviour
 {
     [SerializeField] Light lightPoint;
     [SerializeField] GameObject flame;
-    [SerializeField] float maxIntencity;
+    [SerializeField] float intencity;
+    [SerializeField] float range;
     [SerializeField] bool actived;
     [SerializeField] LayerMask layerOff;
     [SerializeField] AudioSource audioSource;
@@ -24,7 +25,8 @@ public class Candle_Controller : MonoBehaviour
             actived = !actived;
             if (!actived)
             {
-                lightPoint.intensity = maxIntencity;
+                lightPoint.intensity = intencity;
+                lightPoint.range = range;
                 flame.SetActive(true);
                 audioSource.PlayOneShot(audioClip);
             }
