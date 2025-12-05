@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Playertransition : MonoBehaviour
 {
@@ -30,5 +31,21 @@ public class Playertransition : MonoBehaviour
         // Desactivar animación
         transitionAnimator.SetBool("End", false);
         gameObject.SetActive(false);
+    }
+
+
+    public IEnumerator EndTransition(bool activatePlayer)
+    {
+        // Activar animación
+        gameObject.SetActive(true);
+        transitionAnimator.SetBool("Start", true);
+
+        // Esperar la duración
+        yield return new WaitForSeconds(transitionTime);
+
+        // Desactivar animación
+        transitionAnimator.SetBool("Start", false);
+        gameObject.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
