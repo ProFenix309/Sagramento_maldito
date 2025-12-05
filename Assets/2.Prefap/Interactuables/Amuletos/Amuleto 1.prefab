@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2693678900752827789}
   - component: {fileID: 8368826777814161867}
   - component: {fileID: 4754332422463024211}
+  - component: {fileID: 4815395505978224792}
   m_Layer: 0
   m_Name: Amuleto 1
   m_TagString: Item
@@ -57,7 +58,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -81,8 +82,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.32472944, y: 0.33809677, z: 0.34380436}
-  m_Center: {x: -0.0019078255, y: 0.12971307, z: 0}
+  m_Size: {x: 0.36786002, y: 0.3519778, z: 0.45480466}
+  m_Center: {x: -0.0007863045, y: 0.12196678, z: 0.0029209852}
 --- !u!114 &4754332422463024211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +101,27 @@ MonoBehaviour:
   description: "Una roca cuadrada que parece tener un aura extra\xF1a"
   icon: {fileID: 21300000, guid: fd0a90549672ab948b09205f4dc37895, type: 3}
   useInInventory: 0
+--- !u!65 &4815395505978224792
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577832644695175118}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.26918313, y: 0.2758997, z: 0.275882}
+  m_Center: {x: 0, y: 0.12303963, z: 0.0029212236}
 --- !u!1001 &7430610865502625900
 PrefabInstance:
   m_ObjectHideFlags: 0

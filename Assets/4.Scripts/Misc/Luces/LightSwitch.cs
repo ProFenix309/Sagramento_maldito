@@ -15,7 +15,7 @@ public class LightSwitch : MonoBehaviour, Interactable
 
         if (luz == null)
         {
-            Debug.LogWarning("No se encontr� un componente Light en este objeto interactuable.");
+            Debug.LogWarning("No se encontro un componente Light en este objeto interactuable.");
         }
     }
 
@@ -23,11 +23,18 @@ public class LightSwitch : MonoBehaviour, Interactable
     {
         if (luz == null) return;
 
-        encendida = !encendida;
-        luz.enabled = encendida;
-        audioSource.PlayOneShot(audioClip);
-
+        SwitchButtonLight();
 
         Debug.Log($"Luz {(encendida ? "encendida" : "apagada")}");
+    }
+
+    public void SwitchButtonLight()
+    {
+        encendida = !encendida;
+        luz.enabled = encendida;
+        if (encendida)
+        {
+            audioSource.PlayOneShot(audioClip);
+        }
     }
 }
