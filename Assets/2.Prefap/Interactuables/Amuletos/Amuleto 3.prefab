@@ -97,8 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 5
   type: Amuleto
-  description: "Un fragmento alargado envuelto por una pieza \xE1spera y amarillenta,
-    como un relicario roto que a\xFAn conserva un filo inquietante"
+  description: "Artefacto para uso en rituales de Altar.\\n\\nEs una vara de metal
+    adornado con un s\xEDmbolo religioso abstracto de origen desconocido."
   icon: {fileID: 21300000, guid: 73c3ee33bbf11714ab709adaaceb1fc7, type: 3}
   useInInventory: 0
 --- !u!1001 &582241913097267479
