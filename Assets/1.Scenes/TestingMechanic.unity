@@ -1560,6 +1560,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 337779212813830805, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
+      propertyPath: sightRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 337779212813830805, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
+      propertyPath: attackRange
+      value: 1.45
+      objectReference: {fileID: 0}
     - target: {fileID: 664765104963551779, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -1606,7 +1614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4638177202595688065, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1627,6 +1635,6 @@ SceneRoots:
   - {fileID: 6045035999615242390}
   - {fileID: 1158084464090813215}
   - {fileID: 1095928202}
-  - {fileID: 428812430}
-  - {fileID: 8141243447274074312}
   - {fileID: 3667198187311597601}
+  - {fileID: 8141243447274074312}
+  - {fileID: 428812430}

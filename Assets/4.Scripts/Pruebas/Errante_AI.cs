@@ -5,13 +5,12 @@ public class Errante_AI : MonoBehaviour
 {
     NavMeshAgent agent;
     Transform player;
-    Transform Distraction;
     
     [SerializeField] string nameTarget = "Player";
     
     [Space]
     [Header("Layers")]
-    public LayerMask whatIsGround, whatIsPlayer, whatIsDistraction;
+    public LayerMask whatIsGround, whatIsPlayer;
     
     Transform StartingPoint;
     float Velocity;
@@ -40,28 +39,28 @@ public class Errante_AI : MonoBehaviour
     [Header("Ranges")]
     public float sightRange = 15f;
     public float attackRange = 3f;
-    public float distractionRange = 20f;
+    public float lightDetectionRange = 20f;
     
     [Header("States")]
-    public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
+    public bool playerInSightRange, playerInAttackRange;
     
     [Header("Animator")]
     public Animator animator;
     
+    private Light nearestLight;
+    private bool lightInRange;
+    
     private void Awake()
     {
-        // Gets the agent and animator
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         
-        // Try to find StartingPoint (optional)
         GameObject startObj = GameObject.Find("StartingPoint");
         if (startObj != null)
             StartingPoint = startObj.transform;
         else
-            StartingPoint = transform; // Use current position if not found
+            StartingPoint = transform;
         
-        // Try to find player (optional - can be null)
         if (!string.IsNullOrEmpty(nameTarget))
         {
             GameObject playerObj = GameObject.Find(nameTarget);
@@ -69,12 +68,6 @@ public class Errante_AI : MonoBehaviour
                 player = playerObj.transform;
         }
         
-        // Try to find distraction (optional)
-        GameObject distractionObj = GameObject.Find("Distraction");
-        if (distractionObj != null)
-            Distraction = distractionObj.transform;
-        
-        // Set velocity
         if (agent != null)
             velocity = agent.speed;
     }
@@ -87,128 +80,180 @@ public class Errante_AI : MonoBehaviour
     
     private void Update()
     {
-        // Timer to control state changes
         randomTime -= Time.deltaTime;
         
-        // Check for layers only if player/distraction exist
-        playerInSightRange = player != null && Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = player != null && Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        DistractionISinRange = Distraction != null && Physics.CheckSphere(transform.position, distractionRange, whatIsDistraction);
-        
-        // Enemy checks states
-        if (playerInAttackRange && playerInSightRange && !DistractionISinRange)
+        bool playerHasLightOn = false;
+        if (player != null)
         {
-            AttackPlayer();
-        }
-        else if (randomTime <= 0.2f)
-        {
-            if (DistractionISinRange)
+            Candle_Controller playerCandle = player.GetComponentInChildren<Candle_Controller>();
+            if (playerCandle != null)
             {
-                ChaseDistraction();
-            }
-            else if (playerInSightRange && !playerInAttackRange)
-            {
-                ChasePlayer();
+                playerHasLightOn = playerCandle.IsLightOn();
             }
             else
             {
-                // Default: always patrol if nothing else to do
-                Patroling();
+                Debug.LogWarning("No se encontró Candle_Controller en el player ni en sus hijos!");
             }
-            
-            randomTime = initialRandomTime;
+        }
+        
+        float distanceToPlayer = player != null ? Vector3.Distance(transform.position, player.position) : 999f;
+        
+        bool sphereDetection = player != null && Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        
+        playerInSightRange = player != null && playerHasLightOn && distanceToPlayer <= sightRange;
+        playerInAttackRange = player != null && playerHasLightOn && distanceToPlayer <= attackRange;
+        
+        
+        FindNearestLight();
+        
+        if (playerInAttackRange && playerInSightRange)
+        {
+            AttackPlayer();
+        }
+        else if (playerInSightRange && !playerInAttackRange)
+        {
+            ChasePlayer();
+        }
+        else if (lightInRange && nearestLight != null)
+        {
+            ChaseLight();
+        }
+        else
+        {
+            Patroling();
+        }
+    }
+    
+    private void FindNearestLight()
+    {
+        LightSwitch[] allLights = FindObjectsByType<LightSwitch>(FindObjectsSortMode.None);
+        
+        nearestLight = null;
+        float nearestDistance = lightDetectionRange;
+        lightInRange = false;
+        
+        foreach (LightSwitch lightSwitch in allLights)
+        {
+            if (lightSwitch.IsLightOn())
+            {
+                float distance = Vector3.Distance(transform.position, lightSwitch.transform.position);
+                
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestLight = lightSwitch.GetComponent<Light>();
+                    lightInRange = true;
+                }
+            }
         }
     }
     
     private void Patroling()
     {
-        if (agent == null) return;
+        if (agent == null || !agent.isOnNavMesh) return;
         
-        // Set speed by default
         agent.speed = Velocity;
         
-        // Set animation states
         if (animator != null)
             animator.SetBool("isAttack", false);
         
-        // Check for points to travel to
         if (!walkPointSet)
             SearchWalkPoint();
         
-        // Walk to selected point
-        if (walkPointSet && agent.isOnNavMesh)
+        if (walkPointSet)
+        {
             agent.SetDestination(walkPoint);
+        }
         
-        // Check if walkpoint reached
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
         
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 2f || !agent.hasPath || agent.velocity.sqrMagnitude < 0.1f)
+        {
             walkPointSet = false;
+        }
     }
     
     private void SearchWalkPoint()
     {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-        
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        
-        if (NavMesh.SamplePosition(walkPoint, out NavMeshHit hit, walkPointRange, NavMesh.AllAreas))
+        int attempts = 0;
+        while (attempts < 10 && !walkPointSet)
         {
-            walkPoint = hit.position;
+            float randomZ = Random.Range(-walkPointRange, walkPointRange);
+            float randomX = Random.Range(-walkPointRange, walkPointRange);
             
-            if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+            walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+            
+            if (NavMesh.SamplePosition(walkPoint, out NavMeshHit hit, walkPointRange * 2f, NavMesh.AllAreas))
+            {
+                walkPoint = hit.position;
+                
+                NavMeshPath path = new NavMeshPath();
+                if (agent.CalculatePath(walkPoint, path) && path.status == NavMeshPathStatus.PathComplete)
+                {
+                    walkPointSet = true;
+                    return;
+                }
+            }
+            
+            attempts++;
+        }
+        
+        if (!walkPointSet)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * 5f;
+            randomDirection += transform.position;
+            
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit nearHit, 5f, NavMesh.AllAreas))
+            {
+                walkPoint = nearHit.position;
                 walkPointSet = true;
+            }
         }
     }
     
     private void ChasePlayer()
     {
-        if (agent == null || player == null) return;
+        if (agent == null || player == null || !agent.isOnNavMesh) return;
         
-        // Increase agent velocity
         agent.speed = ChaseVelocity;
         
-        // Set animation states
         if (animator != null)
             animator.SetBool("isAttack", true);
         
-        // Agent moves towards player
-        if (agent.isOnNavMesh)
-            agent.SetDestination(player.position);
+        agent.SetDestination(player.position);
     }
     
-    private void ChaseDistraction()
+    private void ChaseLight()
     {
-        if (agent == null || Distraction == null) return;
+        if (agent == null || nearestLight == null || !agent.isOnNavMesh) return;
         
         agent.speed = ChaseVelocity;
         
-        // Set animation states
         if (animator != null)
             animator.SetBool("isAttack", false);
         
-        if (agent.isOnNavMesh)
-            agent.SetDestination(Distraction.position);
+        agent.SetDestination(nearestLight.transform.position);
         
-        if (!alreadyAtacked)
+        float distanceToLight = Vector3.Distance(transform.position, nearestLight.transform.position);
+        if (distanceToLight < 2f)
         {
-            alreadyAtacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAtacks);
+            LightSwitch lightSwitch = nearestLight.GetComponent<LightSwitch>();
+            if (lightSwitch != null && lightSwitch.IsLightOn())
+            {
+                lightSwitch.SwitchButtonLight();
+                Debug.Log("Enemigo apagó una luz!");
+            }
         }
     }
     
     private void AttackPlayer()
     {
-        if (agent == null || player == null) return;
+        if (agent == null || player == null || !agent.isOnNavMesh) return;
         
-        // Makes sure enemy doesn't move
-        if (agent.isOnNavMesh)
-            agent.SetDestination(transform.position);
+        agent.SetDestination(transform.position);
         
         transform.LookAt(player);
         
-        // Set animation states
         if (animator != null)
             animator.SetBool("isAttack", true);
         
@@ -216,14 +261,12 @@ public class Errante_AI : MonoBehaviour
         {
             isAttacking = true;
             
-            // Make player look at enemy
             PlayerLookAtEnemy playerLook = player.GetComponent<PlayerLookAtEnemy>();
             if (playerLook != null)
             {
                 playerLook.StartLookingAtEnemy(transform);
             }
             
-            // Wait for animation time before dealing damage
             Invoke(nameof(DealDamage), AttackingTime);
             alreadyAtacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAtacks);
@@ -234,19 +277,28 @@ public class Errante_AI : MonoBehaviour
     {
         if (player == null) return;
         
-        HealthManager health = player.GetComponent<HealthManager>();
+        Health health = player.GetComponent<Health>();
+        if (health == null)
+        {
+            health = player.GetComponentInParent<Health>();
+        }
+        if (health == null)
+        {
+            health = player.GetComponentInChildren<Health>();
+        }
+        
         if (health != null)
         {
             health.RecibirDaño(damage);
         }
+        else
+        {
+            Debug.LogError("No se encontró el componente Health en el jugador en ninguna parte!");
+        }
         
-        Debug.Log("Player attacked - Damage dealt!");
-        
-        // Set position to starting one (optional)
         if (StartingPoint != null)
             transform.position = StartingPoint.position;
         
-        // End attack animation
         if (animator != null)
             animator.SetBool("isAttack", false);
         
@@ -265,7 +317,7 @@ public class Errante_AI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, distractionRange);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, lightDetectionRange);
     }
 }

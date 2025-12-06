@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour, IDataPersistence
 {
-    [Header("Configuraci�n de Vida")]
+    [Header("Configuracion de Vida")]
     public int vidaMaxima;
     [SerializeField] float vidaActual;
 
