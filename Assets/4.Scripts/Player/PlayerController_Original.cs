@@ -17,7 +17,7 @@ public class PlayerController_Original : MonoBehaviour
 
     [SerializeField] private float jumpForce;
 
-    [Space, Header("Detecci�n de suelos")]
+    [Space, Header("Deteccion de suelos")]
 
     [SerializeField] private LayerMask layerColision;
     [SerializeField] private Transform checkedGround;

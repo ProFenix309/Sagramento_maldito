@@ -1321,38 +1321,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Audio Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.data[1].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: d4f99686a070ff240850b1eae05b140d, type: 3}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.data[0].volume
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.data[1].volume
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.data[1].nameSound
-      value: Door
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.data[1].maxDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.data[1].minDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
-      propertyPath: sfxSounds.Array.data[1].spacialBlend
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1568,6 +1536,10 @@ PrefabInstance:
       propertyPath: attackRange
       value: 1.45
       objectReference: {fileID: 0}
+    - target: {fileID: 337779212813830805, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
+      propertyPath: ChaseVelocity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 664765104963551779, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -1633,8 +1605,8 @@ SceneRoots:
   - {fileID: 2093800494}
   - {fileID: 3768664812001437438}
   - {fileID: 6045035999615242390}
-  - {fileID: 1158084464090813215}
   - {fileID: 1095928202}
   - {fileID: 3667198187311597601}
   - {fileID: 8141243447274074312}
   - {fileID: 428812430}
+  - {fileID: 1158084464090813215}

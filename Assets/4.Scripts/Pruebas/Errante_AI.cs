@@ -25,8 +25,8 @@ public class Errante_AI : MonoBehaviour
     
     [Space]
     [Header("Chasing")]
-    public float velocity = 3.5f;
-    public float ChaseVelocity = 6f;
+    public float velocity;
+    public float ChaseVelocity;
     
     [Space]
     [Header("Atacking")]
@@ -46,6 +46,18 @@ public class Errante_AI : MonoBehaviour
     
     [Header("Animator")]
     public Animator animator;
+    
+    //Sistema de Audio
+    [Space]
+    [Header("Audio Settings")]
+    [Tooltip("Intervalo mínimo entre suspiros cuando patrulla")]
+    public float sighIntervalMin = 4f;
+    [Tooltip("Intervalo máximo entre suspiros cuando patrulla")]
+    public float sighIntervalMax = 8f;
+    
+    private float nextSighTime = 0f;
+    private bool isChasing = false;
+    private bool wasChasing = false;
     
     private Light nearestLight;
     private bool lightInRange;
@@ -76,6 +88,9 @@ public class Errante_AI : MonoBehaviour
     {
         randomTime = initialRandomTime;
         Velocity = velocity;
+        
+        // Inicializar primer suspiro
+        nextSighTime = Time.time + Random.Range(sighIntervalMin, sighIntervalMax);
     }
     
     private void Update()
@@ -90,10 +105,6 @@ public class Errante_AI : MonoBehaviour
             {
                 playerHasLightOn = playerCandle.IsLightOn();
             }
-            else
-            {
-                Debug.LogWarning("No se encontró Candle_Controller en el player ni en sus hijos!");
-            }
         }
         
         float distanceToPlayer = player != null ? Vector3.Distance(transform.position, player.position) : 999f;
@@ -102,7 +113,6 @@ public class Errante_AI : MonoBehaviour
         
         playerInSightRange = player != null && playerHasLightOn && distanceToPlayer <= sightRange;
         playerInAttackRange = player != null && playerHasLightOn && distanceToPlayer <= attackRange;
-        
         
         FindNearestLight();
         
@@ -122,6 +132,7 @@ public class Errante_AI : MonoBehaviour
         {
             Patroling();
         }
+        
     }
     
     private void FindNearestLight()
@@ -156,6 +167,20 @@ public class Errante_AI : MonoBehaviour
         
         if (animator != null)
             animator.SetBool("isAttack", false);
+        
+        isChasing = false;
+        
+        if (wasChasing && !isChasing)
+        {
+            wasChasing = false;
+        }
+        
+        // Reproducir suspiros aleatorios mientras patrulla
+        if (Time.time >= nextSighTime)
+        {
+            PlayPatrolSigh();
+            nextSighTime = Time.time + Random.Range(sighIntervalMin, sighIntervalMax);
+        }
         
         if (!walkPointSet)
             SearchWalkPoint();
@@ -221,6 +246,9 @@ public class Errante_AI : MonoBehaviour
             animator.SetBool("isAttack", true);
         
         agent.SetDestination(player.position);
+        
+        isChasing = true;
+        wasChasing = true;
     }
     
     private void ChaseLight()
@@ -234,6 +262,8 @@ public class Errante_AI : MonoBehaviour
         
         agent.SetDestination(nearestLight.transform.position);
         
+        isChasing = false;
+        
         float distanceToLight = Vector3.Distance(transform.position, nearestLight.transform.position);
         if (distanceToLight < 2f)
         {
@@ -241,6 +271,10 @@ public class Errante_AI : MonoBehaviour
             if (lightSwitch != null && lightSwitch.IsLightOn())
             {
                 lightSwitch.SwitchButtonLight();
+                
+                //Sonido al apagar luz
+                PlayTurnOffLightSound();
+                
                 Debug.Log("Enemigo apagó una luz!");
             }
         }
@@ -260,6 +294,9 @@ public class Errante_AI : MonoBehaviour
         if (!alreadyAtacked && !isAttacking)
         {
             isAttacking = true;
+            
+            //Sonido de ataque
+            PlayAttackSound();
             
             PlayerLookAtEnemy playerLook = player.GetComponent<PlayerLookAtEnemy>();
             if (playerLook != null)
@@ -311,6 +348,33 @@ public class Errante_AI : MonoBehaviour
         isAttacking = false;
     }
     
+    // NUEVOS MÉTODOS DE AUDIO
+    
+    // Reproduce suspiros aleatorios mientras patrulla
+    private void PlayPatrolSigh()
+    {
+        // Reproduce uno de 3 suspiros aleatorios en 3D
+        AudioManager.Instance.PlayRandomSFX3DAtGameObject(
+            gameObject,
+            "Suspiro 1",
+            "Suspiro 2",
+            "Suspiro 3"
+        );
+    }
+    
+    // Sonido de ataque
+    private void PlayAttackSound()
+    {
+        // Puedes usar sonidos aleatorios de ataque también
+        AudioManager.Instance.PlayRandomSFX3DAtGameObject(gameObject,"Ataque Errante");
+    }
+    
+    // Sonido al apagar una luz
+    private void PlayTurnOffLightSound()
+    {
+        AudioManager.Instance.PlaySFX3D("Soplido", transform.position);
+    }
+            
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

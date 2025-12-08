@@ -16,7 +16,7 @@ public class LightSwitch : MonoBehaviour, Interactable
         {
             Debug.LogWarning("No se encontró un componente Light en este objeto interactuable.");
         }
-        
+
         // Asegurar que la luz inicie apagada
         if (luz != null)
             luz.enabled = false;
@@ -34,19 +34,28 @@ public class LightSwitch : MonoBehaviour, Interactable
     public void SwitchButtonLight()
     {
         encendida = !encendida;
-        
+
         if (luz != null)
             luz.enabled = encendida;
-            
+
         if (encendida && audioSource != null && audioClip != null)
         {
             audioSource.PlayOneShot(audioClip);
         }
+        if (!encendida)
+        {
+            OffLightSound();
+        }
     }
-    
-    // Método público para que el enemigo pueda verificar si la luz está encendida
+
+    // Metodo para que el enemigo apague la luz
     public bool IsLightOn()
     {
         return encendida && luz != null && luz.enabled;
     }
+    private void OffLightSound()
+    {
+        AudioManager.Instance.PlaySFX3D("Soplido", transform.position);
+    }
+
 }
