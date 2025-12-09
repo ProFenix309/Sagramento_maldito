@@ -9,7 +9,7 @@ public class Armario : MonoBehaviour, Interactable
     {
         open.SetParent(null);
         close.SetParent(null);
-        target = close; 
+        target = close;
     }
 
     public void Interact()
@@ -17,10 +17,13 @@ public class Armario : MonoBehaviour, Interactable
         if (target == open)
         {
             target = close;
+            PlaySFXSound();
         }
         else
         {
             target = open;
+            PlaySFXSound();
+            AudioManager.Instance.StopMusic("Armario");
         }
     }
 
@@ -28,11 +31,12 @@ public class Armario : MonoBehaviour, Interactable
     {
         if (Vector3.Distance(armario.position, target.position) > 0.01f)
         {
-            armario.position = Vector3.MoveTowards(
-                armario.position,
-                target.position,
-                speed * Time.deltaTime
-            );
+            armario.position = Vector3.MoveTowards(armario.position, target.position, speed * Time.deltaTime);
         }
     }
+    private void PlaySFXSound()
+    {
+        AudioManager.Instance.PlaySFX3D("Armario", transform.position);
+    }
+
 }

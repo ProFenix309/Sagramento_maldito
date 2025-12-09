@@ -105,7 +105,6 @@ GameObject:
   - component: {fileID: 4939934370078937223}
   - component: {fileID: 2381071622966632707}
   - component: {fileID: 4209357032085394505}
-  - component: {fileID: 1669623411057437509}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -148,7 +147,6 @@ MonoBehaviour:
   close: {fileID: 4485586330118182621}
   target: {fileID: 4485586330118182621}
   speed: 50
-  audioClip: {fileID: 0}
 --- !u!65 &4209357032085394505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -170,25 +168,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.27916342, y: 2.2296624, z: 1.0835433}
   m_Center: {x: 0.012720615, y: 0.0042402744, z: -0.45731258}
---- !u!114 &1669623411057437509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7910093199555015696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83803b39307e8c34a98c5b30a0c70015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: Door
-  useRandomAudio: 0
-  randomSoundNames: []
-  useWaitTime: 0
-  minWaitTime: 1
-  maxWaitTime: 5
-  playOnStart: 0
 --- !u!1001 &6662497442256145868
 PrefabInstance:
   m_ObjectHideFlags: 0
