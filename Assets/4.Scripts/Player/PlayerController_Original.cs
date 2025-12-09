@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController_Original : MonoBehaviour
 {
+
+    PlayerController_Original instance;
+
     private Rigidbody rb;
 
     [Header("Movimiento")]
@@ -50,8 +54,14 @@ public class PlayerController_Original : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null && SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+
         canMove = true;
-        rb = GetComponent<Rigidbody>();
+         rb = GetComponent<Rigidbody>();
         health = GetComponent<Health>();
         meshAnimator =  GameObject.Find("LUCY@Idle").GetComponent<Animator>();
     }

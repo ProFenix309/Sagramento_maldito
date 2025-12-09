@@ -79,25 +79,25 @@ public class PlayerData
     [SerializeField] private float _currentHealth;
 
     public Vector3 PlayerPosition { get => _playerPosition; set => _playerPosition = value; }
-    [SerializeField] private Vector3 _playerPosition = new Vector3 (2.16f,3.05f,3.95f);
+    [SerializeField] private Vector3 _playerPosition = new Vector3(2.16f, 3.05f, 3.95f);
 
     public GameObject Player { get => _player; set => _player = value; }
-    [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _player; 
+
+    public List<int> Items { get => _items; set => _items = value; }
+    [SerializeField] private List<int> _items;
 
     public PlayerData()
     {
     }
-    public PlayerData(Vector3 posición)
+    public PlayerData(GameObject pObject,List<int> invItems, Vector3 posicion)
     {
-        _playerPosition = posición;
-    }
-    public PlayerData(float vida)
-    {
-        _currentHealth = vida;
-    }
-    public PlayerData(GameObject pObject) 
-    {
+       // Vector3 posición, float vida, GameObject pObject, int[] invItems
+        _playerPosition = posicion;
+//        _currentHealth = vida;
         _player = pObject;
+        _items = invItems;
+
     }
 }
 

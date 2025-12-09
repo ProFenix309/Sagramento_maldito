@@ -44,7 +44,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6117b8702afa674484e39d6b878aff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
+  gameSavingTime: 1
   player: {fileID: 8078212662175657501, guid: 1fdf45d003390d04ebded3983bf55d62, type: 3}
+  inventory: {fileID: 7406438531906146074, guid: 1fdf45d003390d04ebded3983bf55d62, type: 3}
+  health: {fileID: 0}
+  itemAmount: 0
+  itemsInInv: 
+  items:
+  - {fileID: 194127948060785229, guid: 5be773c4f1266d94bb248533da0ec044, type: 3}
+  - {fileID: 5419754313012389899, guid: b75a1f63f7ebd4346b9aedc7d52528c2, type: 3}
+  - {fileID: 577832644695175118, guid: d229f0fda31354641bca21e17f0c646b, type: 3}
+  - {fileID: 8733438605130775554, guid: af25f50d0359f99449ee1928b25f4f18, type: 3}
+  - {fileID: 7316450187369283123, guid: 52f45e1a0dba1c4469f980e11000a852, type: 3}
+  - {fileID: 8909516086894148460, guid: f92f2aa55dd82a64689a0924c05dec9f, type: 3}
   playerPosition: {x: 0, y: 0, z: 0}
   loadAct: 1

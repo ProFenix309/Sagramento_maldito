@@ -31,7 +31,7 @@ public class Activador_Por_Teclas : MonoBehaviour
         // Verificar si alguna tecla de la lista fue presionada
         foreach (KeyCode key in keys)
         {
-            if (Input.GetKeyDown(key))
+            if (Input.GetKeyDown(key) && Canvas != null)
             {
                 StartCoroutine(Transition());
                 break;

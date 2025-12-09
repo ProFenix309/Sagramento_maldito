@@ -49,5 +49,8 @@ MonoBehaviour:
     _savedPlayerData:
       _currentHealth: 0
       _playerPosition: {x: 0, y: 0, z: 0}
+      _player: {fileID: 8078212662175657501, guid: 1fdf45d003390d04ebded3983bf55d62, type: 3}
+      _items: 
     _savedWorldData:
       _savedAct: 1
+  saveTime: 6

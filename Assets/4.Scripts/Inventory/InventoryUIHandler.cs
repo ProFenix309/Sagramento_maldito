@@ -20,7 +20,7 @@ public class InventoryUIHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemNameText;
     [SerializeField] TextMeshProUGUI itemDescriptionText;
 
-    private readonly List<Slot> currentSlots = new();
+    public readonly List<Slot> currentSlots = new();
 
     public GameObject ItemInfoPanel { get => itemInfoPanel; set => itemInfoPanel = value; }
 

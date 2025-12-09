@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public Dictionary<int, Items> Items { get => _items; }
 
-    Dictionary<int, Items> _items = new();
+    private Dictionary<int, Items> _items = new();
 
     public Action InventoryUpdated;
 
@@ -54,7 +54,8 @@ public class Inventory : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
+       
         if (unlockInputs)
         {
             if (itemH.Item != null && !inventoryEnabled)
@@ -70,7 +71,6 @@ public class Inventory : MonoBehaviour
             else
             {
                 inventoryItem = null;
-                Debug.Log("no detected item for your inventory");
             }
 
             if (Input.GetKeyDown(KeyCode.I) && inventoryUIHandler.ItemInfoPanel.activeSelf == false)
@@ -80,6 +80,12 @@ public class Inventory : MonoBehaviour
                 {
                     if (playerController.canMove)
                     {
+                        foreach (var items in Items)
+                        {
+                            string name = items.Value.name;
+                            Debug.Log(name);
+                        }
+
                         Cursor.lockState = CursorLockMode.None;
                         playerController.canMove = false;
                         cameraController.canMove = false;
@@ -102,6 +108,7 @@ public class Inventory : MonoBehaviour
         {
             _items.Add(item.ID, item);
             InventoryUpdated?.Invoke();
+            Debug.Log(item + "added to your inv");
         }
     }
     public bool TrySpendItem(int id)

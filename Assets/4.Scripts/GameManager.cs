@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 using Unity.VisualScripting;
 using System.Collections.Generic;
 
@@ -8,19 +9,23 @@ public class GameManager : MonoBehaviour, IDataPersistence
 {
     public static GameManager instance;
 
-    public Inventory inventory;
+    public float gameSavingTime;
+
     public GameObject player;
+    public Inventory inventory;
+    public Health health;
 
 
     PlayerController_Original playerController;
     PlayerMovement playerMovement;
     Camera_FPS_Controller cameraController;
 
+
     public float itemAmount;
-    public int[] itemsInInv;
+    public List<int> itemsInInv;
 
     [SerializeField] public List<GameObject> items;
-    [SerializeField] public List<Items> itemsOut;
+   // [SerializeField] public List<Items> itemsOut;
    
 
 
@@ -36,17 +41,20 @@ public class GameManager : MonoBehaviour, IDataPersistence
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
- 
-        GameEvents.PlayerLoaded?.Invoke(new PlayerData(player.transform.position));
-        GameEvents.Worldloaded?.Invoke(new WorldData());
-       // Debug.Log(GameObject.Find("Content Panel").transform.childCount);
+        // player.transform.position, health.vidaMaxima, player,itemsInInv
 
+        GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv,playerPosition));
+
+        GameEvents.Worldloaded?.Invoke(new WorldData());
+        // Debug.Log(GameObject.Find("Content Panel").transform.childCount);
     }
+
+
     private void Update()
     {
-        GetGameInfo();
         StartCoroutine(SpawnPlayer());
-       
+        StartCoroutine(GameInfo(gameSavingTime));
+
     }
 
 
@@ -56,17 +64,21 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             if (SceneManager.GetActiveScene().buildIndex == 1)
             {
+                GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv,playerPosition));
                 Debug.LogWarning("more than 1 players in scene");
-                player.transform.position = playerPosition;
                 Instantiate(player);
+                player.transform.position = playerPosition;
+            
                
             }
 
 
-            if (SceneManager.GetActiveScene().buildIndex == 2 && GameObject.Find("Player_Original(Clone)") == null)
+            if (SceneManager.GetActiveScene().buildIndex == 2)
             {
-                player.transform.position = new Vector3 (0.1f, 5.81f, 6.92f);
+                GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv, playerPosition));
                 Instantiate(player);
+                player.transform.position = new Vector3 (0.1f, 5.81f, 6.92f);
+                
                
             }
         }
@@ -77,6 +89,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
+       
         GameEvents.GameDataLoaded += LoadData;
     }
     private void OnDisable()
@@ -86,24 +99,47 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
        loadAct = data.SavedWorldData.SavedAct;
+       player = data.SavedPlayerData.Player;
+        
+        StartCoroutine(SpawnPlayer());
+        
+
        playerPosition = data.SavedPlayerData.PlayerPosition;
-       ObtainItems();
-       
+        player.transform.position = playerPosition;
+        
+       itemsInInv = data.SavedPlayerData.Items;
+
+
+
+        
+    }
+
+
+    IEnumerator GameInfo(float savingTime)
+    {
+        yield return new WaitForSeconds(savingTime);
+        GetGameInfo();
+     
+
     }
 
     public void GetGameInfo()
     {
-        
-        if (GameObject.Find("Player_Original") && inventory == null)
-        {
-            Debug.Log("waos");
-            inventory = GameObject.Find("Player_Original").GetComponent<Inventory>();
-            player = GameObject.Find("Player_Original");
-            player.transform.position = playerPosition;
-            itemAmount = inventory.initialItems.Count -1;
-            GetItems();
-            
-        }
+
+        // if (GameObject.Find("Player_Original") && inventory == null)
+        //  {
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        { 
+            Debug.LogWarning("waos");
+        inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
+        player = GameObject.Find("Player_Original(Clone)");
+        playerPosition = player.transform.position;
+        health = player.GetComponent<Health>();
+        itemAmount = inventory.initialItems.Count - 1;
+
+        GetItems();
+        ObtainItems();
+         }
         else
         {
             return;
@@ -111,28 +147,38 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
     public void GetItems()
     {
-        foreach (var item in inventory.initialItems) 
+        if (inventory.Items.Count != 0)
         {
-            for (int i = 1; i < inventory.initialItems.Count; i++)
+            if (inventory.Items.Count > 0 && inventory.Items != null)
             {
-                foreach (var waos in itemsInInv)
+
+                foreach (var item in inventory.Items)
                 {
-                    for (int j = 0; j < itemsInInv.Length; j++)
+                    Debug.Log(item.Value.name + " se detectó en el inv");
+
+                    if (!itemsInInv.Contains(item.Value.ID))
                     {
-                        if (itemsInInv[j] != item.ID)
-                        {
-                            itemsInInv[i] = item.ID;
-                        }
+                        itemsInInv.Add(item.Value.ID);
                     }
-                }    
+                }
+                for (int i = 0; i < itemsInInv.Count; i++)
+                {
+                    Debug.Log(itemsInInv[i]);
+                }
             }
         }
+        else
+        {
+            return;
+        }
+
+        
     }
     public void ObtainItems()
     {
         foreach(var item in itemsInInv)
         {
-         foreach(var iItem in items)
+            foreach(var iItem in items)
             {
                 Items currentItem = iItem.GetComponent<Items>();
                 if (item == currentItem.ID)

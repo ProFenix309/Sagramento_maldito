@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 [DefaultExecutionOrder(-10)]
 public class DataPersistenceManager : MonoBehaviour
@@ -9,15 +10,18 @@ public class DataPersistenceManager : MonoBehaviour
     [SerializeField] private GameData gameData = new();
     public static DataPersistenceManager instance { get; private set; }
 
+    public float saveTime;
+
     private void OnEnable()
     {
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
         GameEvents.Worldloaded += gameData.SetWorldData;
         GameEvents.EnemyLoaded += gameData.AddEnemyData;
         GameEvents.PlayerLoaded += gameData.SetPlayerData;
     }
     private void OnDisable()
-    {
+    { 
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         GameEvents.Worldloaded -= gameData.SetWorldData;
         GameEvents.EnemyLoaded -= gameData.AddEnemyData;
         GameEvents.PlayerLoaded -= gameData.SetPlayerData;
@@ -39,16 +43,16 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     private void Start()
-    {
+    { 
+
+        Debug.LogWarning(path);
         CheckGameData();
     }
 
     private void Update()
-    {   
-        if (SceneManager.GetActiveScene().buildIndex > 0)
-        {
-            SaveGameData();
-        }
+    {
+     if (SceneManager.GetActiveScene().buildIndex != 0)
+        StartCoroutine(SaveData(saveTime));
     }
     public void NewGame()
     {
@@ -76,14 +80,28 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGameData()
     {
-        string json = JsonUtility.ToJson(gameData);
+        Debug.Log("SavingData");
+         string json = JsonUtility.ToJson(gameData);
         File.WriteAllText(path, json);
     }
     private void OnApplicationQuit()
     {
-        
+
+        SaveGameData();
+    }    
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         SaveGameData();
     }
+
+    IEnumerator SaveData(float timeBetweenSaves)
+    {
+        SaveGameData();
+        yield return new WaitForSeconds(timeBetweenSaves);
+    }
+
+
 }
 
 

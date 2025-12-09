@@ -19,8 +19,8 @@ public class HealthManager : MonoBehaviour, IDataPersistence
         vidaActual = vidaMaxima;
 
         // Crear instancia de PlayerData explícitamente
-        var playerData = new PlayerData(vidaMaxima);
-        GameEvents.PlayerLoaded?.Invoke(playerData);
+        // playerData = new PlayerData(vidaMaxima);
+       // GameEvents.PlayerLoaded?.Invoke(playerData);
     }
 
     void Start()
