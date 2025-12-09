@@ -361,4 +361,24 @@ MonoBehaviour:
     minDistance: 1
     maxDistance: 20
     source: {fileID: 0}
+  - name: Door
+    clip: {fileID: 8300000, guid: d4f99686a070ff240850b1eae05b140d, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    is3D: 1
+    minDistance: 1
+    maxDistance: 20
+    source: {fileID: 0}
+  - name: Armario
+    clip: {fileID: 8300000, guid: 24400c1d9d79aec41b5d6b1cd8ec708e, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    is3D: 1
+    minDistance: 1
+    maxDistance: 20
+    source: {fileID: 0}
   poolSize: 10
+  autoPlayMusic: 1
+  initialMusicName: BackgroundMusic
