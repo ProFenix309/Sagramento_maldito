@@ -5,7 +5,7 @@ public class Valve : MonoBehaviour, Interactable
     [Header("Estado")]
     [SerializeField] private bool activated = false;
 
-    [Header("Rotación del Modelo")]
+    [Header("Rotacion del Modelo")]
     [SerializeField] private Transform valveModel;
     [SerializeField] private float maxRotation = 360f;
     [SerializeField] private Vector3 rotationAxis = Vector3.up;
@@ -52,7 +52,7 @@ public class Valve : MonoBehaviour, Interactable
     {
         if (activated)
         {
-            Debug.Log($"La válvula {gameObject.name} ya está activada.");
+            Debug.Log($"La valvula {gameObject.name} ya esta activada.");
             return;
         }
 
@@ -72,7 +72,7 @@ public class Valve : MonoBehaviour, Interactable
     private void CompleteActivation()
     {
         activated = true;
-        Debug.Log($"Válvula {gameObject.name} activada!");
+        Debug.Log($"Valvula {gameObject.name} activada!");
         OnValveActivated?.Invoke();
     }
 

@@ -46,6 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   altarSlots:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   onAllSlotsActivated:
     m_PersistentCalls:
       m_Calls:

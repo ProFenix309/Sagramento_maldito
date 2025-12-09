@@ -23,7 +23,7 @@ public class Health : MonoBehaviour, IDataPersistence
     {
 
         vidaActual = vidaMaxima;
-        Debug.Log("Vida inicial: " + vidaActual);
+        //Debug.Log("Vida inicial: " + vidaActual);
 
     }
     private void Update()

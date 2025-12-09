@@ -9,9 +9,6 @@ public class AltarSlot : MonoBehaviour, Interactable, ItemRequierement
     [SerializeField] private GameObject activatedVisual;
     [SerializeField] private GameObject deactivatedVisual;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource activationAudio;
-
     private bool isActivated = false;
     public bool IsActivated => isActivated;
 
@@ -36,10 +33,7 @@ public class AltarSlot : MonoBehaviour, Interactable, ItemRequierement
         isActivated = true;
         UpdateVisuals();
 
-        if (activationAudio != null)
-        {
-            activationAudio.Play();
-        }
+        SoundAltar();
 
         AltarManager manager = FindAltarManager();
         if (manager != null)
@@ -67,17 +61,23 @@ public class AltarSlot : MonoBehaviour, Interactable, ItemRequierement
         UpdateVisuals();
     }
 
-private AltarManager FindAltarManager()
-{
-    AltarManager manager = GetComponentInParent<AltarManager>();
-    
-    if (manager == null)
+    private AltarManager FindAltarManager()
     {
-        manager = FindAnyObjectByType<AltarManager>();
+        AltarManager manager = GetComponentInParent<AltarManager>();
+
+        if (manager == null)
+        {
+            manager = FindAnyObjectByType<AltarManager>();
+        }
+
+        return manager;
     }
-    
-    return manager;
-}
+
+    public void SoundAltar()
+    {
+        AudioManager.Instance.PlaySFX3D("Fuego", transform.position);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = isActivated ? Color.green : Color.yellow;

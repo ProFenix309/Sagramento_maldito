@@ -591,7 +591,8 @@ PrefabInstance:
       propertyPath: requiredItemID
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7201083891468546399, guid: 62769841e6e8fb441a47ec2dc85f8487, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1215,10 +1216,6 @@ PrefabInstance:
       value: Altar Manager
       objectReference: {fileID: 0}
     - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
-      propertyPath: altarSlots.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
       propertyPath: 'altarSlots.Array.data[0]'
       value: 
       objectReference: {fileID: 1687593586}
@@ -1232,22 +1229,6 @@ PrefabInstance:
       objectReference: {fileID: 1683525564}
     - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
       propertyPath: 'altarSlots.Array.data[3]'
-      value: 
-      objectReference: {fileID: 945374620}
-    - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
-      propertyPath: 'altarSlots.Array.data[4]'
-      value: 
-      objectReference: {fileID: 945374620}
-    - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
-      propertyPath: 'altarSlots.Array.data[5]'
-      value: 
-      objectReference: {fileID: 945374620}
-    - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
-      propertyPath: 'altarSlots.Array.data[6]'
-      value: 
-      objectReference: {fileID: 945374620}
-    - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
-      propertyPath: 'altarSlots.Array.data[7]'
       value: 
       objectReference: {fileID: 945374620}
     - target: {fileID: 4418847487162518390, guid: df72b4d7dee46c341957c7e9df9bafa2, type: 3}
@@ -1340,7 +1321,8 @@ PrefabInstance:
       propertyPath: requiredItemID
       value: 6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7201083891468546399, guid: 62769841e6e8fb441a47ec2dc85f8487, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1860,7 +1842,8 @@ PrefabInstance:
       propertyPath: requiredItemID
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7201083891468546399, guid: 62769841e6e8fb441a47ec2dc85f8487, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1953,7 +1936,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7201083891468546399, guid: 62769841e6e8fb441a47ec2dc85f8487, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2025,6 +2009,10 @@ PrefabInstance:
     - target: {fileID: 4638177202595688065, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
       propertyPath: m_Name
       value: Errante
+      objectReference: {fileID: 0}
+    - target: {fileID: 4638177202595688065, guid: 07306627c3ce5764c91cdd463860c356, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2252,6 +2240,10 @@ PrefabInstance:
       value: ev
       objectReference: {fileID: 0}
     - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: initialMusicName
+      value: Cripta
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
       propertyPath: musicSounds.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -2264,8 +2256,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].name
+      value: Cripta
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
+      propertyPath: musicSounds.Array.data[0].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
       propertyPath: musicSounds.Array.data[0].volume
-      value: 0.3
+      value: 0.563
       objectReference: {fileID: 0}
     - target: {fileID: 4266476799758024976, guid: c91a1eb7cbef2cf43bb8b060218b65ce, type: 3}
       propertyPath: musicSounds.Array.data[0].nameSound

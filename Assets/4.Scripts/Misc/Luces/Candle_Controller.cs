@@ -86,6 +86,7 @@ public class Candle_Controller : MonoBehaviour
         
         if (flame != null)
             flame.SetActive(false);
+            OffLightSound();
         
         actived = false;
         Debug.Log("Luz del jugador APAGADA");
@@ -108,9 +109,15 @@ public class Candle_Controller : MonoBehaviour
         }
     }
     
-    // Método público para que otros scripts verifiquen si la luz está encendida
+    // Método para que el enemigo apague la luz
     public bool IsLightOn()
     {
         return actived;
     }
+
+        private void OffLightSound()
+    {
+        AudioManager.Instance.PlaySFX3D("Soplido", transform.position);
+    }
+
 }

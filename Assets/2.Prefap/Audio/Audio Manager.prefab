@@ -304,53 +304,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa6d218429c83044bf14ff86fc32208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 86b4969681b62c84799584faec5e9a78, type: 2}
   musicSounds: []
   sfxSounds:
-  - nameSound: Door
-    audioSource: {fileID: 0}
-    clip: {fileID: 8300000, guid: d4f99686a070ff240850b1eae05b140d, type: 3}
-    minDistance: 1
-    maxDistance: 10
-    spacialBlend: 1
-    loop: 0
-    volume: 0.5
-    usePlayOneShot: 0
-  - nameSound: Errante 1
-    audioSource: {fileID: 0}
+  - name: Suspiro 1
     clip: {fileID: 8300000, guid: 3e629d3bbe2e5954c9bc6412e9acc25c, type: 3}
-    minDistance: 1
-    maxDistance: 30
-    spacialBlend: 1
+    volume: 0.5
+    pitch: 1
     loop: 0
-    volume: 1
-    usePlayOneShot: 0
-  - nameSound: Errante 2
-    audioSource: {fileID: 0}
+    is3D: 0
+    minDistance: 1
+    maxDistance: 20
+    source: {fileID: 0}
+  - name: Suspiro 2
     clip: {fileID: 8300000, guid: 6135689dba38863448659a7e2794810c, type: 3}
-    minDistance: 1
-    maxDistance: 30
-    spacialBlend: 1
+    volume: 0.5
+    pitch: 1
     loop: 0
-    volume: 1
-    usePlayOneShot: 0
-  - nameSound: Errante 3
-    audioSource: {fileID: 0}
+    is3D: 1
+    minDistance: 1
+    maxDistance: 20
+    source: {fileID: 0}
+  - name: Suspiro 3
     clip: {fileID: 8300000, guid: b016e36380189b345a36c596f0a6890a, type: 3}
-    minDistance: 1
-    maxDistance: 30
-    spacialBlend: 1
+    volume: 0.5
+    pitch: 1
     loop: 0
-    volume: 1
-    usePlayOneShot: 0
-  - nameSound: Mechero
-    audioSource: {fileID: 0}
-    clip: {fileID: 8300000, guid: 4d8bd8d418380894ab15dd19823dd414, type: 3}
+    is3D: 0
     minDistance: 1
-    maxDistance: 30
-    spacialBlend: 1
+    maxDistance: 20
+    source: {fileID: 0}
+  - name: Ataque Errante
+    clip: {fileID: 8300000, guid: 9a2bb5495a942334fa2a925cc8cbdf12, type: 3}
+    volume: 0.5
+    pitch: 1
     loop: 0
-    volume: 1
-    usePlayOneShot: 0
-  musicSource: {fileID: 424262031973438205}
-  sfxSource: {fileID: 6431029231131813578}
-  backgroundMusic: 
+    is3D: 1
+    minDistance: 1
+    maxDistance: 20
+    source: {fileID: 0}
+  - name: Soplido
+    clip: {fileID: 8300000, guid: ce954266943b75144b0cd9d13fc4313a, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    is3D: 1
+    minDistance: 1
+    maxDistance: 20
+    source: {fileID: 0}
+  - name: Mechero
+    clip: {fileID: 8300000, guid: ce954266943b75144b0cd9d13fc4313a, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    is3D: 1
+    minDistance: 1
+    maxDistance: 20
+    source: {fileID: 0}
+  poolSize: 10
