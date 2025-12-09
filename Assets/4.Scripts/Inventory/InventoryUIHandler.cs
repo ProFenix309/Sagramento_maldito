@@ -44,7 +44,7 @@ public class InventoryUIHandler : MonoBehaviour
             Destroy(s.gameObject);
         }
         currentSlots.Clear();
-
+     
         // Crea nuevos slots por cada ítem en el inventario
         foreach (var item in inventory.Items.Values)
         {

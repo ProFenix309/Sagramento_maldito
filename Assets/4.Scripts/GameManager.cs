@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using Unity.VisualScripting;
 using System.Collections.Generic;
+using UnityEditor.Overlays;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
@@ -91,10 +92,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
        
         GameEvents.GameDataLoaded += LoadData;
+        GameEvents.GameDataSaved += SaveData;
     }
     private void OnDisable()
     {
         GameEvents.GameDataLoaded -= LoadData;
+         GameEvents.GameDataSaved -= SaveData;
+
     }
     public void LoadData(GameData data)
     {
@@ -108,17 +112,45 @@ public class GameManager : MonoBehaviour, IDataPersistence
         player.transform.position = playerPosition;
         
        itemsInInv = data.SavedPlayerData.Items;
-
-
-
         
     }
+
+    public void SaveData(GameData data)
+    {
+        data.SavedWorldData.SavedAct = loadAct;
+        data.SavedPlayerData.Player = player ;
+        data.SavedPlayerData.PlayerPosition = playerPosition;
+        itemsInInv = data.SavedPlayerData.Items;
+    }
+        
 
 
     IEnumerator GameInfo(float savingTime)
     {
         yield return new WaitForSeconds(savingTime);
-        GetGameInfo();
+
+        if (inventory.Items != null)
+        {
+            if (inventory.Items.Count > 0 && inventory.Items != null)
+            {
+
+                foreach (var item in inventory.Items)
+                {
+                   // Debug.Log(item.Value.name + " se detectó en el inv");
+
+                    if (!itemsInInv.Contains(item.Value.ID))
+                    {
+                        itemsInInv.Add(item.Value.ID);
+                    }
+                }
+                for (int i = 0; i < itemsInInv.Count; i++)
+                {
+                    Debug.Log(itemsInInv[i]);
+                }
+            }
+        }
+
+            GetGameInfo();
      
 
     }
@@ -147,19 +179,27 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
     public void GetItems()
     {
-        if (inventory.Items.Count != 0)
+        if (inventory.Items != null)
         {
             if (inventory.Items.Count > 0 && inventory.Items != null)
             {
 
                 foreach (var item in inventory.Items)
                 {
-                    Debug.Log(item.Value.name + " se detectó en el inv");
+                  //  Debug.Log(item.Value.name + " se detectó en el inv");
 
                     if (!itemsInInv.Contains(item.Value.ID))
                     {
                         itemsInInv.Add(item.Value.ID);
                     }
+                    for (int i = 0;i < itemsInInv.Count; i++)
+                    {
+                        if (!inventory.Items.ContainsKey(itemsInInv[i]))
+                        {
+                            itemsInInv.Remove(itemsInInv[i]);
+                        }
+                    }
+ 
                 }
                 for (int i = 0; i < itemsInInv.Count; i++)
                 {
