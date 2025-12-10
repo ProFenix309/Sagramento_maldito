@@ -33,6 +33,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-3488766359053696707
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 7cfd00cc56c4067448479ecce78adc1d
+  m_EffectName: Attenuation
+  m_MixLevel: eda21d3382bf9784fb25830dd3108b0d
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-1692996521371926947
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -62,12 +76,19 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 06a408317e462f34f9f55aebf7420c9b
+    name: MasterVolume
+  - guid: fd929e66b36bcf0488e6ace0a56e74b9
+    name: MusicVolume
+  - guid: 79850761261427d4790a65538a4a134c
+    name: SFXVolume
   m_AudioMixerGroupViews:
   - guids:
     - 5134b44b40d522640afcdb80e784e22e
     - 458634a938b492f48945685c04b7ade2
     - ffa367032d2802b48820bf0ecf72371c
+    - da94b620c5c6825439338b7154c7ccca
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -81,8 +102,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 5134b44b40d522640afcdb80e784e22e
   m_Children:
-  - {fileID: 5266193971783130281}
-  - {fileID: -9145012221546105322}
+  - {fileID: 515499776120103727}
   m_Volume: f2ca5eeb555ed004a817c2267634a1e0
   m_Pitch: edbf2e849afdc5f4080d935a5410791c
   m_Send: 00000000000000000000000000000000
@@ -117,6 +137,27 @@ AudioMixerSnapshotController:
   m_SnapshotID: f5084e74c92c652468ea1117c8af36f6
   m_FloatValues: {}
   m_TransitionOverrides: {}
+--- !u!243 &515499776120103727
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MasterVolume
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: da94b620c5c6825439338b7154c7ccca
+  m_Children:
+  - {fileID: 5266193971783130281}
+  - {fileID: -9145012221546105322}
+  m_Volume: 06a408317e462f34f9f55aebf7420c9b
+  m_Pitch: 3d1eb34d7727fdb44abfe4860ae34247
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -3488766359053696707}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &5266193971783130281
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
