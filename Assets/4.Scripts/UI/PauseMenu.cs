@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using TMPro.Examples;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement; // Necesario para cambiar de escena
@@ -19,6 +20,8 @@ public class PauseMenu : MonoBehaviour
 
     public PlayerController_Original playerController;
 
+    public Camera_FPS_Controller cameraController;
+
 
     // Bandera para saber si el juego est� pausado
     private bool gamePause = false;
@@ -29,11 +32,11 @@ public class PauseMenu : MonoBehaviour
     // En tu script ControladorPausa:
     public GameObject configutionPanel; // Asigna este panel en el Inspector
 
-    
+
 
     private void Awake()
     {
-       
+
         sceneManager = SceneManager.GetActiveScene().buildIndex;
 
         if (sceneManager != 0)
@@ -44,7 +47,7 @@ public class PauseMenu : MonoBehaviour
                 DontDestroyOnLoad(gameObject);
 
             }
-            else if (instance != null) 
+            else if (instance != null)
             {
                 instance = this;
             }
@@ -52,10 +55,6 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -63,10 +62,11 @@ public class PauseMenu : MonoBehaviour
         {
 
 
-            if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null && GameObject.Find("Player_Original(Clone)"))
+            if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null && cameraController == null && GameObject.Find("Player_Original(Clone)"))
             {
                 playerController = GameObject.Find("Player_Original(Clone)").GetComponent<PlayerController_Original>();
                 inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
+                cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
                 configutionPanel = GameObject.Find("Configuracion");
                 pausePanel = GameObject.Find("Pause Menu").gameObject;
                 menuPanel = GameObject.Find("Menu Pausa").gameObject;
@@ -90,6 +90,7 @@ public class PauseMenu : MonoBehaviour
     {
         inventory.UnlockInputs = false;
         playerController.stop = false; 
+        cameraController.unlockInputs = false;
 
         // Desbloquea el curso
         Cursor.lockState = CursorLockMode.None;
@@ -113,6 +114,7 @@ public class PauseMenu : MonoBehaviour
     {
         inventory.UnlockInputs = true;
         playerController.stop = true;
+        cameraController.unlockInputs = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
