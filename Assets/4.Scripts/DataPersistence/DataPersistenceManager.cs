@@ -8,6 +8,7 @@ public class DataPersistenceManager : MonoBehaviour
 {
     string path;
     [SerializeField] private GameData gameData;
+    GameData newGameData = new GameData();
     public static DataPersistenceManager instance { get; private set; }
 
     public float saveTime;
@@ -60,7 +61,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
     public void NewGame()
     {
-        gameData = new GameData();
+        gameData = newGameData;
         SaveGameData();
     }
     public void CheckGameData()
@@ -99,27 +100,36 @@ public class DataPersistenceManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, Scene newScene)
     {
         load = 1;
-        SaveGameData();
         LoadGameData();
+        Debug.Log("cargado al cargar escena");
+        if (gameData != newGameData)
+        {
+            SaveGameData();
+            Debug.Log("guardado al cargar escena");
+        }
+       
 
         
     }
 
     IEnumerator SaveData(float timeBetweenSaves)
     {
-        if (!File.Exists(path))
-        { }
-        if (load == 1)
+        if (gameData.SavedPlayerData.Items != newGameData.SavedPlayerData.Items)
         {
-            LoadGameData();
-            load = 0;
+            if (load == 1)
+            {
+                LoadGameData();
+                load = 0;
+            }
         }
+
     
 
         yield return new WaitForSeconds(timeBetweenSaves);
-
-        SaveGameData();
-        
+        if (gameData.SavedPlayerData.Items != newGameData.SavedPlayerData.Items)
+        {
+            SaveGameData();
+        }
     }
 
 

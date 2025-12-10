@@ -36,7 +36,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
 
     public Vector3 playerPosition;
-    [HideInInspector]public int loadAct =1;
+    public Vector3 playerPosition1 = new Vector3(2.16f, 3.05f, 3.95f);
+    public Vector3 playerPosition2 = new Vector3(0.1f, 5.81f, 6.92f);
+    public Vector3 playerPosition3 = new Vector3();//toca mirar punto de spawneo
+    [HideInInspector] public int loadAct;
 
     private void Awake()
     {
@@ -47,7 +50,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         // player.transform.position, health.vidaMaxima, player,itemsInInv
 
-        GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv,playerPosition));
+        GameEvents.PlayerLoaded?.Invoke(new PlayerData(player,playerPosition1,playerPosition2,playerPosition3));
 
         GameEvents.Worldloaded?.Invoke(new WorldData());
         // Debug.Log(GameObject.Find("Content Panel").transform.childCount);
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
+        
         SpawnPlayer();
         StartCoroutine(GameInfo(gameSavingTime));
 
@@ -66,12 +70,18 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         if (SceneManager.GetActiveScene().buildIndex != 0 && GameObject.Find("Player_Original(Clone)") == null)
         {
+
             if (SceneManager.GetActiveScene().buildIndex == 1)
             {
-                GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv,playerPosition));
-                Debug.LogWarning("more than 1 players in scene");
+                Debug.Log("se cargó el jugador en la escena 2");
                 Instantiate(playerPrefab);
+                playerPrefab.transform.position = playerPosition1;
+                if (playerPosition == new Vector3())
+                {
+                    playerPosition = playerPosition1;
+                }
                 playerPrefab.transform.position = playerPosition;
+
             
                
             }
@@ -79,11 +89,26 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
             if (SceneManager.GetActiveScene().buildIndex == 2)
             {
-                GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv, playerPosition));
+                Debug.Log("se cargó el jugador en la escena 2");
                 Instantiate(playerPrefab);
-                playerPrefab.transform.position = new Vector3 (0.1f, 5.81f, 6.92f);
-                
-               
+                playerPrefab.transform.position = playerPosition2;
+                if (playerPosition == new Vector3())
+                {
+                    playerPosition = playerPosition2;
+                }
+                playerPrefab.transform.position = playerPosition;
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 3)
+            {
+                Instantiate(playerPrefab);
+                playerPrefab.transform.position = playerPosition3;
+                if (playerPosition == new Vector3())
+                {
+                    playerPosition = playerPosition3;
+                }
+                playerPrefab.transform.position = playerPosition;
+
             }
         }
     
@@ -93,6 +118,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            loadAct = 1;
+        }
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            loadAct = SceneManager.GetActiveScene().buildIndex;
+        }
         GameEvents.GameDataLoaded += LoadData;
         Debug.Log("guardandoinfo");
         GameEvents.GameDataSaved += SaveData;
@@ -100,7 +133,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private void OnDisable()
     {
         GameEvents.GameDataLoaded -= LoadData;
-         GameEvents.GameDataSaved -= SaveData;
 
     }
     public void LoadData(GameData data)
@@ -153,7 +185,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         //  {
         if (SceneManager.GetActiveScene().buildIndex > 0)
         { 
-            Debug.LogWarning("waos");
+            Debug.LogWarning("getting info");
         inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
         player = GameObject.Find("Player_Original(Clone)");
         playerPosition = player.transform.position;
@@ -206,8 +238,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
     public void ObtainItems()
     {
-        if (itemsInInv != null)
-        {
             foreach (var item in itemsInInv)
             {
                 foreach (var iItem in items)
@@ -220,8 +250,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 }
 
             }
-        }
-        
-       //inventory.AddItem(item)
+
+        //inventory.AddItem(item)
     }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 
 [Serializable]
@@ -79,7 +81,17 @@ public class PlayerData
     [SerializeField] private float _currentHealth;
 
     public Vector3 PlayerPosition { get => _playerPosition; set => _playerPosition = value; }
-    [SerializeField] private Vector3 _playerPosition = new Vector3(2.16f, 3.05f, 3.95f);
+    [SerializeField] private Vector3 _playerPosition;
+
+
+    public Vector3 PlayerPosition1 { get => _playerPosition1; set => _playerPosition1 = value; }
+    [SerializeField] private Vector3 _playerPosition1 = new Vector3(2.16f, 3.05f, 3.95f);
+
+    public Vector3 PlayerPosition2 { get => _playerPosition2; set => _playerPosition2 = value; }
+    [SerializeField] private Vector3 _playerPosition2 = new Vector3(0.1f, 5.81f, 6.92f);
+
+    public Vector3 PlayerPosition3 { get => _playerPosition3; set => _playerPosition3 = value; }
+    [SerializeField] private Vector3 _playerPosition3 = new Vector3(2.16f, 3.05f, 3.95f);
 
     public GameObject Player { get => _player; set => _player = value; }
     [SerializeField] private GameObject _player; 
@@ -87,16 +99,24 @@ public class PlayerData
     public List<int> Items { get => _items; set => _items = value; }
     [SerializeField] private List<int> _items;
 
+
+  
+    
     public PlayerData()
     {
     }
-    public PlayerData(GameObject pObject,List<int> invItems, Vector3 posicion)
+    public PlayerData(GameObject pObject, Vector3 posicion1, Vector3 posicion2,Vector3 posicion3)
     {
-       // Vector3 posición, float vida, GameObject pObject, int[] invItems
-        _playerPosition = posicion;
-//        _currentHealth = vida;
+        // Vector3 posición, float vida, GameObject pObject, int[] invItems
+
+        //_playerPosition = posicion;
+        _playerPosition1 = posicion1;
+        _playerPosition2 = posicion2;
+        _playerPosition3 = posicion3;
+
+        //        _currentHealth = vida;
         _player = pObject;
-        _items = invItems;
+    
 
     }
 }

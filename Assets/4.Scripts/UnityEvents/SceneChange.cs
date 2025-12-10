@@ -5,7 +5,12 @@ public class SceneChange : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         if (other.gameObject.layer == 7)
-           SceneManager.LoadScene( SceneManager.GetActiveScene().buildIndex + 1);
+        {
+            gameManager.playerPosition = new();
+            SceneManager.LoadScene(gameManager.loadAct + 1); 
+        }
     }
 }
