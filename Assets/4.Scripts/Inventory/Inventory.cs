@@ -116,7 +116,21 @@ public class Inventory : MonoBehaviour
                     cameraController.canMove = true;
                     Cursor.lockState = CursorLockMode.Locked;
                 }
-                inventory.SetActive(inventoryEnabled);
+                if (!inventoryEnabled)
+                {
+                    inventory.GetComponent<CanvasGroup>().alpha = 0;
+                    inventory.GetComponent<CanvasGroup>().interactable = false;
+                    inventory.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+                }
+                if (inventoryEnabled)
+                {
+                    inventory.GetComponent<CanvasGroup>().alpha = 1;
+                    inventory.GetComponent<CanvasGroup>().interactable = true;
+                    inventory.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                }
+
             }
         }
     }

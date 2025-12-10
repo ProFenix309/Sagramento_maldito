@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +38,12 @@ public class MenuControlscript : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        panelConfiguracion = GameObject.Find("Configuracion");
+    }
+
+
     public void CambiarResolucionPorIndice(int indice)
     {
         if (resoluciones != null) 
@@ -51,7 +58,9 @@ public class MenuControlscript : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             panelMenuPrincipal.SetActive(true);
-            panelConfiguracion.SetActive(false);
+            panelConfiguracion.GetComponent<CanvasGroup>().alpha = 0;
+            panelConfiguracion.GetComponent<CanvasGroup>().interactable = false;
+            panelConfiguracion.GetComponent<CanvasGroup>().blocksRaycasts = false;
             panelCreditos.SetActive(false);
         }
         else 
@@ -63,7 +72,9 @@ public class MenuControlscript : MonoBehaviour
     public void ShowConfiguracion()
     {
         panelMenuPrincipal.SetActive(false);
-        panelConfiguracion.SetActive(true);
+        panelConfiguracion.GetComponent<CanvasGroup>().alpha = 1;
+        panelConfiguracion.GetComponent<CanvasGroup>().interactable = true;
+        panelConfiguracion.GetComponent<CanvasGroup>().blocksRaycasts = true;
         panelCreditos.SetActive(false);
 
 
@@ -73,7 +84,9 @@ public class MenuControlscript : MonoBehaviour
     public void ShowCreditos()
     {
         panelMenuPrincipal.SetActive(false);
-        panelConfiguracion.SetActive(false);
+        panelConfiguracion.GetComponent<CanvasGroup>().alpha = 0;
+        panelConfiguracion.GetComponent<CanvasGroup>().interactable = false;
+        panelConfiguracion.GetComponent<CanvasGroup>().blocksRaycasts = false;
         panelCreditos.SetActive(true);
     }
 

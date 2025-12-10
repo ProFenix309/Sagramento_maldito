@@ -59,24 +59,29 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null && GameObject.Find("Player_Original(Clone)"))
+        if (sceneManager != 0)
         {
-            playerController = GameObject.Find("Player_Original(Clone)").GetComponent<PlayerController_Original>();
-            inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
-            configutionPanel = GameObject.Find("Configuracion");
-            pausePanel = GameObject.Find("Pause Menu").gameObject;
-            menuPanel = GameObject.Find("Menu Pausa").gameObject;
-        }
-        // Detecta si el jugador presiona la tecla Escape (o la que definas)
-        if (Input.GetKeyDown(KeyCode.Escape) ||Input.GetKeyDown(KeyCode.Q))
-        {
-            if (gamePause)
+
+
+            if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null && GameObject.Find("Player_Original(Clone)"))
             {
-                ResumeGame();
+                playerController = GameObject.Find("Player_Original(Clone)").GetComponent<PlayerController_Original>();
+                inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
+                configutionPanel = GameObject.Find("Configuracion");
+                pausePanel = GameObject.Find("Pause Menu").gameObject;
+                menuPanel = GameObject.Find("Menu Pausa").gameObject;
             }
-            else
+            // Detecta si el jugador presiona la tecla Escape (o la que definas)
+            if ( Input.GetKeyDown(KeyCode.Q))
             {
-                PauseGame();
+                if (gamePause)
+                {
+                    ResumeGame();
+                }
+                else
+                {
+                    PauseGame();
+                }
             }
         }
     }
