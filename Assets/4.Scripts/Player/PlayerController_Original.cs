@@ -54,11 +54,7 @@ public class PlayerController_Original : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null && SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            DontDestroyOnLoad(gameObject);
-            instance = this;
-        }
+
 
         canMove = true;
          rb = GetComponent<Rigidbody>();

@@ -53,13 +53,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        StartCoroutine(SpawnPlayer());
+        SpawnPlayer();
         StartCoroutine(GameInfo(gameSavingTime));
 
     }
 
 
-    IEnumerator SpawnPlayer()
+    public void SpawnPlayer()
     {
         if (SceneManager.GetActiveScene().buildIndex != 0 && GameObject.Find("Player_Original(Clone)") == null)
         {
@@ -83,16 +83,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
                
             }
         }
-        yield return new WaitForSeconds(3);
+    
     }
 
 
 
     private void OnEnable()
     {
-       
         GameEvents.GameDataLoaded += LoadData;
-        GameEvents.GameDataSaved += SaveData;
     }
     private void OnDisable()
     {
@@ -105,14 +103,16 @@ public class GameManager : MonoBehaviour, IDataPersistence
        loadAct = data.SavedWorldData.SavedAct;
        player = data.SavedPlayerData.Player;
         
-        StartCoroutine(SpawnPlayer());
+        SpawnPlayer();
         
 
        playerPosition = data.SavedPlayerData.PlayerPosition;
-        player.transform.position = playerPosition;
+
+        
         
        itemsInInv = data.SavedPlayerData.Items;
-        
+       //ObtainItems();
+
     }
 
     public void SaveData(GameData data)
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.SavedWorldData.SavedAct = loadAct;
         data.SavedPlayerData.Player = player ;
         data.SavedPlayerData.PlayerPosition = playerPosition;
-        itemsInInv = data.SavedPlayerData.Items;
+        data.SavedPlayerData.Items  = itemsInInv ;
     }
         
 
@@ -128,31 +128,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
     IEnumerator GameInfo(float savingTime)
     {
         yield return new WaitForSeconds(savingTime);
-
-        if (inventory.Items != null)
-        {
-            if (inventory.Items.Count > 0 && inventory.Items != null)
-            {
-
-                foreach (var item in inventory.Items)
-                {
-                   // Debug.Log(item.Value.name + " se detectó en el inv");
-
-                    if (!itemsInInv.Contains(item.Value.ID))
-                    {
-                        itemsInInv.Add(item.Value.ID);
-                    }
-                }
-                for (int i = 0; i < itemsInInv.Count; i++)
-                {
-                    Debug.Log(itemsInInv[i]);
-                }
-            }
-        }
-
-            GetGameInfo();
-     
-
+        GetGameInfo();
+        GameEvents.GameDataSaved += SaveData;
     }
 
     public void GetGameInfo()
@@ -170,7 +147,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         itemAmount = inventory.initialItems.Count - 1;
 
         GetItems();
-        ObtainItems();
          }
         else
         {
@@ -216,17 +192,20 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
     public void ObtainItems()
     {
-        foreach(var item in itemsInInv)
+        if (itemsInInv != null)
         {
-            foreach(var iItem in items)
+            foreach (var item in itemsInInv)
             {
-                Items currentItem = iItem.GetComponent<Items>();
-                if (item == currentItem.ID)
+                foreach (var iItem in items)
                 {
-                    inventory.AddItem(currentItem);
+                    Items currentItem = iItem.GetComponent<Items>();
+                    if (item == currentItem.ID)
+                    {
+                        inventory.AddItem(currentItem);
+                    }
                 }
+
             }
-           
         }
         
        //inventory.AddItem(item)

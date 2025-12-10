@@ -8700,7 +8700,7 @@ MonoBehaviour:
   slotHalder: {fileID: 2853085846177895336}
   initialItems:
   - {fileID: 7234593296606031768, guid: 021a316b74d4cf2469f7456f5bc2eeef, type: 3}
-  HandDetection: {fileID: 0}
+  HandDetection: {fileID: 8962202859394138281}
   itemH: {fileID: 0}
   inventoryItem: {fileID: 0}
 --- !u!114 &4525157305230425295

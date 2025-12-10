@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
     public Dictionary<int, Items> Items { get => _items; }
 
-    private Dictionary<int, Items> _items = new();
+    private Dictionary<int, Items> _items = new Dictionary<int, Items>();
 
     public Action InventoryUpdated;
 
@@ -24,48 +24,66 @@ public class Inventory : MonoBehaviour
     [Header("Items Iniciales")]
     [SerializeField] public List<Items> initialItems = new List<Items>();
 
-    [HideInInspector] public GameObject HandDetection;
+    public GameObject HandDetection;
     [HideInInspector] public GetItem itemH;
     [HideInInspector] public GameObject inventoryItem;
 
     bool unlockInputs = true;
     public bool UnlockInputs { get => unlockInputs; set => unlockInputs = value; }
 
-    private void Awake()
+    private void OnEnable()
     {
-        HandDetection = GameObject.Find("Hand");
-        
+            LoadInfo();
     }
-    void Start()
+    public void LoadInfo()
     {
-        inventoryUIHandler = inventory.GetComponent<InventoryUIHandler>();
-        itemH = HandDetection.GetComponent<GetItem>();
-        playerController = GetComponent<PlayerController_Original>();
-        cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
-
-        foreach (var item in initialItems)
+        if (inventoryUIHandler == null)
         {
-            if (item != null)
+            inventoryUIHandler = inventoryUIHandler.GetComponent<InventoryUIHandler>();
+        }
+        if (itemH == null)
+        {
+            itemH = HandDetection.GetComponent<GetItem>();
+        }
+        if (playerController == null)
+        {
+            playerController = GetComponent<PlayerController_Original>();
+        }
+        if (cameraController == null)
+        {
+            cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
+        }
+
+        if (Items != null)
+        {
+            foreach (var item in initialItems)
             {
-                AddItem(item);
-                Debug.Log($"Item inicial '{item.type}' agregado al inventario");
+                if (item != null)
+                {
+                    AddItem(item);
+                    Debug.Log($"Item inicial '{item.type}' agregado al inventario");
+                }
             }
         }
+
     }
 
     void Update()
-    {   
-       
+    {
+        LoadInfo();
         if (unlockInputs)
         {
-            if (itemH.Item != null && !inventoryEnabled)
+            if (itemH != null) 
             {
-                inventoryItem = itemH.Item.gameObject;
-                if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
+                if (itemH.Item != null && !inventoryEnabled)
                 {
-                    AddItem(item);
-                    inventoryItem.gameObject.SetActive(false);
-                    Debug.Log(inventoryItem + "is in your inventory");
+                    inventoryItem = itemH.Item.gameObject;
+                    if (inventoryItem.TryGetComponent(out Items item) && Input.GetKeyDown(KeyCode.E))
+                    {
+                        AddItem(item);
+                        inventoryItem.gameObject.SetActive(false);
+                        Debug.Log(inventoryItem + "is in your inventory");
+                    }
                 }
             }
             else
@@ -80,11 +98,11 @@ public class Inventory : MonoBehaviour
                 {
                     if (playerController.canMove)
                     {
-                        foreach (var items in Items)
-                        {
-                            string name = items.Value.name;
-                            Debug.Log(name);
-                        }
+                        /*   foreach (var items in Items)
+                           {
+                               string name = items.Value.name;
+                               Debug.Log(name);
+                        }*/
 
                         Cursor.lockState = CursorLockMode.None;
                         playerController.canMove = false;

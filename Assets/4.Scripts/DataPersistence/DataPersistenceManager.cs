@@ -7,21 +7,20 @@ using System.Collections;
 public class DataPersistenceManager : MonoBehaviour
 {
     string path;
-    [SerializeField] private GameData gameData = new();
+    [SerializeField] private GameData gameData;
     public static DataPersistenceManager instance { get; private set; }
 
     public float saveTime;
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.activeSceneChanged += OnSceneLoaded;
         GameEvents.Worldloaded += gameData.SetWorldData;
         GameEvents.EnemyLoaded += gameData.AddEnemyData;
         GameEvents.PlayerLoaded += gameData.SetPlayerData;
     }
     private void OnDisable()
     { 
-        SceneManager.sceneLoaded -= OnSceneLoaded;
         GameEvents.Worldloaded -= gameData.SetWorldData;
         GameEvents.EnemyLoaded -= gameData.AddEnemyData;
         GameEvents.PlayerLoaded -= gameData.SetPlayerData;
@@ -52,7 +51,10 @@ public class DataPersistenceManager : MonoBehaviour
     private void Update()
     {
      if (SceneManager.GetActiveScene().buildIndex != 0)
-        StartCoroutine(SaveData(saveTime));
+        {
+            StartCoroutine(SaveData(saveTime));
+        }
+        
     }
     public void NewGame()
     {
@@ -73,6 +75,8 @@ public class DataPersistenceManager : MonoBehaviour
     }
     public void LoadGameData()
     {
+        Debug.LogWarning("loading data");
+
         string json = File.ReadAllText(path);
         gameData = JsonUtility.FromJson<GameData>(json);
         GameEvents.GameDataLoaded?.Invoke(gameData);
@@ -80,7 +84,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGameData()
     {
-        Debug.Log("SavingData");
+        Debug.LogWarning("SavingData");
          string json = JsonUtility.ToJson(gameData);
         File.WriteAllText(path, json);
     }
@@ -90,15 +94,17 @@ public class DataPersistenceManager : MonoBehaviour
         SaveGameData();
     }    
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, Scene newScene)
     {
         SaveGameData();
+        
     }
 
     IEnumerator SaveData(float timeBetweenSaves)
     {
         SaveGameData();
         yield return new WaitForSeconds(timeBetweenSaves);
+        LoadGameData();
     }
 
 
