@@ -305,7 +305,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 86b4969681b62c84799584faec5e9a78, type: 2}
-  musicSounds: []
+  musicSounds:
+  - name: Cripta
+    clip: {fileID: 8300000, guid: bc518797454c40c41b874b2571fd0e9c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    is3D: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
   sfxSounds:
   - name: Suspiro 1
     clip: {fileID: 8300000, guid: 3e629d3bbe2e5954c9bc6412e9acc25c, type: 3}
@@ -381,4 +390,4 @@ MonoBehaviour:
     source: {fileID: 0}
   poolSize: 10
   autoPlayMusic: 1
-  initialMusicName: BackgroundMusic
+  initialMusicName: Cripta
