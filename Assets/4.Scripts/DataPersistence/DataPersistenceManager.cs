@@ -12,6 +12,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public float saveTime;
 
+    int load = 1;
+
     private void OnEnable()
     {
         SceneManager.activeSceneChanged += OnSceneLoaded;
@@ -96,15 +98,28 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, Scene newScene)
     {
+        load = 1;
         SaveGameData();
+        LoadGameData();
+
         
     }
 
     IEnumerator SaveData(float timeBetweenSaves)
     {
-        SaveGameData();
+        if (!File.Exists(path))
+        { }
+        if (load == 1)
+        {
+            LoadGameData();
+            load = 0;
+        }
+    
+
         yield return new WaitForSeconds(timeBetweenSaves);
-        LoadGameData();
+
+        SaveGameData();
+        
     }
 
 

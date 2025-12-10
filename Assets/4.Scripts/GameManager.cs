@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public float gameSavingTime;
 
+
+    public GameObject playerPrefab;
+
     public GameObject player;
     public Inventory inventory;
     public Health health;
@@ -67,8 +70,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             {
                 GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv,playerPosition));
                 Debug.LogWarning("more than 1 players in scene");
-                Instantiate(player);
-                player.transform.position = playerPosition;
+                Instantiate(playerPrefab);
+                playerPrefab.transform.position = playerPosition;
             
                
             }
@@ -77,8 +80,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             if (SceneManager.GetActiveScene().buildIndex == 2)
             {
                 GameEvents.PlayerLoaded?.Invoke(new PlayerData(player, itemsInInv, playerPosition));
-                Instantiate(player);
-                player.transform.position = new Vector3 (0.1f, 5.81f, 6.92f);
+                Instantiate(playerPrefab);
+                playerPrefab.transform.position = new Vector3 (0.1f, 5.81f, 6.92f);
                 
                
             }
@@ -91,6 +94,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private void OnEnable()
     {
         GameEvents.GameDataLoaded += LoadData;
+        Debug.Log("guardandoinfo");
+        GameEvents.GameDataSaved += SaveData;
     }
     private void OnDisable()
     {
@@ -101,24 +106,33 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
        loadAct = data.SavedWorldData.SavedAct;
-       player = data.SavedPlayerData.Player;
+     
         
         SpawnPlayer();
         
 
        playerPosition = data.SavedPlayerData.PlayerPosition;
+        if (player == null)
+        {
+            player = data.SavedPlayerData.Player;
+        }
 
-        
-        
-       itemsInInv = data.SavedPlayerData.Items;
-       //ObtainItems();
+
+        itemsInInv = data.SavedPlayerData.Items;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            ObtainItems();
+        }
 
     }
 
     public void SaveData(GameData data)
     {
         data.SavedWorldData.SavedAct = loadAct;
-        data.SavedPlayerData.Player = player ;
+        if (data.SavedPlayerData.Player != null)
+        {
+            data.SavedPlayerData.Player = player;
+        }
         data.SavedPlayerData.PlayerPosition = playerPosition;
         data.SavedPlayerData.Items  = itemsInInv ;
     }
