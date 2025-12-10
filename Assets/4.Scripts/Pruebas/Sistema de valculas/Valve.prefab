@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8262811849456147706}
   - component: {fileID: 9074446916942479520}
-  - component: {fileID: 5782894297004490311}
+  - component: {fileID: 4317782073983626783}
   m_Layer: 0
   m_Name: Valve
   m_TagString: Untagged
@@ -53,9 +53,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.7414942, y: 1.637051, z: 0.18348306}
-  m_Center: {x: 0.036278307, y: -0.007611692, z: 0.01786635}
---- !u!114 &5782894297004490311
+  m_Size: {x: 1.0633137, y: 1.0549841, z: 0.18348306}
+  m_Center: {x: 0.008561969, y: -0.007611692, z: 0.01786635}
+--- !u!114 &4317782073983626783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,15 +64,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6862864960561801931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 688a5b46387f0204293b4d3dc6c70d2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 239bde1338e335544bbf6075c8a3aaa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activated: 0
-  valveModel: {fileID: 8511158876008722753}
-  maxRotation: 360
-  rotationAxis: {x: 0, y: 1, z: 0}
+  requiredItemID: 1
+  activatedVisual: {fileID: 0}
+  deactivatedVisual: {fileID: 0}
+  valveModel: {fileID: 9031517478988671995}
+  rotationAxis: {x: 0, y: 0, z: 1}
   rotationSpeed: 180
-  audioSource: {fileID: 0}
+  totalRotation: 360
 --- !u!1001 &8185024704035477162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81,6 +82,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8262811849456147706}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: d5ef8be7f568b774397fb40a3e60f04b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 59.670002
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d5ef8be7f568b774397fb40a3e60f04b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 66.259995
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d5ef8be7f568b774397fb40a3e60f04b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -133,5 +142,10 @@ PrefabInstance:
 --- !u!4 &8511158876008722753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5ef8be7f568b774397fb40a3e60f04b, type: 3}
+  m_PrefabInstance: {fileID: 8185024704035477162}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9031517478988671995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d5ef8be7f568b774397fb40a3e60f04b, type: 3}
   m_PrefabInstance: {fileID: 8185024704035477162}
   m_PrefabAsset: {fileID: 0}
