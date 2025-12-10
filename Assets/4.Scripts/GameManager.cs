@@ -137,25 +137,29 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
     public void LoadData(GameData data)
     {
-       loadAct = data.SavedWorldData.SavedAct;
-     
-        
-        SpawnPlayer();
-        
-
-       playerPosition = data.SavedPlayerData.PlayerPosition;
-        if (player == null)
+        if (data != new GameData())
         {
-            player = data.SavedPlayerData.Player;
+
+
+            loadAct = data.SavedWorldData.SavedAct;
+
+
+            SpawnPlayer();
+
+
+            playerPosition = data.SavedPlayerData.PlayerPosition;
+            if (player == null)
+            {
+                player = data.SavedPlayerData.Player;
+            }
+
+
+            itemsInInv = data.SavedPlayerData.Items;
+            if (SceneManager.GetActiveScene().buildIndex != 0)
+            {
+                ObtainItems();
+            }
         }
-
-
-        itemsInInv = data.SavedPlayerData.Items;
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            ObtainItems();
-        }
-
     }
 
     public void SaveData(GameData data)

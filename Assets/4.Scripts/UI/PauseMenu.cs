@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
 
     public static PauseMenu instance;
 
-    int sceneManager;
+    public int sceneManager;
 
     // Asigna este objeto de UI desde el Inspector (PanelPausa)
     public GameObject pausePanel;
@@ -138,7 +138,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
 
         // Carga la escena del men� principal 
-        SceneManager.LoadScene(namePrincipalMenu);
+        SceneManager.LoadScene(0);
     }
 
     public void OpenConfiguration()
