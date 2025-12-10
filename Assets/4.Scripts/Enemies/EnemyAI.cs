@@ -1,6 +1,7 @@
 using UnityEngine.AI;
 using UnityEngine;
 using System.Threading;
+using System.Collections;
 
 public class EnemyAI : MonoBehaviour, IDataPersistence
 {
@@ -10,7 +11,6 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     Transform player;
     Transform Distraction;
     [SerializeField] string playerTag;
-
 
     [Space]
     [Header("Layers")]
@@ -38,6 +38,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     public bool alreadyAtacked;
     public float AttackingTime;
     public float daño;
+    public float tiempoAnimacion;
 
 
     [Header("Ranges")]
@@ -137,13 +138,13 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     }
     private void ChaseDistraction()
     {
-            agent.speed = agent.speed + ChaseVelocity;
-            agent.SetDestination(Distraction.position);
-            if (!alreadyAtacked)
-            {
-                alreadyAtacked = true;
-                Invoke(nameof(ResetAttack), timeBetweenAtacks);
-            }
+        agent.speed = agent.speed + ChaseVelocity;
+        agent.SetDestination(Distraction.position);
+        if (!alreadyAtacked)
+        {
+            alreadyAtacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAtacks);
+        }
     }
     private void AttackPlayer()
     {
@@ -151,8 +152,12 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
+        StartCoroutine(Attack(tiempoAnimacion));
+    }
 
-
+    IEnumerator Attack(float tima)
+    {
+        yield return new WaitForSeconds(tima);
         if (!alreadyAtacked)
         {
             ///Attack code here
