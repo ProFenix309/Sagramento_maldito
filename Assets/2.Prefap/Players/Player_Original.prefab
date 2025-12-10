@@ -5965,7 +5965,7 @@ Transform:
   m_GameObject: {fileID: 3159256106828858505}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.558, z: 0.201}
+  m_LocalPosition: {x: 0, y: 1.558, z: 0.184}
   m_LocalScale: {x: 1, y: 0.625, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8565,6 +8565,7 @@ GameObject:
   - component: {fileID: 2825517827754485423}
   - component: {fileID: 3660776614447174811}
   - component: {fileID: 7004946587034483172}
+  - component: {fileID: 939997886614406097}
   m_Layer: 7
   m_Name: Player_Original
   m_TagString: Player
@@ -8869,6 +8870,20 @@ MonoBehaviour:
   spawnPointTag: SpawnPoint
   spawnOffset: {x: 0, y: 0.5, z: 0}
   drownedEnemy: {fileID: 0}
+--- !u!114 &939997886614406097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8078212662175657501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b39d2a2b5bd5747b8f50e524cdc936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookSpeed: 5
+  isBeingAttacked: 0
 --- !u!1 &8247975228023023307
 GameObject:
   m_ObjectHideFlags: 0
@@ -10059,7 +10074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f65a19fbcf414346b56828dee3dc525, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.035
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f65a19fbcf414346b56828dee3dc525, type: 3}
       propertyPath: m_LocalRotation.w
