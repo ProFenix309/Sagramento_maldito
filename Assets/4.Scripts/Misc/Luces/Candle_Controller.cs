@@ -7,12 +7,12 @@ public class Candle_Controller : MonoBehaviour
     [SerializeField] GameObject flame;
     [SerializeField] float intencity = 5f;
     [SerializeField] float range = 10f;
-    private bool actived = false;
-    
+    public bool actived = false;
+
     [Header("Audio Settings")]
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip audioClip;
-    
+
     [Header("Enemy Detection")]
     [SerializeField] LayerMask enemyLayer; // Capa del enemigo para detectar cuando te ataque
 
@@ -21,10 +21,10 @@ public class Candle_Controller : MonoBehaviour
         // Obtener componentes si no están asignados
         if (lightPoint == null)
             lightPoint = GetComponent<Light>();
-        
+
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
-        
+
         // Iniciar con la luz apagada
         TurnOffLight();
     }
@@ -42,7 +42,7 @@ public class Candle_Controller : MonoBehaviour
     public void ToggleLight()
     {
         actived = !actived;
-        
+
         if (actived)
         {
             TurnOnLight();
@@ -52,7 +52,7 @@ public class Candle_Controller : MonoBehaviour
             TurnOffLight();
         }
     }
-    
+
     // Encender la luz
     private void TurnOnLight()
     {
@@ -62,18 +62,17 @@ public class Candle_Controller : MonoBehaviour
             lightPoint.range = range;
             lightPoint.enabled = true;
         }
-        
+
         if (flame != null)
             flame.SetActive(true);
-        
+
         // Reproducir sonido de encendido
         if (audioSource != null && audioClip != null)
             audioSource.PlayOneShot(audioClip);
-        
+
         actived = true;
-        Debug.Log("Luz del jugador ENCENDIDA");
     }
-    
+
     // Apagar la luz
     private void TurnOffLight()
     {
@@ -83,15 +82,14 @@ public class Candle_Controller : MonoBehaviour
             lightPoint.range = 0f;
             lightPoint.enabled = false;
         }
-        
+
         if (flame != null)
             flame.SetActive(false);
-            OffLightSound();
-        
+        OffLightSound();
+
         actived = false;
-        Debug.Log("Luz del jugador APAGADA");
     }
-    
+
     // Forzar apagar la luz (cuando el enemigo ataca)
     public void ForceOffLight()
     {
@@ -108,14 +106,14 @@ public class Candle_Controller : MonoBehaviour
             Debug.Log("¡El enemigo apagó tu luz!");
         }
     }
-    
+
     // Método para que el enemigo apague la luz
     public bool IsLightOn()
     {
         return actived;
     }
 
-        private void OffLightSound()
+    private void OffLightSound()
     {
         AudioManager.Instance.PlaySFX3D("Soplido", transform.position);
     }
