@@ -38,7 +38,7 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
     public bool alreadyAtacked;
     public float AttackingTime;
     public float daño;
-    public float tiempoAnimacion;
+    public float tiempoVideo;
 
 
     [Header("Ranges")]
@@ -47,6 +47,9 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
 
     [Header("States")]
     public bool playerInSightRange, playerInAttackRange, DistractionISinRange;
+
+    [Header("Videos Jumpscare")]
+    public Video_Controller video_Controller;
 
     private void Awake()
     {
@@ -152,12 +155,35 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
-        StartCoroutine(Attack(tiempoAnimacion));
+        StartCoroutine(Attack(tiempoVideo));
     }
 
     IEnumerator Attack(float tima)
     {
+
+        if (video_Controller != null)
+        {
+            video_Controller.PlayVideo();
+            video_Controller.ActivedVideo();
+        }
+
+        if (player != null)
+        {
+            Candle_Controller playerCandle = player.GetComponentInChildren<Candle_Controller>();
+            if (playerCandle != null && playerCandle.IsLightOn())
+            {
+                playerCandle.ForceOffLight();
+            }
+        }
+
         yield return new WaitForSeconds(tima);
+
+        if (video_Controller != null)
+        {
+            video_Controller.StopVideo();
+            video_Controller.DeactivatedVideo();
+        }
+
         if (!alreadyAtacked)
         {
             ///Attack code here
@@ -169,6 +195,12 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
                 health.RecibirDaño(daño);
             }
             Debug.Log("Player attacked");
+
+            PlayerLookAtEnemy playerLook = player.GetComponent<PlayerLookAtEnemy>();
+            if (playerLook != null)
+            {
+                playerLook.StartLookingAtEnemy(transform);
+            }
 
             //sets potsition to starting one (optional)
 
