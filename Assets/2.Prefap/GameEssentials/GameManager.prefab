@@ -44,9 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6117b8702afa674484e39d6b878aff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSavingTime: 1
-  player: {fileID: 8078212662175657501, guid: 1fdf45d003390d04ebded3983bf55d62, type: 3}
-  inventory: {fileID: 7406438531906146074, guid: 1fdf45d003390d04ebded3983bf55d62, type: 3}
+  gameSavingTime: 10
+  playerPrefab: {fileID: 8078212662175657501, guid: 1fdf45d003390d04ebded3983bf55d62, type: 3}
+  player: {fileID: 0}
+  inventory: {fileID: 0}
   health: {fileID: 0}
   itemAmount: 0
   itemsInInv: 
