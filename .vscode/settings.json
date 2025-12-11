@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Sagramento_maldito.slnx"
+    "dotnet.defaultSolution": "Sacramento_maldito.slnx"
 }
