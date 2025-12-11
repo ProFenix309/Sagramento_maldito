@@ -115,7 +115,7 @@ public class PlayerData
     [SerializeField] private Vector3 _playerPosition1 = new Vector3(2.16f, 3.05f, 3.95f);
 
     public Vector3 PlayerPosition2 { get => _playerPosition2; set => _playerPosition2 = value; }
-    [SerializeField] private Vector3 _playerPosition2 = new Vector3(0.1f, 5.81f, 6.92f);
+    [SerializeField] private Vector3 _playerPosition2 = new Vector3(0.25f, 5.685016f, 7.62f);
 
     public Vector3 PlayerPosition3 { get => _playerPosition3; set => _playerPosition3 = value; }
     [SerializeField] private Vector3 _playerPosition3 = new Vector3(2.16f, 3.05f, 3.95f);
