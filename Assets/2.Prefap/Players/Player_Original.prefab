@@ -8733,6 +8733,7 @@ MonoBehaviour:
   vidaMaxima: 20
   vidaActual: 20
   etiquetaEnemigo: Enemy
+  panelMuerte: {fileID: 7571984786131521972}
 --- !u!82 &2825517827754485423
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9766,6 +9767,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6666368339625994093, guid: 7faeefdbf1ec313499d7d3afebdba0b0, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7673547960420048935, guid: 7faeefdbf1ec313499d7d3afebdba0b0, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -10010,7 +10015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260078782312430006, guid: 2f3f957aec12cfc4e91f4d34b2a9d6a9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.026672363
+      value: -0.026855469
       objectReference: {fileID: 0}
     - target: {fileID: 3260078782312430006, guid: 2f3f957aec12cfc4e91f4d34b2a9d6a9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10088,6 +10093,11 @@ PrefabInstance:
 --- !u!224 &176345439895216799 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3260078782312430006, guid: 2f3f957aec12cfc4e91f4d34b2a9d6a9, type: 3}
+  m_PrefabInstance: {fileID: 3408276449440029481}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7571984786131521972 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5069286626131954333, guid: 2f3f957aec12cfc4e91f4d34b2a9d6a9, type: 3}
   m_PrefabInstance: {fileID: 3408276449440029481}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3481645071889983375

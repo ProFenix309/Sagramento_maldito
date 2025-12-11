@@ -1,7 +1,6 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
-
 public class Health : MonoBehaviour, IDataPersistence
 {
     [Header("Configuracion de Vida")]
@@ -13,11 +12,27 @@ public class Health : MonoBehaviour, IDataPersistence
 
     Animator animatior;
 
+    [Header("Panel de Muerte")]
+    [SerializeField] private GameObject panelMuerte;
+
+    private PlayerController_Original playerController;
+    private Camera_FPS_Controller cameraController;
+
+    float tiempoMuerte;
+
     private void Awake()
     {
         animatior = GameObject.Find("Altered State").GetComponent<Animator>();
         vidaActual = vidaMaxima;
         // GameEvents.PlayerLoaded?.Invoke(new PlayerData(vidaMaxima));
+
+        playerController = GetComponent<PlayerController_Original>();
+        cameraController = GetComponentInChildren<Camera_FPS_Controller>();
+
+        if (panelMuerte != null)
+        {
+            panelMuerte.SetActive(false);
+        }
     }
     void Start()
     {
@@ -46,23 +61,65 @@ public class Health : MonoBehaviour, IDataPersistence
         vidaActual -= daño;
         Debug.Log("Daño recibido: " + daño + " | Vida restante: " + vidaActual);
 
-        if (vidaActual <= 0)
+       if (vidaActual <= 0)
         {
-            Morir();
+            StartCoroutine(Morir(tiempoMuerte));
         }
-        StartEffect();
+        else
+        {
+            StartEffect();
+        }
     }
 
-    void Morir()
+ IEnumerator Morir(float time)
     {
         Debug.Log(gameObject.name + " ha muerto.");
 
-        // Puedes desactivar, destruir o reiniciar el objeto aqu�:
-        Scene escenaActual = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(escenaActual.buildIndex);
+        // Detener el movimiento del jugador
+        if (playerController != null)
+        {
+            playerController.canMove = false;
+            playerController.stop = false;
+        }
 
+        // Detener el movimiento de la cámara
+        if (cameraController != null)
+        {
+            cameraController.canMove = false;
+        }
+
+        // Desbloquear el cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // Esperar el tiempo de muerte
+        yield return new WaitForSeconds(time);
+
+        // Activar el panel de muerte
+        if (panelMuerte != null)
+        {
+            panelMuerte.SetActive(true);
+        }
     }
 
+    // Función para el botón de reiniciar nivel
+    public void ReiniciarNivel()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        Scene escenaActual = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(escenaActual.buildIndex);
+    }
+
+    // Función para el botón de volver al menú principal
+    public void VolverAlMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        SceneManager.LoadScene(0);
+    }
     public void StartEffect()
     {
         animatior.SetBool("StartedEffect", true);
