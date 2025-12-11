@@ -1,165 +1,288 @@
-using System.ComponentModel;
-using TMPro.Examples;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement; // Necesario para cambiar de escena
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-
     public static PauseMenu instance;
 
     public int sceneManager;
 
     // Asigna este objeto de UI desde el Inspector (PanelPausa)
     public GameObject pausePanel;
-
     public GameObject menuPanel;
+    public GameObject configurationPanel;
 
-    public Inventory inventory;
+    private Inventory inventory;
+    private PlayerController_Original playerController;
+    private Camera_FPS_Controller cameraController;
 
-    public PlayerController_Original playerController;
-
-    public Camera_FPS_Controller cameraController;
-
-
-    // Bandera para saber si el juego est� pausado
+    // Bandera para saber si el juego está pausado
     private bool gamePause = false;
 
-    // Nombre de la escena del men� principal (ej: "MenuPrincipal")
+    // Nombre de la escena del menú principal (ej: "MenuPrincipal")
     public string namePrincipalMenu = "PrincipalMenu";
 
-    // En tu script ControladorPausa:
-    public GameObject configutionPanel; // Asigna este panel en el Inspector
-
-
+    private bool referencesFound = false;
 
     private void Awake()
     {
-
         sceneManager = SceneManager.GetActiveScene().buildIndex;
 
         if (sceneManager != 0)
         {
             if (instance == null)
             {
-
-                DontDestroyOnLoad(gameObject);
-
-            }
-            else if (instance != null)
-            {
                 instance = this;
+                DontDestroyOnLoad(gameObject);
             }
-
+            else if (instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Reiniciar referencias cuando cambia la escena
+        referencesFound = false;
+        inventory = null;
+        playerController = null;
+        cameraController = null;
+        configurationPanel = null;
+        pausePanel = null;
+        menuPanel = null;
+
+        sceneManager = scene.buildIndex;
+
+        if (sceneManager != 0)
+        {
+            // Intentar encontrar referencias después de un pequeño delay
+            Invoke(nameof(FindReferences), 0.5f);
+        }
+    }
 
     void Update()
     {
-        if (sceneManager != 0)
+        if (sceneManager == 0)
+            return;
+
+        // Intentar encontrar referencias si no se han encontrado
+        if (!referencesFound)
         {
+            FindReferences();
+        }
 
+        // Solo permitir pausar si todas las referencias están encontradas
+        if (referencesFound && Input.GetKeyDown(KeyCode.Q))
+        {
+            if (gamePause)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+    }
 
-            if (inventory == null && playerController == null && configutionPanel == null && pausePanel == null && menuPanel == null && cameraController == null && GameObject.Find("Player_Original(Clone)"))
-            {
-                playerController = GameObject.Find("Player_Original(Clone)").GetComponent<PlayerController_Original>();
-                inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
-                cameraController = GameObject.Find("Main Camera").GetComponent<Camera_FPS_Controller>();
-                configutionPanel = GameObject.Find("Configuracion");
-                pausePanel = GameObject.Find("Pause Menu").gameObject;
-                menuPanel = GameObject.Find("Menu Pausa").gameObject;
-            }
-            // Detecta si el jugador presiona la tecla Escape (o la que definas)
-            if ( Input.GetKeyDown(KeyCode.Q))
-            {
-                if (gamePause)
-                {
-                    ResumeGame();
-                }
-                else
-                {
-                    PauseGame();
-                }
-            }
+    private void FindReferences()
+    {
+        // Buscar jugador
+        GameObject playerObj = GameObject.Find("Player_Original(Clone)");
+        if (playerObj != null)
+        {
+            playerController = playerObj.GetComponent<PlayerController_Original>();
+            inventory = playerObj.GetComponent<Inventory>();
+        }
+
+        // Buscar cámara
+        GameObject cameraObj = GameObject.Find("Main Camera");
+        if (cameraObj != null)
+        {
+            cameraController = cameraObj.GetComponent<Camera_FPS_Controller>();
+        }
+
+        // Buscar paneles UI
+        GameObject configObj = GameObject.Find("Configuracion");
+        if (configObj != null)
+        {
+            configurationPanel = configObj;
+        }
+
+        GameObject pauseObj = GameObject.Find("Pause Menu");
+        if (pauseObj != null)
+        {
+            pausePanel = pauseObj;
+        }
+
+        GameObject menuObj = GameObject.Find("Menu Pausa");
+        if (menuObj != null)
+        {
+            menuPanel = menuObj;
+        }
+
+        // Verificar si todas las referencias fueron encontradas
+        if (playerController != null && inventory != null && cameraController != null &&
+            configurationPanel != null && pausePanel != null && menuPanel != null)
+        {
+            referencesFound = true;
+            Debug.Log("PauseMenu: All references found successfully");
         }
     }
 
     public void PauseGame()
     {
-        inventory.UnlockInputs = false;
-        playerController.stop = false; 
-        cameraController.unlockInputs = false;
+        if (!referencesFound)
+        {
+            Debug.LogWarning("Cannot pause: References not found yet");
+            return;
+        }
 
-        // Desbloquea el curso
+        // Deshabilitar inputs del jugador
+        if (inventory != null)
+            inventory.UnlockInputs = false;
+
+        if (playerController != null)
+            playerController.stop = false;
+
+        if (cameraController != null)
+            cameraController.unlockInputs = false;
+
+        // Desbloquear el cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // Muestra el panel del men� de pausa
-        pausePanel.GetComponent<CanvasGroup>().alpha = 1;
-        pausePanel.GetComponent<CanvasGroup>().interactable = true;
-        pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        // Mostrar el panel del menú de pausa
+        if (pausePanel != null)
+        {
+            pausePanel.GetComponent<CanvasGroup>().alpha = 1;
+            pausePanel.GetComponent<CanvasGroup>().interactable = true;
+            pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
 
-        // Detiene el tiempo en el juego (escalado a 0)
+        // Detener el tiempo en el juego
         Time.timeScale = 0f;
 
-        // Actualiza el estado
+        // Actualizar el estado
         gamePause = true;
     }
 
-    // --- Funciones que se asignan a los botones ---
-
     public void ResumeGame()
     {
-        inventory.UnlockInputs = true;
-        playerController.stop = true;
-        cameraController.unlockInputs = true;
+        if (!referencesFound)
+        {
+            Debug.LogWarning("Cannot resume: References not found yet");
+            return;
+        }
 
+        // Habilitar inputs del jugador
+        if (inventory != null)
+            inventory.UnlockInputs = true;
+
+        if (playerController != null)
+            playerController.stop = true;
+
+        if (cameraController != null)
+            cameraController.unlockInputs = true;
+
+        // Bloquear el cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Oculta el panel del men� de pausa
-        pausePanel.GetComponent<CanvasGroup>().alpha = 0;
-        pausePanel.GetComponent<CanvasGroup>().interactable = false;
-        pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        // Ocultar el panel del menú de pausa
+        if (pausePanel != null)
+        {
+            pausePanel.GetComponent<CanvasGroup>().alpha = 0;
+            pausePanel.GetComponent<CanvasGroup>().interactable = false;
+            pausePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
 
-        // Restaura el tiempo normal (escalado a 1)
+        // Restaurar el tiempo normal
         Time.timeScale = 1f;
 
-        // Actualiza el estado
+        // Actualizar el estado
         gamePause = false;
+
+        // Cerrar configuración si está abierta
+        CloseConfiguration();
     }
 
     public void ReturnPrincipalMenu()
     {
-        // **IMPORTANTE:** Primero hay que restaurar el tiempo, 
-        // de lo contrario la carga de la escena puede fallar o comportarse mal.
+        // Guardar datos antes de volver al menú
+        if (DataPersistenceManager.instance != null)
+        {
+            DataPersistenceManager.instance.SaveGameData();
+            Debug.Log("Game saved before returning to main menu");
+        }
+
+        // Restaurar el tiempo
         Time.timeScale = 1f;
 
-        // Carga la escena del men� principal 
+        // Actualizar estado de pausa
+        gamePause = false;
+
+        // Desbloquear cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // Cargar la escena del menú principal
         SceneManager.LoadScene(0);
     }
 
     public void OpenConfiguration()
     {
+        if (menuPanel == null || configurationPanel == null)
+        {
+            Debug.LogWarning("Cannot open configuration: Panels not found");
+            return;
+        }
+
+        // Ocultar el menú de pausa
         menuPanel.GetComponent<CanvasGroup>().alpha = 0;
         menuPanel.GetComponent<CanvasGroup>().interactable = false;
-        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = false; // Oculta el men� de pausa
+        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        configutionPanel.GetComponent<CanvasGroup>().alpha = 1;
-        configutionPanel.GetComponent<CanvasGroup>().interactable = true;
-        configutionPanel.GetComponent<CanvasGroup>().blocksRaycasts = true; // Muestra el panel de configuraci�n
+        // Mostrar el panel de configuración
+        configurationPanel.GetComponent<CanvasGroup>().alpha = 1;
+        configurationPanel.GetComponent<CanvasGroup>().interactable = true;
+        configurationPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
     public void CloseConfiguration()
     {
-        configutionPanel.GetComponent<CanvasGroup>().alpha = 0;
-        configutionPanel.GetComponent<CanvasGroup>().interactable = false;
-        configutionPanel.GetComponent<CanvasGroup>().blocksRaycasts = false; // Oculta el panel de configuraci�n
+        if (menuPanel == null || configurationPanel == null)
+        {
+            Debug.LogWarning("Cannot close configuration: Panels not found");
+            return;
+        }
 
+        // Ocultar el panel de configuración
+        configurationPanel.GetComponent<CanvasGroup>().alpha = 0;
+        configurationPanel.GetComponent<CanvasGroup>().interactable = false;
+        configurationPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        // Mostrar de nuevo el menú de pausa
         menuPanel.GetComponent<CanvasGroup>().alpha = 1;
         menuPanel.GetComponent<CanvasGroup>().interactable = true;
-        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;  // Muestra de nuevo el men� de pausa
+        menuPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
+    public bool IsPaused()
+    {
+        return gamePause;
     }
 }

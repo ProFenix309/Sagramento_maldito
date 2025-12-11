@@ -19,6 +19,8 @@ public class LoadConfigButtons : MonoBehaviour
    
     void Update()
     {
+        pauseMenu = GameObject.Find("ManagerPause").GetComponent<PauseMenu>();
+
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
 
@@ -32,7 +34,6 @@ public class LoadConfigButtons : MonoBehaviour
                 Mainmenu = GameObject.Find("Button Volver al menu principal").GetComponent<Button>();
             }
 
-            pauseMenu = FindAnyObjectByType<PauseMenu>();
 
                 continueGame.onClick.AddListener(pauseMenu.ResumeGame);
             

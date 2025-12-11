@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HealthManager : MonoBehaviour, IDataPersistence
+public class HealthManager : MonoBehaviour
 {
     [Header("Configuración de Vida")]
     public int vidaMaxima;

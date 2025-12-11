@@ -237,6 +237,10 @@ public class EnemyAI : MonoBehaviour, IDataPersistence
         EnemyData enemy = data.GetEnemyDataById(enemyData.Id);
         gameObject.SetActive(enemy.Active);
     }
+    public void SaveData(GameData data)
+    {
+
+    }
     //valores a modificar desde el inspector
     //watIsDistraction whatIsGround, whatIsPlayer,velocity, timeBetweenAtacks, sightRange, attackRange, diatractionRange, chaseVelocity, initialRandomTime, walkPointRange, damage, crear un objetao vacio para StartingPoint (punto inicial) 
 }
