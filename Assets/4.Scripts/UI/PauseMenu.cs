@@ -39,20 +39,19 @@ public class PauseMenu : MonoBehaviour
 
         sceneManager = SceneManager.GetActiveScene().buildIndex;
 
-        if (sceneManager != 0)
-        {
             if (instance == null)
             {
-
                 DontDestroyOnLoad(gameObject);
-
-            }
-            else if (instance != null)
-            {
                 instance = this;
+                
+
+            }
+            else
+            {
+                Destroy(gameObject);
             }
 
-        }
+        
     }
 
 

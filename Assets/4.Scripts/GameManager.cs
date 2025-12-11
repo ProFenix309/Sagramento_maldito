@@ -1,45 +1,30 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using System;
-using Unity.VisualScripting;
 using System.Collections.Generic;
-using UnityEditor.Overlays;
+
+
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
     public static GameManager instance;
 
-    public float gameSavingTime;
-
-
     public GameObject playerPrefab;
 
-    public GameObject player;
-    public Inventory inventory;
-    public Health health;
+    [HideInInspector] public GameObject player;
+    [HideInInspector] public Inventory inventory;
+    [HideInInspector] public Health health;
 
-
-    PlayerController_Original playerController;
-    PlayerMovement playerMovement;
-    Camera_FPS_Controller cameraController;
-
-
-    public float itemAmount;
-    public List<int> itemsInInv;
-
+    public List<int> itemsInInv = new List<int>();
     [SerializeField] public List<GameObject> items;
-   // [SerializeField] public List<Items> itemsOut;
-   
 
-
-
-
-    public Vector3 playerPosition;
     public Vector3 playerPosition1 = new Vector3(2.16f, 3.05f, 3.95f);
     public Vector3 playerPosition2 = new Vector3(0.1f, 5.81f, 6.92f);
-    public Vector3 playerPosition3 = new Vector3();//toca mirar punto de spawneo
-    [HideInInspector] public int loadAct;
+    public Vector3 playerPosition3 = new Vector3(2.16f, 3.05f, 3.95f);
+
+    private Vector3 currentPlayerPosition;
+    [HideInInspector] public int loadAct = 1;
+    private bool hasSpawnedPlayer = false;
 
     private void Awake()
     {
@@ -48,213 +33,232 @@ public class GameManager : MonoBehaviour, IDataPersistence
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
-        // player.transform.position, health.vidaMaxima, player,itemsInInv
-
-        GameEvents.PlayerLoaded?.Invoke(new PlayerData(player,playerPosition1,playerPosition2,playerPosition3));
-
-        GameEvents.Worldloaded?.Invoke(new WorldData());
-        // Debug.Log(GameObject.Find("Content Panel").transform.childCount);
-    }
-
-
-    private void Update()
-    {
-        
-        SpawnPlayer();
-        StartCoroutine(GameInfo(gameSavingTime));
-
-    }
-
-
-    public void SpawnPlayer()
-    {
-        if (SceneManager.GetActiveScene().buildIndex != 0 && GameObject.Find("Player_Original(Clone)") == null)
+        else
         {
-
-            if (SceneManager.GetActiveScene().buildIndex == 1)
-            {
-                Debug.Log("se cargó el jugador en la escena 2");
-                Instantiate(playerPrefab);
-                playerPrefab.transform.position = playerPosition1;
-                if (playerPosition == new Vector3())
-                {
-                    playerPosition = playerPosition1;
-                }
-                playerPrefab.transform.position = playerPosition;
-
-            
-               
-            }
-
-
-            if (SceneManager.GetActiveScene().buildIndex == 2)
-            {
-                Debug.Log("se cargó el jugador en la escena 2");
-                Instantiate(playerPrefab);
-                playerPrefab.transform.position = playerPosition2;
-                if (playerPosition == new Vector3())
-                {
-                    playerPosition = playerPosition2;
-                }
-                playerPrefab.transform.position = playerPosition;
-            }
-
-            if (SceneManager.GetActiveScene().buildIndex == 3)
-            {
-                Instantiate(playerPrefab);
-                playerPrefab.transform.position = playerPosition3;
-                if (playerPosition == new Vector3())
-                {
-                    playerPosition = playerPosition3;
-                }
-                playerPrefab.transform.position = playerPosition;
-
-            }
+            Destroy(gameObject);
+            return;
         }
-    
     }
-
-
 
     private void OnEnable()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            loadAct = 1;
-        }
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            loadAct = SceneManager.GetActiveScene().buildIndex;
-        }
+        SceneManager.sceneLoaded += OnSceneLoadedHandler;
         GameEvents.GameDataLoaded += LoadData;
-        Debug.Log("guardandoinfo");
         GameEvents.GameDataSaved += SaveData;
     }
+
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoadedHandler;
         GameEvents.GameDataLoaded -= LoadData;
-
+        GameEvents.GameDataSaved -= SaveData;
     }
-    public void LoadData(GameData data)
+
+    private void OnSceneLoadedHandler(Scene scene, LoadSceneMode mode)
     {
-        if (data != new GameData())
+        hasSpawnedPlayer = false;
+
+        // Solo spawnear en escenas de juego (no en menú)
+        if (scene.buildIndex > 0)
         {
+            StartCoroutine(SpawnPlayerDelayed());
+        }
+    }
 
+    private IEnumerator SpawnPlayerDelayed()
+    {
+        // Esperar un frame para que la escena esté completamente cargada
+        yield return null;
 
-            loadAct = data.SavedWorldData.SavedAct;
+        SpawnPlayer();
 
+        // Esperar otro frame antes de obtener referencias
+        yield return null;
 
-            SpawnPlayer();
+        UpdatePlayerReferences();
+    }
 
+    public void SpawnPlayer()
+    {
+        if (hasSpawnedPlayer || SceneManager.GetActiveScene().buildIndex == 0)
+            return;
 
-            playerPosition = data.SavedPlayerData.PlayerPosition;
-            if (player == null)
+        // Verificar si ya existe un jugador
+        GameObject existingPlayer = GameObject.Find("Player_Original(Clone)");
+        if (existingPlayer != null)
+        {
+            player = existingPlayer;
+            hasSpawnedPlayer = true;
+            return;
+        }
+
+        Vector3 spawnPosition = GetSpawnPositionForCurrentScene();
+
+        // Usar la posición guardada si existe y estamos en el acto correcto
+        if (currentPlayerPosition != Vector3.zero && SceneManager.GetActiveScene().buildIndex == loadAct)
+        {
+            spawnPosition = currentPlayerPosition;
+        }
+
+        player = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        player.name = "Player_Original(Clone)";
+        hasSpawnedPlayer = true;
+
+        Debug.Log($"Player spawned in scene {SceneManager.GetActiveScene().name} at position {spawnPosition}");
+    }
+
+    private Vector3 GetSpawnPositionForCurrentScene()
+    {
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        switch (sceneIndex)
+        {
+            case 1:
+                return playerPosition1;
+            case 2:
+                return playerPosition2;
+            case 3:
+                return playerPosition3;
+            default:
+                return playerPosition1;
+        }
+    }
+
+    private void UpdatePlayerReferences()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            return;
+
+        GameObject playerObj = GameObject.Find("Player_Original(Clone)");
+
+        if (playerObj != null)
+        {
+            player = playerObj;
+            inventory = player.GetComponent<Inventory>();
+            health = player.GetComponent<Health>();
+
+            Debug.Log("Player references updated successfully");
+
+            // Restaurar items si es necesario
+            if (itemsInInv != null && itemsInInv.Count > 0 && inventory != null)
             {
-                player = data.SavedPlayerData.Player;
-            }
-
-
-            itemsInInv = data.SavedPlayerData.Items;
-            if (SceneManager.GetActiveScene().buildIndex != 0)
-            {
-                ObtainItems();
+                StartCoroutine(RestoreItemsDelayed());
             }
         }
+        else
+        {
+            Debug.LogWarning("Could not find player object to update references");
+        }
+    }
+
+    private IEnumerator RestoreItemsDelayed()
+    {
+        yield return new WaitForSeconds(0.5f);
+        ObtainItems();
+    }
+
+    public void LoadData(GameData data)
+    {
+        if (data == null)
+        {
+            Debug.LogWarning("LoadData called with null data");
+            return;
+        }
+
+        loadAct = data.SavedWorldData.SavedAct;
+        currentPlayerPosition = data.SavedPlayerData.PlayerPosition;
+
+        if (data.SavedPlayerData.Items != null)
+        {
+            itemsInInv = new List<int>(data.SavedPlayerData.Items);
+        }
+
+        Debug.Log($"GameManager - Data loaded: Act {loadAct}, Position {currentPlayerPosition}, Items: {itemsInInv.Count}");
     }
 
     public void SaveData(GameData data)
     {
-        data.SavedWorldData.SavedAct = loadAct;
-        if (data.SavedPlayerData.Player != null)
+        if (data == null)
         {
-            data.SavedPlayerData.Player = player;
-        }
-        data.SavedPlayerData.PlayerPosition = playerPosition;
-        data.SavedPlayerData.Items  = itemsInInv ;
-    }
-        
-
-
-    IEnumerator GameInfo(float savingTime)
-    {
-        yield return new WaitForSeconds(savingTime);
-        GetGameInfo();
-        GameEvents.GameDataSaved += SaveData;
-    }
-
-    public void GetGameInfo()
-    {
-
-        // if (GameObject.Find("Player_Original") && inventory == null)
-        //  {
-        if (SceneManager.GetActiveScene().buildIndex > 0)
-        { 
-            Debug.LogWarning("getting info");
-        inventory = GameObject.Find("Player_Original(Clone)").GetComponent<Inventory>();
-        player = GameObject.Find("Player_Original(Clone)");
-        playerPosition = player.transform.position;
-        health = player.GetComponent<Health>();
-        itemAmount = inventory.initialItems.Count - 1;
-
-        GetItems();
-         }
-        else
-        {
+            Debug.LogWarning("SaveData called with null data");
             return;
         }
-    }
-    public void GetItems()
-    {
-        if (inventory.Items != null)
+
+        // Actualizar posición del jugador si existe
+        if (player != null)
         {
-            if (inventory.Items.Count > 0 && inventory.Items != null)
+            currentPlayerPosition = player.transform.position;
+        }
+
+        // Actualizar items del inventario
+        UpdateItemsList();
+
+        // Guardar en GameData
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        data.SavedWorldData.SavedAct = currentScene > 0 ? currentScene : loadAct;
+        data.SavedPlayerData.PlayerPosition = currentPlayerPosition;
+        data.SavedPlayerData.Items = new List<int>(itemsInInv);
+
+        Debug.Log($"GameManager - Data saved: Act {data.SavedWorldData.SavedAct}, Position {currentPlayerPosition}, Items: {itemsInInv.Count}");
+    }
+
+    private void UpdateItemsList()
+    {
+        if (inventory == null || inventory.Items == null)
+            return;
+
+        // Limpiar lista y reconstruir desde el inventario actual
+        itemsInInv.Clear();
+
+        foreach (var item in inventory.Items)
+        {
+            if (!itemsInInv.Contains(item.Value.ID))
             {
-
-                foreach (var item in inventory.Items)
-                {
-                  //  Debug.Log(item.Value.name + " se detectó en el inv");
-
-                    if (!itemsInInv.Contains(item.Value.ID))
-                    {
-                        itemsInInv.Add(item.Value.ID);
-                    }
-                    for (int i = 0;i < itemsInInv.Count; i++)
-                    {
-                        if (!inventory.Items.ContainsKey(itemsInInv[i]))
-                        {
-                            itemsInInv.Remove(itemsInInv[i]);
-                        }
-                    }
- 
-                }
-                for (int i = 0; i < itemsInInv.Count; i++)
-                {
-                    Debug.Log(itemsInInv[i]);
-                }
+                itemsInInv.Add(item.Value.ID);
             }
         }
-        else
-        {
-            return;
-        }
-
-        
     }
+
     public void ObtainItems()
     {
-            foreach (var item in itemsInInv)
-            {
-                foreach (var iItem in items)
-                {
-                    Items currentItem = iItem.GetComponent<Items>();
-                    if (item == currentItem.ID)
-                    {
-                        inventory.AddItem(currentItem);
-                    }
-                }
+        if (inventory == null || itemsInInv == null || itemsInInv.Count == 0)
+        {
+            Debug.Log("No items to restore or inventory not ready");
+            return;
+        }
 
+        foreach (int itemId in itemsInInv)
+        {
+            // Verificar si ya tiene el item
+            if (inventory.Items != null && inventory.Items.ContainsKey(itemId))
+            {
+                continue;
             }
 
-        //inventory.AddItem(item)
+            // Buscar el item en la lista de items disponibles
+            foreach (GameObject itemObj in items)
+            {
+                Items itemComponent = itemObj.GetComponent<Items>();
+                if (itemComponent != null && itemComponent.ID == itemId)
+                {
+                    inventory.AddItem(itemComponent);
+                    Debug.Log($"Item {itemId} restored to inventory");
+                    break;
+                }
+            }
+        }
+    }
+
+    public void LoadAct(int actNumber)
+    {
+        if (actNumber > 0 && actNumber <= 3)
+        {
+            SceneManager.LoadScene(actNumber);
+        }
+    }
+
+    public bool HasSaveData()
+    {
+        return loadAct > 1 || currentPlayerPosition != Vector3.zero || itemsInInv.Count > 0;
     }
 }

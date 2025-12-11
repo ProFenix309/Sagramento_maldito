@@ -11,129 +11,185 @@ public class DataPersistenceManager : MonoBehaviour
     GameData newGameData = new GameData();
     public static DataPersistenceManager instance { get; private set; }
 
-    public float saveTime;
+    public float saveTime = 5f;
 
-    int load = 1;
+    private Coroutine autoSaveCoroutine;
+    private bool hasLoadedOnce = false;
 
     private void OnEnable()
     {
-        SceneManager.activeSceneChanged += OnSceneLoaded;
-        GameEvents.Worldloaded += gameData.SetWorldData;
-        GameEvents.EnemyLoaded += gameData.AddEnemyData;
-        GameEvents.PlayerLoaded += gameData.SetPlayerData;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
     private void OnDisable()
-    { 
-        GameEvents.Worldloaded -= gameData.SetWorldData;
-        GameEvents.EnemyLoaded -= gameData.AddEnemyData;
-        GameEvents.PlayerLoaded -= gameData.SetPlayerData;
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
     private void Awake()
     {
         if (instance != null)
         {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene.");
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            instance = this;
-        }
+
+        instance = this;
         DontDestroyOnLoad(gameObject);
-        
-        path = Application.persistentDataPath + "/GameData.txt";
-        Debug.Log(path);
+
+        path = Application.persistentDataPath + "/GameData.json";
+        Debug.Log("Save path: " + path);
     }
 
     private void Start()
-    { 
-
-        Debug.LogWarning(path);
+    {
         CheckGameData();
     }
 
-    private void Update()
-    {
-     if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            StartCoroutine(SaveData(saveTime));
-        }
-        
-    }
     public void NewGame()
     {
-        gameData = newGameData;
+        gameData = new GameData();
         SaveGameData();
+        Debug.Log("New game created");
     }
+
     public void CheckGameData()
     {
         if (!File.Exists(path))
         {
-            StreamWriter file = File.CreateText(path);
-            file.Close();
+            Debug.Log("No save file found, creating new game data");
+            NewGame();
         }
         else
         {
             LoadGameData();
         }
     }
+
     public void LoadGameData()
     {
-        Debug.LogWarning("loading data");
+        if (!File.Exists(path))
+        {
+            Debug.LogWarning("No save file to load");
+            return;
+        }
 
-        string json = File.ReadAllText(path);
-        gameData = JsonUtility.FromJson<GameData>(json);
-        GameEvents.GameDataLoaded?.Invoke(gameData);
+        try
+        {
+            string json = File.ReadAllText(path);
+
+            if (string.IsNullOrEmpty(json))
+            {
+                Debug.LogWarning("Save file is empty, creating new game");
+                NewGame();
+                return;
+            }
+
+            gameData = JsonUtility.FromJson<GameData>(json);
+
+            if (gameData == null)
+            {
+                Debug.LogWarning("Failed to parse save data, creating new game");
+                NewGame();
+                return;
+            }
+
+            Debug.Log("Game data loaded successfully");
+            GameEvents.GameDataLoaded?.Invoke(gameData);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error loading game data: " + e.Message);
+            NewGame();
+        }
     }
 
     public void SaveGameData()
     {
-        Debug.LogWarning("SavingData");
-         string json = JsonUtility.ToJson(gameData);
-        File.WriteAllText(path, json);
+        if (gameData == null)
+        {
+            Debug.LogWarning("No game data to save");
+            return;
+        }
+
+        try
+        {
+            // Invocar evento para que otros sistemas guarden sus datos
+            GameEvents.GameDataSaved?.Invoke(gameData);
+
+            string json = JsonUtility.ToJson(gameData, true);
+            File.WriteAllText(path, json);
+            Debug.Log("Game data saved successfully");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error saving game data: " + e.Message);
+        }
     }
+
     private void OnApplicationQuit()
     {
-
-        SaveGameData();
-    }    
-
-    private void OnSceneLoaded(Scene scene, Scene newScene)
-    {
-        load = 1;
-        LoadGameData();
-        Debug.Log("cargado al cargar escena");
-        if (gameData != newGameData)
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             SaveGameData();
-            Debug.Log("guardado al cargar escena");
         }
-       
-
-        
     }
 
-    IEnumerator SaveData(float timeBetweenSaves)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (gameData.SavedPlayerData.Items != newGameData.SavedPlayerData.Items)
+        // Detener autoguardado anterior si existe
+        if (autoSaveCoroutine != null)
         {
-            if (load == 1)
+            StopCoroutine(autoSaveCoroutine);
+            autoSaveCoroutine = null;
+        }
+
+        // Solo procesar si no estamos en el menú principal
+        if (scene.buildIndex == 0)
+        {
+            hasLoadedOnce = false;
+            Debug.Log("Main menu loaded - autosave disabled");
+            return;
+        }
+
+        Debug.Log($"Scene loaded: {scene.name} (Index: {scene.buildIndex})");
+
+        // Guardar antes de cargar nueva escena para no perder progreso
+        if (hasLoadedOnce && gameData != null)
+        {
+            Debug.Log("Saving data before loading new scene data");
+            SaveGameData();
+        }
+
+        // Cargar datos para esta escena
+        LoadGameData();
+        hasLoadedOnce = true;
+
+        // Iniciar autoguardado solo en escenas de juego
+        if (scene.buildIndex > 0)
+        {
+            autoSaveCoroutine = StartCoroutine(AutoSaveCoroutine());
+            Debug.Log($"Autosave started - interval: {saveTime} seconds");
+        }
+    }
+
+    IEnumerator AutoSaveCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(saveTime);
+
+            int currentScene = SceneManager.GetActiveScene().buildIndex;
+            if (currentScene > 0)
             {
-                LoadGameData();
-                load = 0;
+                Debug.Log($"Autosaving... (Scene: {currentScene})");
+                SaveGameData();
             }
         }
-
-    
-
-        yield return new WaitForSeconds(timeBetweenSaves);
-        if (gameData.SavedPlayerData.Items != newGameData.SavedPlayerData.Items)
-        {
-            SaveGameData();
-        }
     }
 
-
+    public GameData GetGameData()
+    {
+        return gameData;
+    }
 }
-
-
-

@@ -6,7 +6,7 @@ public class Health : MonoBehaviour, IDataPersistence
 {
     [Header("Configuracion de Vida")]
     public int vidaMaxima;
-    [SerializeField]  public float vidaActual;
+    [SerializeField] public float vidaActual;
 
     [Header("Deteccion de enemigo")]
     public string etiquetaEnemigo = "Enemy";
@@ -17,7 +17,7 @@ public class Health : MonoBehaviour, IDataPersistence
     {
         animatior = GameObject.Find("Altered State").GetComponent<Animator>();
         vidaActual = vidaMaxima;
-       // GameEvents.PlayerLoaded?.Invoke(new PlayerData(vidaMaxima));
+        // GameEvents.PlayerLoaded?.Invoke(new PlayerData(vidaMaxima));
     }
     void Start()
     {
@@ -81,6 +81,10 @@ public class Health : MonoBehaviour, IDataPersistence
         vidaActual = data.SavedPlayerData.CurrentHealth;
     }
 
+      public void SaveData(GameData data)
+    {
+       data.SavedPlayerData.CurrentHealth = vidaActual;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy")
