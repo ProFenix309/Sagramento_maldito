@@ -173,7 +173,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
             itemsInInv = new List<int>(data.SavedPlayerData.Items);
         }
 
-        Debug.Log($"GameManager - Data loaded: Act {loadAct}, Position {currentPlayerPosition}, Items: {itemsInInv.Count}");
+        // Cargar salud del jugador si existe
+        if (health != null && data.SavedPlayerData.CurrentHealth > 0)
+        {
+            health.vidaActual = data.SavedPlayerData.CurrentHealth;
+        }
+
+        Debug.Log($"GameManager - Data loaded: Act {loadAct}, Position {currentPlayerPosition}, Items: {itemsInInv.Count}, Health: {data.SavedPlayerData.CurrentHealth}");
     }
 
     public void SaveData(GameData data)
@@ -190,6 +196,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
             currentPlayerPosition = player.transform.position;
         }
 
+        // Actualizar salud del jugador si existe
+        if (health != null)
+        {
+            data.SavedPlayerData.CurrentHealth = health.vidaActual;
+        }
+
         // Actualizar items del inventario
         UpdateItemsList();
 
@@ -199,7 +211,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.SavedPlayerData.PlayerPosition = currentPlayerPosition;
         data.SavedPlayerData.Items = new List<int>(itemsInInv);
 
-        Debug.Log($"GameManager - Data saved: Act {data.SavedWorldData.SavedAct}, Position {currentPlayerPosition}, Items: {itemsInInv.Count}");
+        Debug.Log($"GameManager - Data saved: Act {data.SavedWorldData.SavedAct}, Position {currentPlayerPosition}, Items: {itemsInInv.Count}, Health: {data.SavedPlayerData.CurrentHealth}");
     }
 
     private void UpdateItemsList()

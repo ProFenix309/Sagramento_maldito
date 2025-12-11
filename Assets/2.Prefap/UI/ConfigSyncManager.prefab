@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3932777841581284097
+--- !u!1 &2206050121442811304
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5828203879405280575}
-  - component: {fileID: 2094459525867761776}
+  - component: {fileID: 6187840109129205651}
+  - component: {fileID: 1896295652648047398}
   m_Layer: 0
-  m_Name: DataPersitenceManager
+  m_Name: ConfigSyncManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5828203879405280575
+--- !u!4 &6187840109129205651
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3932777841581284097}
+  m_GameObject: {fileID: 2206050121442811304}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 960, y: 540, z: 0}
@@ -32,36 +32,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2094459525867761776
+--- !u!114 &1896295652648047398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3932777841581284097}
+  m_GameObject: {fileID: 2206050121442811304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12007eb7e8f91a944baae81b222ace3f, type: 3}
+  m_Script: {fileID: 11500000, guid: bbc12b107995c0449ae9592b6c953f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData:
-    _enemies: []
-    _savedPlayerData:
-      _currentHealth: 0
-      _playerPosition: {x: 0, y: 0, z: 0}
-      _playerPosition1: {x: 2.16, y: 3.05, z: 3.95}
-      _playerPosition2: {x: 0.1, y: 5.81, z: 6.92}
-      _playerPosition3: {x: 2.16, y: 3.05, z: 3.95}
-      _items: 
-    _savedWorldData:
-      _savedAct: 1
-    _savedConfigData:
-      _masterVolume: 1
-      _musicVolume: 1
-      _sfxVolume: 1
-      _sensitivity: 1
-      _isFullscreen: 1
-      _resolutionWidth: 1920
-      _resolutionHeight: 1080
-      _resolutionIndex: 0
-  saveTime: 5

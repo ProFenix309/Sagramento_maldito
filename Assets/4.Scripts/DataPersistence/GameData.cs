@@ -149,18 +149,14 @@ public class EnemyData
     public Vector3 Position { get => _position; set => _position = value; }
     [SerializeField] Vector3 _position;
 
-    public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
-    [SerializeField] float _currentHealth;
-
     public EnemyData()
     {
     }
 
-    public EnemyData(string id, bool active, Vector3 position, float health)
+    public EnemyData(string id, bool active, Vector3 position)
     {
         _id = id;
         _active = active;
         _position = position;
-        _currentHealth = health;
     }
 }

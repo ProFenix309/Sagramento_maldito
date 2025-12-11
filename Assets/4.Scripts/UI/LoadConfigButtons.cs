@@ -19,7 +19,7 @@ public class LoadConfigButtons : MonoBehaviour
    
     void Update()
     {
-        pauseMenu = FindAnyObjectByType<PauseMenu>();
+        pauseMenu = GameObject.Find("ManagerPause").GetComponent<PauseMenu>();
 
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {

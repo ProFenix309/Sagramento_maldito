@@ -7,7 +7,7 @@ public class ResolutionSettings : MonoBehaviour
 {
     [Header("UI Elements")]
     public Toggle fullscreenToggle;
-    public Dropdown resolutionDropdown;
+    public TMP_Dropdown resolutionDropdown;
     public Slider sensitivitySlider;
 
     private Resolution[] resolutions;
@@ -149,24 +149,34 @@ public class ResolutionSettings : MonoBehaviour
     public void SaveData(GameData data)
     {
         if (data == null || data.SavedConfigData == null)
-            return;
-
-        if (fullscreenToggle != null)
-            data.SavedConfigData.IsFullscreen = fullscreenToggle.isOn;
-
-        if (resolutionDropdown != null && resolutionDropdown.value < resolutions.Length)
         {
-            data.SavedConfigData.ResolutionIndex = resolutionDropdown.value;
-            data.SavedConfigData.ResolutionWidth = resolutions[resolutionDropdown.value].width;
-            data.SavedConfigData.ResolutionHeight = resolutions[resolutionDropdown.value].height;
+            Debug.LogWarning("GraphicsSettingsManager: Cannot save - data is null");
+            return;
         }
 
-        if (sensitivitySlider != null)
-            data.SavedConfigData.Sensitivity = sensitivitySlider.value;
+        try
+        {
+            if (fullscreenToggle != null)
+                data.SavedConfigData.IsFullscreen = fullscreenToggle.isOn;
 
-        Debug.Log($"Graphics settings saved: Fullscreen={data.SavedConfigData.IsFullscreen}, " +
-                  $"Resolution={data.SavedConfigData.ResolutionWidth}x{data.SavedConfigData.ResolutionHeight}, " +
-                  $"Sensitivity={data.SavedConfigData.Sensitivity}");
+            if (resolutionDropdown != null && resolutions != null && resolutionDropdown.value < resolutions.Length)
+            {
+                data.SavedConfigData.ResolutionIndex = resolutionDropdown.value;
+                data.SavedConfigData.ResolutionWidth = resolutions[resolutionDropdown.value].width;
+                data.SavedConfigData.ResolutionHeight = resolutions[resolutionDropdown.value].height;
+            }
+
+            if (sensitivitySlider != null)
+                data.SavedConfigData.Sensitivity = sensitivitySlider.value;
+
+            Debug.Log($"Graphics settings saved: Fullscreen={data.SavedConfigData.IsFullscreen}, " +
+                      $"Resolution={data.SavedConfigData.ResolutionWidth}x{data.SavedConfigData.ResolutionHeight}, " +
+                      $"Sensitivity={data.SavedConfigData.Sensitivity}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in GraphicsSettingsManager.SaveData: {e.Message}");
+        }
     }
 
     public void OnFullscreenChanged(bool isFullscreen)
@@ -205,5 +215,18 @@ public class ResolutionSettings : MonoBehaviour
         {
             DataPersistenceManager.instance.SaveGameData();
         }
+    }
+
+    public float GetSensitivity()
+    {
+        if (DataPersistenceManager.instance != null)
+        {
+            GameData data = DataPersistenceManager.instance.GetGameData();
+            if (data != null && data.SavedConfigData != null)
+            {
+                return data.SavedConfigData.Sensitivity;
+            }
+        }
+        return 1f;
     }
 }

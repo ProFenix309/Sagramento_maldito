@@ -99,7 +99,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Error loading game data: " + e.Message);
+            Debug.LogWarning("Error loading game data: " + e.Message);
             NewGame();
         }
     }
@@ -115,7 +115,11 @@ public class DataPersistenceManager : MonoBehaviour
         try
         {
             // Invocar evento para que otros sistemas guarden sus datos
-            GameEvents.GameDataSaved?.Invoke(gameData);
+            // Solo invocar si hay listeners registrados
+            if (GameEvents.GameDataSaved != null)
+            {
+                GameEvents.GameDataSaved.Invoke(gameData);
+            }
 
             string json = JsonUtility.ToJson(gameData, true);
             File.WriteAllText(path, json);
@@ -123,7 +127,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Error saving game data: " + e.Message);
+            Debug.LogError($"Error saving game data: {e.Message}\nStack trace: {e.StackTrace}");
         }
     }
 

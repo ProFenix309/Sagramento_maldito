@@ -141,16 +141,26 @@ public class UI_Audio_Manager : MonoBehaviour, IDataPersistence
     public void SaveData(GameData data)
     {
         if (data == null || data.SavedConfigData == null)
+        {
+            Debug.LogWarning("UI_Audio_Manager: Cannot save - data is null");
             return;
+        }
 
-        if (masterSlider != null)
-            data.SavedConfigData.MasterVolume = masterSlider.value;
-        if (musicSlider != null)
-            data.SavedConfigData.MusicVolume = musicSlider.value;
-        if (sfxSlider != null)
-            data.SavedConfigData.SFXVolume = sfxSlider.value;
+        try
+        {
+            if (masterSlider != null)
+                data.SavedConfigData.MasterVolume = masterSlider.value;
+            if (musicSlider != null)
+                data.SavedConfigData.MusicVolume = musicSlider.value;
+            if (sfxSlider != null)
+                data.SavedConfigData.SFXVolume = sfxSlider.value;
 
-        Debug.Log($"Audio settings saved: Master={data.SavedConfigData.MasterVolume}, Music={data.SavedConfigData.MusicVolume}, SFX={data.SavedConfigData.SFXVolume}");
+            Debug.Log($"Audio settings saved: Master={data.SavedConfigData.MasterVolume}, Music={data.SavedConfigData.MusicVolume}, SFX={data.SavedConfigData.SFXVolume}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in UI_Audio_Manager.SaveData: {e.Message}");
+        }
     }
 
     public void OnMasterVolumeChanged(float value)

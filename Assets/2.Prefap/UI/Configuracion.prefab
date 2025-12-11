@@ -3968,7 +3968,7 @@ GameObject:
   - component: {fileID: 1060870435818733484}
   - component: {fileID: 8080295498125180010}
   m_Layer: 5
-  m_Name: Brillo
+  m_Name: Sensibilidad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4634,7 +4634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Brillo
+  m_text: Sensibilidad
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c821d1638d05184b9008204f413ce54, type: 2}
   m_sharedMaterial: {fileID: -6323859877190412452, guid: 7c821d1638d05184b9008204f413ce54, type: 2}
