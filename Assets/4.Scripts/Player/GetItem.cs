@@ -17,7 +17,7 @@ public class GetItem : MonoBehaviour
 
     void Start()
     {
-        // Obtener el 韓dice del layer
+        // Obtener el 铆ndice del layer
         launchedLayer = LayerMask.NameToLayer(launchedLayerName);
     }
 
@@ -33,6 +33,13 @@ public class GetItem : MonoBehaviour
     {
         if (other.gameObject.CompareTag(objectName) && Input.GetKeyDown(KeyCode.E) && other.gameObject.GetComponent<Items>() == null)
         {
+            // Verificar si el objeto tiene Rigidbody antes de intentar agarrarlo
+            if (!other.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            {
+                Debug.LogWarning($"El objeto '{other.gameObject.name}' no tiene Rigidbody. No se puede agarrar.");
+                return;
+            }
+
             isHolding = !isHolding;
             if (isHolding)
             {
@@ -58,8 +65,15 @@ public class GetItem : MonoBehaviour
 
     private void AgarrarObjeto(GameObject objeto)
     {
-        objeto.GetComponent<Rigidbody>().useGravity = false;
-        objeto.GetComponent<Rigidbody>().isKinematic = true;
+        // Verificaci贸n segura del Rigidbody
+        if (!objeto.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            Debug.LogError($"No se puede agarrar '{objeto.name}': falta Rigidbody");
+            return;
+        }
+
+        rb.useGravity = false;
+        rb.isKinematic = true;
         objeto.transform.position = handPoint.transform.position;
         objeto.transform.SetParent(handPoint.transform);
         pickedObject = objeto;
@@ -68,27 +82,44 @@ public class GetItem : MonoBehaviour
 
     private void SoltarObjeto()
     {
-        if (pickedObject != null)
+        if (pickedObject == null) return;
+
+        // Verificaci贸n segura del Collider
+        if (pickedObject.TryGetComponent<Collider>(out Collider col))
         {
-            pickedObject.GetComponent<Collider>().isTrigger = false;
-            pickedObject.GetComponent<Rigidbody>().useGravity = true;
-            pickedObject.GetComponent<Rigidbody>().isKinematic = false;
-
-            Disappear disappearComponent = pickedObject.GetComponent<Disappear>();
-            if (disappearComponent != null)
-            {
-                disappearComponent.Spawned = false;
-            }
-
-            pickedObject.transform.SetParent(null);
-            pickedObject = null;
-            isHolding = false;
+            col.isTrigger = false;
         }
+
+        // Verificaci贸n segura del Rigidbody
+        if (pickedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            rb.useGravity = true;
+            rb.isKinematic = false;
+        }
+
+        Disappear disappearComponent = pickedObject.GetComponent<Disappear>();
+        if (disappearComponent != null)
+        {
+            disappearComponent.Spawned = false;
+        }
+
+        pickedObject.transform.SetParent(null);
+        pickedObject = null;
+        isHolding = false;
     }
 
     private void LanzarObjeto()
     {
         if (pickedObject == null) return;
+
+        // Verificaci贸n segura del Rigidbody
+        if (!pickedObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            Debug.LogError($"No se puede lanzar '{pickedObject.name}': falta Rigidbody");
+            pickedObject = null;
+            isHolding = false;
+            return;
+        }
 
         // CAMBIA el layer SOLO al lanzar
         pickedObject.layer = launchedLayer;
@@ -99,15 +130,18 @@ public class GetItem : MonoBehaviour
             disappearComponent.Spawned = false;
         }
 
-        Rigidbody rb = pickedObject.GetComponent<Rigidbody>();
-        pickedObject.GetComponent<Collider>().isTrigger = false;
+        // Verificaci贸n segura del Collider
+        if (pickedObject.TryGetComponent<Collider>(out Collider col))
+        {
+            col.isTrigger = false;
+        }
 
-        // Soltar objeto para que la f韘ica act鷈 sobre 閘
+        // Soltar objeto para que la f铆sica act煤e sobre 茅l
         pickedObject.transform.SetParent(null);
         rb.useGravity = true;
         rb.isKinematic = false;
 
-        // Aplicar fuerza hacia donde mira la c醡ara
+        // Aplicar fuerza hacia donde mira la c谩mara
         Vector3 direction = playerCamera.transform.forward;
         rb.AddForce(direction * launchForce);
 
