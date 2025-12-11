@@ -5,7 +5,10 @@ public class SceneChange : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }

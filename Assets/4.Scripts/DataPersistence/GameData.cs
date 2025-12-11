@@ -82,7 +82,7 @@ public class ConfigData
 
     public ConfigData()
     {
-        // Valores por defecto ya están asignados arriba
+        // Valores por defecto ya estï¿½n asignados arriba
     }
 }
 
@@ -115,7 +115,7 @@ public class PlayerData
     [SerializeField] private Vector3 _playerPosition1 = new Vector3(2.16f, 3.05f, 3.95f);
 
     public Vector3 PlayerPosition2 { get => _playerPosition2; set => _playerPosition2 = value; }
-    [SerializeField] private Vector3 _playerPosition2 = new Vector3(0.25f, 5.685016f, 7.62f);
+    [SerializeField] private Vector3 _playerPosition2 = new Vector3(0.07f, 5.71f, 20.43f);
 
     public Vector3 PlayerPosition3 { get => _playerPosition3; set => _playerPosition3 = value; }
     [SerializeField] private Vector3 _playerPosition3 = new Vector3(2.16f, 3.05f, 3.95f);
