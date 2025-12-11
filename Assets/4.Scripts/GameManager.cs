@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public Vector3 playerPosition1 = new Vector3(2.16f, 3.05f, 3.95f);
     public Vector3 playerPosition2 = new Vector3(0.1f, 5.81f, 6.92f);
-    public Vector3 playerPosition3 = new Vector3(2.16f, 3.05f, 3.95f);
+    public Vector3 playerPosition3 = new Vector3(0f, 0f, 0f);
 
     private Vector3 currentPlayerPosition;
     [HideInInspector] public int loadAct = 1;
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         hasSpawnedPlayer = false;
 
-        // Solo spawnear en escenas de juego (no en menú)
+        // Solo spawnear en escenas de juego (no en menï¿½)
         if (scene.buildIndex > 0)
         {
             StartCoroutine(SpawnPlayerDelayed());
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private IEnumerator SpawnPlayerDelayed()
     {
-        // Esperar un frame para que la escena esté completamente cargada
+        // Esperar un frame para que la escena estï¿½ completamente cargada
         yield return null;
 
         SpawnPlayer();
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         Vector3 spawnPosition = GetSpawnPositionForCurrentScene();
 
-        // Usar la posición guardada si existe y estamos en el acto correcto
+        // Usar la posiciï¿½n guardada si existe y estamos en el acto correcto
         if (currentPlayerPosition != Vector3.zero && SceneManager.GetActiveScene().buildIndex == loadAct)
         {
             spawnPosition = currentPlayerPosition;
@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             return;
         }
 
-        // Actualizar posición del jugador si existe
+        // Actualizar posiciï¿½n del jugador si existe
         if (player != null)
         {
             currentPlayerPosition = player.transform.position;

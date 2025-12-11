@@ -394,6 +394,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: playerPosition3.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: playerPosition3.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700980727030827518, guid: d04cdee89efdabd4c82fb6353ccb5713, type: 3}
+      propertyPath: playerPosition3.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4196,12 +4208,8 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1121286334268425404, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1121286334268425404, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
-      propertyPath: m_AnchorMax.y
+    - target: {fileID: 1168036581714869228, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
+      propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2483134198490606261, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
@@ -4310,18 +4318,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3834444572813578066, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770722091203661683, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770722091203661683, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770722091203661683, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
-      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4909646243675545658, guid: 15e412e64e9e84f4998e5c2cf6a984fe, type: 3}
